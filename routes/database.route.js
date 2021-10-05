@@ -10,5 +10,6 @@ module.exports = (app, jsonParser ,urlParser) => {
     /* -- Route settings -- */
     //app.post("/distinct-fields", jsonParser, database.fetchDistinctValues);
     //app.post("/fields", jsonParser, database.fetchValues);
-    app.post("/view", jsonParser, database.fetchView);
+    app.post("/view-treatment", jsonParser, database.fetchViewTreatment);
+    app.post("/view-medical", jsonParser, database.fetchViewMedical);
 };
