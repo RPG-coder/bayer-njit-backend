@@ -133,34 +133,40 @@ exports.fetchView = (req, res) => {
             (data) => {
                 /* --- VIEW B is created --- */    
 
-                /* --- Generating the Final Results --- */
-                const result = (
-                    `SELECT COUNT(*) AS ALL_DATA,`+
-                    req.body.treatments.labels.map((e,i)=>{ return ` SUM(treatment & ${2**i}) >> ${i} AS ${e}` }).join() +
-                    ` ${req.body.group_condition.group_by} FROM B GROUP BY ${req.body.group_condition.group_by}`
-                );
+                database.mysql.query(`SELECT label, label_val FROM label_info WHERE label_type='treatment' ORDER BY label_val`).then((data)=>{
+                    /* --- Generating the Final Results --- */
+                    console.log(data);
+                    /*
+                    const result = (
+                        `SELECT COUNT(*) AS ALL_DATA,`+
+                        req.body.treatments.labels.map((e,i)=>{ return ` SUM(treatment & ${2**i}) >> ${i} AS ${e}` }).join() +
+                        ` ${req.body.group_condition.group_by} FROM B GROUP BY ${req.body.group_condition.group_by}`
+                    );
 
-                /* --- Generating a Response --- */
-                database.mysql.query( result, {type: QueryTypes.SELECT}).then((data)=>{
-                    console.log.data(data);
+                    /* --- Generating a Response --- 
+                    database.mysql.query( result, {type: QueryTypes.SELECT}).then((data)=>{
+                        console.log.data(data);
 
-                    res.status(200).send({
-                        group_condition: req.body.group_condition,
-                        treatments: {
-                            labels: req.body.treatments.labels,
-                            data: {}                            
-                        },
-                        medicalConditions: {
-                            labels: req.body.medical_conditions.labels,
-                            data: {}                            
-                        }
+                        res.status(200).send({
+                            group_condition: req.body.group_condition,
+                            treatments: {
+                                labels: req.body.treatments.labels,
+                                data: {}                            
+                            },
+                            medicalConditions: {
+                                labels: req.body.medical_conditions.labels,
+                                data: {}                            
+                            }
+                        });
+                        
+                        database.mysql.query(`DROP VIEW IF EXISTS B`);
                     });
-                    
-                    database.mysql.query(`DROP VIEW IF EXISTS B`);
-                });
-                
 
-                //req.body.medicalConditions.labels.map((e,i)=>{ return ` SUM(medical_condition & ${2**i}) >> ${i} as ${e}` }).join() +
+                    */
+                    //req.body.medicalConditions.labels.map((e,i)=>{ return ` SUM(medical_condition & ${2**i}) >> ${i} as ${e}` }).join() +
+                })
+
+                
 
 
             }
