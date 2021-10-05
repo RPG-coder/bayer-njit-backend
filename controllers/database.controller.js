@@ -56,21 +56,22 @@ exports.fetchView = (req, res) => {
     if(req.body.group_condition && req.body.states && 
        req.body.treatments && req.body.medical_conditions){
         database.mysql.query(`DROP VIEW IF EXISTS B`);
+        const {QueryTypes} = database.Sequelize;
 
         let groupByConditionQuery = "", stateQuery = "";
         let medicalORSum = 0, treatmentORSum = 0, medicalANDSum = 0, treatmentANDSum = 0;
-        let error = 1, errorMessage = "";
+        let error = 0, errorMessage = "";
 
         /* --- Checking if Group By conditions exists!! & Setting groupBy conditions --- */
         if(req.body.group_condition.group_by && req.body.group_condition.selection){
             groupByConditionQuery = req.body.group_condition.selection.map((e,i)=>{
-                return `${req.body.group_condition.group_by}=${e}`
+                return `${req.body.group_condition.group_by}='${e}'`
             }).join(" OR ");
         }else{ error = 1; errorMessage="Grouping condition, ";}
         
         /* --- Setting states conditions --- */
         stateQuery = req.body.states.map((e,i)=>{
-            return `${req.body.states}=${e}`
+            return `state='${e}'`
         }).join(" OR ");
 
         /* --- Setting Treatments & Medical conditions --- */
@@ -123,30 +124,32 @@ exports.fetchView = (req, res) => {
             /* Medical AND/OR condition check */
             `AND medical_condition & ${medicalANDSum} = ${medicalANDSum} AND medical_condition & ${medicalORSum} <> 0 `+
             /* Treatment AND/OR condition check */
-            `AND medical_condition & ${treatmentANDSum} = ${treatmentANDSum} AND treatment & ${treatmentORSum} <> 0`
+            `AND treatment & ${treatmentANDSum} = ${treatmentANDSum} AND treatment & ${treatmentORSum} <> 0)`
         );
         console.log(`[EXECUTING]: ${query}`);
 
         /* --- Query Execution --- */
-        database.mysql.query(
-            query, {type: QueryTypes.SELECT}).then(
-            (data) => {
+        database.mysql.query(query).then(
+            (data0) => {
                 /* --- VIEW B is created --- */    
 
-                database.mysql.query(`SELECT label, label_val FROM label_info WHERE label_type='treatment' ORDER BY label_val`).then((data)=>{
+                database.mysql.query(`SELECT label, label_val FROM label_info WHERE label_type='treatment' ORDER BY label_val`, {type: QueryTypes.SELECT}).then((data1)=>{
                     /* --- Generating the Final Results --- */
-                    console.log(data);
-                    /*
+
+                    
+                    const label=[]
+                    console.log('label');
+                    for(let i=0;i<data1.length;i++){
+                        label.push(data1[i]['label'])
+                    }
                     const result = (
-                        `SELECT COUNT(*) AS ALL_DATA,`+
-                        req.body.treatments.labels.map((e,i)=>{ return ` SUM(treatment & ${2**i}) >> ${i} AS ${e}` }).join() +
-                        ` ${req.body.group_condition.group_by} FROM B GROUP BY ${req.body.group_condition.group_by}`
+                        `SELECT COUNT(*) AS ALL_DATA, ${label.map((e,i)=>{ return ` SUM(treatment & ${2**i}) >> ${i} AS ${e}` }).join()}, ${req.body.group_condition.group_by} FROM B GROUP BY ${req.body.group_condition.group_by}`
                     );
+                    console.log(`[Executing]: ${result}`);
 
-                    /* --- Generating a Response --- 
+                    /* --- Generating a Response --- */
                     database.mysql.query( result, {type: QueryTypes.SELECT}).then((data)=>{
-                        console.log.data(data);
-
+                        
                         res.status(200).send({
                             group_condition: req.body.group_condition,
                             treatments: {
@@ -162,7 +165,7 @@ exports.fetchView = (req, res) => {
                         database.mysql.query(`DROP VIEW IF EXISTS B`);
                     });
 
-                    */
+                    
                     //req.body.medicalConditions.labels.map((e,i)=>{ return ` SUM(medical_condition & ${2**i}) >> ${i} as ${e}` }).join() +
                 })
 
@@ -180,36 +183,3 @@ exports.fetchView = (req, res) => {
     }
 };
 
-
-/*
- let groupByClause = "", whereClause = "", error=0, errorReason="";
-
-        if(req.body.groupCondition.groupBy && req.body.groupCondition.selection){
-
-            whereClause = req.body.groupCondition.selection.map((e,i)=>{
-                return `${req.body.groupCondition.groupBy}=${e}`
-            }).join(" OR ");
-            groupByClause = `GROUP BY ${req.body.groupCondition.groupBy}`;
-
-        }else{
-            error=1; errorReason="Grouping";
-        }
-
-        whereClause += " AND " + req.body.states.map((e,i)=>{
-            return `${req.body.states}=${e}`
-        }).join(" OR ");
-
-        /* --- Requires Atleast 1 to show case a Graph --- *
-        if(req.body.treatments.labels && (req.body.treatments.OR || req.body.treatments.AND)){
-            if(req.body.treatments.OR){
-                whereClause = req.body.treatments.OR.map((e,i)=>{
-                    return `treatment & ${e} >> ${i} = `
-                }).join(" OR ");
-                groupByClause = `GROUP BY ${req.body.groupCondition.groupBy}`;    
-            }
-            
-        }else{
-            error=1; errorReason="Treatment AND/OR";
-        }
-
-*/
