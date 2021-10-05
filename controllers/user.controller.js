@@ -6,6 +6,7 @@ const user = {};
   @function: createUser
   @details: Create a single user by storing it in the `user_admin_access` table -- */
 exports.createUser = (req, res) => {
+  console.log(req.body)
   if(req.body.register_email && req.body.register_userid && req.body.register_password){
     console.log(`[INFO]: Received ${JSON.stringify(req.body)}`);
 
@@ -17,10 +18,10 @@ exports.createUser = (req, res) => {
     accessTable.create(user)
       .then(data => {
         res.cookie("userData", user);
-        res.status(200).send({signup:1, message: "A new user has been added sucessfully!", data: data});
+        res.status(200).send({success:1, message: "You are now officialy registered!", data: data});
       })
       .catch(err => {
-        res.status(500).send({signup:0, message: "UserID is already added"});
+        res.status(500).send({success:0, message: "UserID/Email is already added in to our database"});
       });
     }else{
         res.status(500).send({signup:0, message: "Email, username & password are not provided correctly"});
@@ -54,20 +55,20 @@ exports.performAuthentication = (req, res) => {
         user.userid = req.body.login_userid;
         user.password = req.body.login_password;
         res.cookie("userData", user);
-        res.status(200).send({login: 1, message: "Login: Sucessful!" });
+        res.status(200).send({success: 1, message: "Login: Sucessful!" });
       }else{
-        res.status(401).send({login: 0, message: "Invalid UserID/Password!"});
+        res.status(401).send({success: 0, message: "Invalid UserID/Password!"});
       }
     })
     .catch(err => {
-      res.status(401).send({
-        login: 0, message: "Invalid UserID/Password!"
+      res.status(400).send({
+        success: 0, message: "Bad Request"
       });
     });
     
   }else{
-    res.status(401).send({
-        login: 0, message: "Login credentials not passed correctly!"
+    res.status(400).send({
+        success: 0, message: "Bad Request: Credentials are not passed correctly!"
     });
   }
 }

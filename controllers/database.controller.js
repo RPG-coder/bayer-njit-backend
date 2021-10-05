@@ -6,22 +6,21 @@ Developer note:
 --- */
 
 
-/* -- 
-   
+
+
 exports.fetchLabels = (req, res) => {
     const {QueryTypes} = database.Sequelize;
-    
-    let condition = false, wherePart = "";
 
     database.mysql.query(
-        `SELECT * FROM label_info ${condition?`WHERE ${wherePart}`:""}`, {type: QueryTypes.SELECT}).then(
+        `SELECT * FROM label_info`, {type: QueryTypes.SELECT}).then(
         (data) => {
-            res.status(200).send({message: data});
+            /*console.log(JSON.stringify(data))*/
+            res.status(200).send({labels: data});
         }
     ).catch((e)=>{console.log(e)});
 };
 
-
+/* -- 
 exports.fetchValues = (req, res) => {
     if(req.body.column && req.body.type){
         const {QueryTypes} = database.Sequelize;
@@ -58,8 +57,9 @@ exports.fetchDistinctValues = (req, res) => {
 -- */
 
 exports.fetchViewMedical = (req, res) => {
-    if(req.body.group_condition && req.body.states && 
-       req.body.treatments && req.body.medical_conditions){
+    console.log(JSON.stringify(req.body))
+    if(req.body.group_condition && req.body.states && req.body.medical_conditions && 
+        Object.keys(req.body.group_condition).length === 0 && Object.keys(req.body.states).length === 0 && Object.keys(req.body.medical_conditions).length === 0){
         database.mysql.query(`DROP VIEW IF EXISTS B`);
         const {QueryTypes} = database.Sequelize;
 
@@ -80,6 +80,7 @@ exports.fetchViewMedical = (req, res) => {
         }).join(" OR ");
 
         /* --- Setting Treatments & Medical conditions --- */
+        /*
         if(req.body.treatments.OR || req.body.treatments.AND){
             
             if(req.body.treatments.OR){
@@ -95,6 +96,7 @@ exports.fetchViewMedical = (req, res) => {
             }
             
         }else{ error = 1; errorMessage+="Treatments condition, ";}
+        */
 
         if(req.body.medical_conditions.OR || req.body.medical_conditions.AND){
             
@@ -116,7 +118,7 @@ exports.fetchViewMedical = (req, res) => {
         /* --- Checking Errors --- */
         if(error===1){
             res.status(500).send({error: 1, statusMessage: "Bad Request", message: errorMessage+" parameters missing/invalid"})
-            console.log(`[ERROR]: ${{error: 1, statusMessage: "Bad Request", message: errorMessage+" parameters missing/invalid"}}`);
+            console.log(`[ERROR]: ${JSON.stringify({error: 1, statusMessage: "Bad Request", message: errorMessage+" parameters missing/invalid"})}`);
             return;
         }
 
@@ -127,9 +129,10 @@ exports.fetchViewMedical = (req, res) => {
             `WHERE ${stateQuery} AND ${groupByConditionQuery} `+
             /* Dynamic condition checking */
             /* Medical AND/OR condition check */
-            `AND medical_condition & ${medicalANDSum} = ${medicalANDSum} AND medical_condition & ${medicalORSum} <> 0 `+
+            `AND medical_condition & ${medicalANDSum} = ${medicalANDSum} AND medical_condition & ${medicalORSum} <> 0 ` +
             /* Treatment AND/OR condition check */
-            `AND treatment & ${treatmentANDSum} = ${treatmentANDSum} AND treatment & ${treatmentORSum} <> 0)`
+            // `AND treatment & ${treatmentANDSum} = ${treatmentANDSum} AND treatment & ${treatmentORSum} <> 0` +
+            `)`
         );
         console.log(`[EXECUTING]: ${query}`);
 
@@ -206,8 +209,8 @@ exports.fetchViewMedical = (req, res) => {
 
 
 exports.fetchViewTreatment = (req, res) => {
-    if(req.body.group_condition && req.body.states && 
-       req.body.treatments && req.body.medical_conditions){
+    if(req.body.group_condition && req.body.states && req.body.treatments &&
+        Object.keys(req.body.group_condition).length === 0 && Object.keys(req.body.states).length === 0 && Object.keys(req.body.treatments).length === 0){
         database.mysql.query(`DROP VIEW IF EXISTS B`);
         const {QueryTypes} = database.Sequelize;
 
@@ -244,6 +247,7 @@ exports.fetchViewTreatment = (req, res) => {
             
         }else{ error = 1; errorMessage+="Treatments condition, ";}
 
+        /*
         if(req.body.medical_conditions.OR || req.body.medical_conditions.AND){
             
             if(req.body.medical_conditions.OR){
@@ -258,13 +262,13 @@ exports.fetchViewTreatment = (req, res) => {
                 });
             }
             
-        }else{ error = 1; errorMessage+="Medical condition, ";}
+        }else{ error = 1; errorMessage+="Medical condition, ";}*/
         
 
         /* --- Checking Errors --- */
         if(error===1){
             res.status(500).send({error: 1, statusMessage: "Bad Request", message: errorMessage+" parameters missing/invalid"})
-            console.log(`[ERROR]: ${{error: 1, statusMessage: "Bad Request", message: errorMessage+" parameters missing/invalid"}}`);
+            console.log(`[ERROR]: ${JSON.stringify({error: 1, statusMessage: "Bad Request", message: errorMessage+" parameters missing/invalid"})}`);
             return;
         }
 
@@ -275,7 +279,7 @@ exports.fetchViewTreatment = (req, res) => {
             `WHERE ${stateQuery} AND ${groupByConditionQuery} `+
             /* Dynamic condition checking */
             /* Medical AND/OR condition check */
-            `AND medical_condition & ${medicalANDSum} = ${medicalANDSum} AND medical_condition & ${medicalORSum} <> 0 `+
+            //`AND medical_condition & ${medicalANDSum} = ${medicalANDSum} AND medical_condition & ${medicalORSum} <> 0 `+
             /* Treatment AND/OR condition check */
             `AND treatment & ${treatmentANDSum} = ${treatmentANDSum} AND treatment & ${treatmentORSum} <> 0)`
         );
