@@ -59,18 +59,19 @@ exports.fetchDistinctValues = (req, res) => {
 exports.fetchViewMedical = (req, res) => {
     console.log(JSON.stringify(req.body))
     if(req.body.group_condition && req.body.states && req.body.medical_conditions && 
-        Object.keys(req.body.group_condition).length === 0 && Object.keys(req.body.states).length === 0 && Object.keys(req.body.medical_conditions).length === 0){
+        Object.keys(req.body.group_condition).length > 0 && Object.keys(req.body.states).length > 0 && Object.keys(req.body.medical_conditions).length > 0){
         database.mysql.query(`DROP VIEW IF EXISTS B`);
         const {QueryTypes} = database.Sequelize;
 
         let groupByConditionQuery = "", stateQuery = "";
         let medicalORSum = 0, treatmentORSum = 0, medicalANDSum = 0, treatmentANDSum = 0;
-        let error = 0, errorMessage = "";
+        let error = 0, errorMessage = "", group_by="";
 
         /* --- Checking if Group By conditions exists!! & Setting groupBy conditions --- */
         if(req.body.group_condition.group_by && req.body.group_condition.selection){
+            req.body.group_condition.group_by = group_by = (req.body.group_condition.group_by == "paytype")?"paytyp":"pop";
             groupByConditionQuery = req.body.group_condition.selection.map((e,i)=>{
-                return `${req.body.group_condition.group_by}='${e}'`
+                return `${group_by}='${e}'`
             }).join(" OR ");
         }else{ error = 1; errorMessage="Grouping condition, ";}
         
@@ -150,7 +151,7 @@ exports.fetchViewMedical = (req, res) => {
                         label.push(data1[i]['label'])
                     }
                     const result = (
-                        `SELECT COUNT(*) AS ALL_DATA, ${label.map((e,i)=>{ return ` SUM(medical_condition & ${2**i}) >> ${i} AS ${e}` }).join()}, ${req.body.group_condition.group_by} FROM B GROUP BY ${req.body.group_condition.group_by} HAVING ${groupByConditionQuery}`
+                        `SELECT COUNT(*) AS ALL_DATA, ${label.map((e,i)=>{ return ` SUM(medical_condition & ${2**i}) >> ${i} AS ${e}` }).join()}, ${group_by} FROM B GROUP BY ${group_by} HAVING ${groupByConditionQuery}`
                     );
                     console.log(`[Executing]: ${result}`);
 
@@ -210,7 +211,7 @@ exports.fetchViewMedical = (req, res) => {
 
 exports.fetchViewTreatment = (req, res) => {
     if(req.body.group_condition && req.body.states && req.body.treatments &&
-        Object.keys(req.body.group_condition).length === 0 && Object.keys(req.body.states).length === 0 && Object.keys(req.body.treatments).length === 0){
+        Object.keys(req.body.group_condition).length > 0 && Object.keys(req.body.states).length > 0 && Object.keys(req.body.treatments).length > 0){
         database.mysql.query(`DROP VIEW IF EXISTS B`);
         const {QueryTypes} = database.Sequelize;
 
@@ -220,6 +221,7 @@ exports.fetchViewTreatment = (req, res) => {
 
         /* --- Checking if Group By conditions exists!! & Setting groupBy conditions --- */
         if(req.body.group_condition.group_by && req.body.group_condition.selection){
+            req.body.group_condition.group_by = (req.body.group_condition.group_by == "paytype")?"paytyp":"pop";
             groupByConditionQuery = req.body.group_condition.selection.map((e,i)=>{
                 return `${req.body.group_condition.group_by}='${e}'`
             }).join(" OR ");
