@@ -1,0 +1,37 @@
+{
+  "name": "backend-patient-app",
+  "version": "1.0.0",
+  "description": "Second round project for Prof.Zhi Wei for RA opportunity",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RPG-coder/patient-app-backend.git"
+  },
+  "keywords": [
+    "patient",
+    "finder",
+    "data",
+    "visualization",
+    "react",
+    "mysql",
+    "express",
+    "node"
+  ],
+  "author": "Rahul Gautham Putcha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RPG-coder/patient-app-backend/issues"
+  },
+  "homepage": "https://github.com/RPG-coder/patient-app-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5"
+  }
+}
