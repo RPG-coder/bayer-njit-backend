@@ -11,6 +11,7 @@ databaseManager.mysql = mysql;
 
 /* Table connectors */
 databaseManager.accessTable = require("./user.model")(mysql, Sequelize);
+databaseManager.historyTable = require("./click_history.model")(mysql, Sequelize);
 
 /* -- Exports -- */
 module.exports = databaseManager;
