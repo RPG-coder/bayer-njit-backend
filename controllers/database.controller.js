@@ -13,7 +13,6 @@ exports.fetchLabels = (req, res) => {
 };
 
 const initializeQuery = (req,res)=>{
-    userGraphClick(req);
 
     database.mysql.query(`DROP VIEW IF EXISTS B`);
     let groupByConditionQuery = "", stateQuery = "";
@@ -180,6 +179,9 @@ exports.fetchViewMedical = (req, res) => {
                                 }
                             });
                             
+                            /* --- This records user click data --- */
+                            userGraphClick(req);
+
                             database.mysql.query(`DROP VIEW IF EXISTS B`);
                         });
                     });
@@ -300,4 +302,7 @@ exports.fetchViewTreatment = (req, res) => {
     Requires:
     - Model Controller seperation ... (in future)
     - Introducing React SEQUELIZE Migration ... (in future)
+    - Input validation 
+      - strip spaces in user.controller.js
+
 */
