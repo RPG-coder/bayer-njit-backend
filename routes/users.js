@@ -1,135 +1,193 @@
 var express = require('express');
 var router = express.Router();
-//var userController = require('./controller/users.controller');
+var userController = require('../controllers/users.controller');
 
 
-/* Route: /users */
-router.put('/users', function(req, res, next) {
-  /* @route: /users
-     @method: put
-     @request: {userid,password} 
-     @response: userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
-     @details:
-     - GET /users is used to check if user exist and return userData as response.
-     - Generates new uniquely identified auth-token for retaining it in user's cookie, to maintain a secure login state.
-     - Updates database with user login=true and generating new auth-token (using uuid, for now)
+/* Route: /users (via. app.use('\users') ) */
+router.put('/', function(req, res, next) {
+  /** 
+   * GET /users is used to check if user exist and return userData as response.
+   * Generates new uniquely identified auth-token for retaining it in user's cookie, to maintain a secure login state.
+   * Updates database with user login=true and generating new auth-token (using uuid, for now).
+   * @route /users
+   * @method put
+   * @param {JSON} res - request message of format {userid,password} 
+   * @param {JSON} req - response message for which function will generate, userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
+  */ 
+
+  userController.login(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });
+
+}); router.put('/login', function(req, res, next) {
+  /** 
+   * Alternative to GET /users route
+   * @route /users/login
+   * @method put
+   * @param {JSON} req - request message of format {userid,password}
+   * @param {JSON} res - response message for which function will generate, userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-  const response = userController.login(req,res);
-  res.send(response);
-}); router.put('/users/login', function(req, res, next) {
-  /* @route: /users/login
-     @method: put
-     @request: {userid,password}
-     @response: userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
-     @details: Alternative to GET /users route
-   */
-  const response = userController.login(req,res);
-  res.send(response);
+
+  userController.login(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });
+
 });
-router.post('/users', function(req, res, next) {
-  /* @route: /users
-     @method: post
-     @request: {userid,password,fullname, email} 
-     @response: userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
-     @details:
-     - POST /users is used to create a new user with userid and responds with the login state immediately
-     - Creates a record using request data along with a new auth-token, isLogged, createdAt and updatedAt
-     - Generates new uniquely identified auth-token for retaining it in user's cookie, to maintain a secure login state.
-     - Updates database with user login=true and generating new auth-token (using uuid, for now)
+router.post('/', function(req, res, next) {
+  /**
+   * POST /users is used to create a new user with userid and responds with the login state immediately.
+   * Creates a record using request data along with a new auth-token, isLogged, createdAt and updatedAt.
+   * Generates new uniquely identified auth-token for retaining it in user's cookie, to maintain a secure login state.
+   * Updates database with user login=true and generating new auth-token (using uuid, for now).
+   * @route /users
+   * @method: post
+   * @method post
+   * @param {JSON} req - request message of format {userid,password,fullname, email} 
+   * @param {JSON} res - response message for which function will genereate, userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-  const response = userController.register(req,res);
-  res.send(response);
-});router.post('/users/register', function(req, res, next) {
-  /* @route: /users/register
-     @method: post
-     @request: {userid,password,fullname, email} 
-     @response: userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
-     @details: Alternative to POST /users
-   */
-  const response = userController.register(req,res);
-  res.send(response);
-});
 
+  userController.register(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });
+
+});router.post('/register', function(req, res, next) {
+  /**
+   * Alternative to POST /users
+   * @route /users/register
+   * @method post
+   * @param {JSON} req - request message of format {userid,password,fullname, email} 
+   * @param {JSON} res - response message for which function will genereate, userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
+   */
+
+   userController.register(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });
+
+});
+router.post('/logout', function(req, res, next) {
+  /**
+   * Users will be logged out and the session will be ended. 
+   * The user, upon logout, will no longer have their access until a new accessToken is generated by logging in.
+   * @route /users/logout
+   * @method post
+   * @param {JSON} req - request message of format 
+   * @param {JSON} res - response message for which function will genereate, statusMessage = {success: !isLogged, message}
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
+   */
+
+
+   userController.logOut(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });
+});
 
 /* ------------------------------------------------------------------------------- */
 
 /* Route: /user/preferences */
-router.get('/users/preferences', function(req, res, next) {
-  /* @route: /users/preferences
-     @method: get
-     @request: {userid, authToken} 
-     @response: userPreferences = {userid, preferenceData : [ userPref1: {preferenceId, savedName, jsonData}, userPref2, ... ] }
-     @details:
-     - GET /preferences
+router.get('/preferences', function(req, res, next) {
+  /**
+   * Get a list of preferences, specific to a user with userid. jsonData contains the filter values stored at mySQL end.
+   * @route /users/preferences
+   * @method get
+   * @param {JSON} req - request message of format {userid, authToken} 
+   * @param {JSON} res - response message for which function will generate, userPreferences = {userid, preferenceData : [ userPref1: {preferenceId, savedName, jsonData}, userPref2, ... ] }
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-  const response = userController.getPreferences(req);
-  res.send(response);
+
+  userController.getPreferences(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });
+
 });
-router.post('/users/preferences', function(req, res, next) {
-  /* @route: /users/preferences
-     @method: post
-     @request: {userid, authToken,  saveName, jsonData}
-     @response: statusMessage = {success, message}
-     @details:
-     - POST /preferences is used to create a new preference belonging to user with userid
-     - responds the success with message for the creation operation.
+router.post('/preferences', function(req, res, next) {
+  /**
+   * POST /preferences is used to create a new preference belonging to user with userid.
+   * Responds the success with message for the creation operation.
+   * @route /users/preferences
+   * @method post
+   * @param {JSON} req - request message of format {userid, authToken,  saveName, jsonData}
+   * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-  const response = userController.createPreferences(req);
-  res.send(response);
+  userController.createPreferences(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });
 });
-router.put('/users/preferences', function(req, res, next) {
-  /* @route: /users/preferences
-     @method: put
-     @request: {userid, authToken,  preferenceId, jsonData}
-     @response: statusMessage = {success, message}
-     @details:
-     - POST /preferences is used to update an existing preference belonging to user with userid
-     - responds the success with message for the update operation
+router.put('/preferences', function(req, res, next) {
+  /**
+   * POST /preferences is used to update an existing preference belonging to user with userid.
+   * Responds the success with message for the update operation
+   * @route /users/preferences
+   * @method put
+   * @param {JSON} req - request message of format {userid, authToken,  preferenceId, jsonData}
+   * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-  const response = userController.updatePreferences(req);
-  res.send(response);
+  userController.updatePreferences(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });
 });
-router.delete('/users/preferences', function(req, res, next) {
-  /* @route: /users/preferences
-     @method: delete
-     @request: {userid, authToken,  preferenceId}
-     @response: statusMessage = {success, message}
-     @details:
-     - POST /preferences is used to delete an existing preference belonging to user with userid
-     - responds the success with message for the delete operation
-     - Note this is a soft (paranoid) delete operation
+router.delete('/preferences', function(req, res, next) {
+  /**
+   * POST /preferences is used to delete an existing preference belonging to user with userid.
+   * Responds the success with message for the delete operation.
+   * Note this is a soft (paranoid) delete operation
+   * @route /users/preferences
+   * @method delete
+   * @param {JSON} req - request message of format {userid, authToken,  preferenceId}
+   * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-  const response = userController.deletePreferences(req);
-  res.send(response);
+  userController.deletePreferences(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });;
 });
 
 
 /* ------------------------------------------------------------------------------- */
 
 /* Route: /user/history */
-router.get('/users/history', function(req, res, next) {
-  /* @route: /users/preferences
-     @method: get
-     @request: {userid, authToken} 
-     @response: userPreferences = {userid, historyData : [ userHistory1: {historyId, createdOn, jsonData}, userHistory2, ... ] }
-     @details:
-     - GET /history gets set of historical records on a user's patientFinder data access
-   */
-  const response = userController.getPreferences(req);
-  res.send(response);
+router.get('/history', function(req, res, next) {
+  /**
+   * GET /history gets set of historical records on a user's patientFinder data access.
+   * @route /users/preferences
+   * @method get
+   * @param {JSON} req- request message of format {userid, authToken} 
+   * @param {JSON} res- response message for which function will generate, userHistory = {userid, historyData : [ userHistory1: {historyId, createdOn, jsonData}, userHistory2, ... ] }
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
+  **/
+  userController.getPreferences(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });
 });
-router.post('/users/history', function(req, res, next) {
-  /* @route: /users/history
-     @method: post
-     @request: {userid, authToken, jsonData}
-     @response: statusMessage = {success, message}
-     @details:
-     - POST /history is used to record a new action about patientFinder data access to the history belonging to user with userid
-     - Responds the success with message for the creation operation.
-   */
-  const response = userController.recordHistory(req);
-  res.send(response);
+router.post('/history', function(req, res, next) {
+  /** 
+   * POST /history is used to record a new action about patientFinder data access to the history belonging to user with userid.
+   * Responds a success status with message for the creation operation.
+   * @route /users/history
+   * @method post
+   * @param {JSON} req - request message of format {userid, authToken, jsonData}
+   * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
+   * @returns {void}   - nothing, instead sends a response to the client of format specified in res
+  **/
+  userController.recordHistory(req).then((response)=>{
+    console.log(response);
+    res.status(response.status).send(response);
+  });
 });
-
 
 module.exports = router;

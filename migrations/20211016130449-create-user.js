@@ -25,8 +25,8 @@ module.exports = {
       isLogged: DataTypes.BOOLEAN,
       authToken: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        /*allowNull: false,
+        unique: true*/
       },
       createdAt: {
         allowNull: false,
