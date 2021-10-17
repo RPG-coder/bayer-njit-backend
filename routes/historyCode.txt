@@ -1,0 +1,32 @@
+/* ------------------------------------------------------------------------------- */
+
+/* Route: /user/history */
+router.get('/history', function(req, res, next) {
+  /**
+   * GET /history gets set of historical records on a user's patientFinder data access.
+   * @route /users/preferences
+   * @method get
+   * @param {JSON} req- request message of format {userid, authToken} 
+   * @param {JSON} res- response message for which function will generate, userHistory = {userid, historyData : [ userHistory1: {historyId, createdOn, jsonData}, userHistory2, ... ] }
+   * @returns {void} - nothing, instead sends a response to the client of format specified in res
+  **/
+  userController.getPreferences(req).then((response)=>{
+    console.log(`Sending: ${response}`);
+    res.status(response.status).send(response);
+  });
+});
+router.post('/history', function(req, res, next) {
+  /** 
+   * POST /history is used to record a new action about patientFinder data access to the history belonging to user with userid.
+   * Responds a success status with message for the creation operation.
+   * @route /users/history
+   * @method post
+   * @param {JSON} req - request message of format {userid, authToken, jsonData}
+   * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
+   * @returns {void}   - nothing, instead sends a response to the client of format specified in res
+  **/
+  userController.recordHistory(req).then((response)=>{
+    console.log(`Sending: ${response}`);
+    res.status(response.status).send(response);
+  });
+});

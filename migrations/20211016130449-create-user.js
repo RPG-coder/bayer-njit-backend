@@ -28,6 +28,7 @@ module.exports = {
         /*allowNull: false,
         unique: true*/
       },
+      defaultPreference: DataTypes.INTEGER,
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

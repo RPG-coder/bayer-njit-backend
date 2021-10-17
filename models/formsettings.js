@@ -14,7 +14,29 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   FormSettings.init({
-    userid: DataTypes.STRING
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true
+    },
+    userid: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true
+    },
+    jsonData: {
+      type: DataTypes.JSON,
+      allowNull: false
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'FormSettings',

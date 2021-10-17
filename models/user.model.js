@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       /*allowNull: false,
       unique: true*/
     },
+    defaultPreference: DataTypes.INTEGER,
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE

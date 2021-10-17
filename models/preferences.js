@@ -14,8 +14,28 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Preferences.init({
-    userid: DataTypes.STRING,
-    saveName: DataTypes.STRING
+    id: {
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true
+    },
+    userid: {
+      type: DataTypes.STRING,
+      primaryKey: true,
+      allowNull: false,
+    },
+    saveName: {
+      type: DataTypes.STRING,
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'Preferences',

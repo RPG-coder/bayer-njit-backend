@@ -10,6 +10,7 @@ module.exports = {
       },
       userid: {
         type: Sequelize.STRING,
+        allowNull: false,
         primaryKey: true
       },
       jsonData: {

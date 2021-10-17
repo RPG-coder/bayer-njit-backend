@@ -8,9 +8,12 @@ const Users = database.User;
  * for more information on the API documentation please visit: <Doc_Link_here>
  * 
  * @contain functions
- * 1. register()
- * 2. login()
- * 3. logOut()
+ * 1. register() - unsafe
+ * 2. login() - unsafe
+ * 3. logOut() - unsafe
+ * 
+ * safe - makes no changes in database, or atleast existing data.
+ * unsafe - makes a change to the database
 *********************************************************/
 
 exports.register = async (req) => {
@@ -119,12 +122,17 @@ exports.login = async (req) => {
                 };
             }
         } catch(err){
-            return {
+            const response = {
                 status: 400,
                 success: 0,
                 message: "Bad Request",
                 error: err
+            };
+            if(err){
+                response.status = 401,
+                response.message = "Invalid UserID/Password!";
             }
+            return response;
         };
         
     }else{
