@@ -37,7 +37,6 @@ exports.getLabels = async (req)=>{
      * @param {JSON} req - request message of format {userid, authToken}
      * @returns {JSON} - response message containing Label data from label_info table
     **/
-
     if(await checkCredentials(req)){ /* Check if the user is having proper authorization credentials */
         try{
             const labels = await labelData.findAll({
@@ -63,7 +62,7 @@ exports.getLabels = async (req)=>{
             status: 401,
             success: 0,
             message: "Unauthorized action!", 
-            error: err
+            // error: err
         }; 
     }
 };

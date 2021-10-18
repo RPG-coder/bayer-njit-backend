@@ -10,6 +10,8 @@ const database = require("../models");
 const checkCredentials = async (req)=>{
     try{
         const user = await database['User'].findOne({where:{userid: req.body.userid}});
+        console.log(user.authToken===req.body.authToken);
+
         return user.authToken===req.body.authToken;
     }catch(err){
         console.log(err)

@@ -29,7 +29,6 @@ exports.getPreferences = async (req) => {
      **/
     try{
         if(await checkCredentials(req)){
-            
             const user = await User.findOne({
                 userid: req.body.userid 
             });
@@ -78,15 +77,14 @@ exports.createPreference = async (req) => {
             if(req.body.saveName && req.body.jsonData){
                 const setting = await FormSettings.create({userid: req.body.userid, jsonData: req.body.jsonData});
                 const preference = await Preferences.create({userid: req.body.userid, saveName: req.body.saveName});
-
-                if(req.body.makeDefault==1){
+                console.log(setting, 'settings');
+                if(req.body.makeDefault==true){
                     console.log('Default preference set');
                     const user = await User.findOne({where:{userid: req.body.userid}});
                     user.defaultPreferenceId = preference.id;
                     await user.save();
                     await user.reload();
                 }
-                
                 return {
                     status: 200,
                     success:1,

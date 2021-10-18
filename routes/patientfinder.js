@@ -5,7 +5,7 @@ var pfController = require('../controllers/patientfinder.controller');
 
 /* --- Route: /patientfinder (via. app.use('/patientfinder'))--- */
 /* --- 1. Routes: For Getters for Filter values --- */
-router.get('/labels', (req,res,next)=>{
+router.post('/labels', (req,res,next)=>{
     /**
      * @route /patientfinder/labels
      * @method get
