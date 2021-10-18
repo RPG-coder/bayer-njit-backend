@@ -16,7 +16,7 @@ module.exports = {
       },
       userid: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
       },
       password: {
         type: DataTypes.STRING,
@@ -28,7 +28,7 @@ module.exports = {
         /*allowNull: false,
         unique: true*/
       },
-      defaultPreference: DataTypes.INTEGER,
+      defaultPreferenceId: DataTypes.INTEGER,
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

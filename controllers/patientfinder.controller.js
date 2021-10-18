@@ -3,7 +3,7 @@ const database = require("../models");
 const {v4} = require('uuid');
 const patientData = database.patients_info;
 const labelData = database.label_info;
-const {Op} = database.Sequelize;
+const {checkCredentials} = require('./common.controller');
 
 /*********************************************************
  * Controller for Bayer Patient Finder: Relating to the Patient Finder Task
@@ -28,17 +28,8 @@ const {Op} = database.Sequelize;
  * unsafe - makes a change to the database
 *********************************************************/
 
-
-/* --- Controller: Methods for accessing Patient Finder Data --- */
-const checkCredentials = async (req)=>{
-    try{
-        const user = await database['User'].findOne({where:{userid: req.body.userid}});
-        return user.authToken===req.body.authToken;
-    }catch(err){
-        return false;
-    }
-}
 exports.checkCredentials = checkCredentials;
+
 exports.getLabels = async (req)=>{
     /**
      * Get all medical_condition and treatment labels present in label_info table

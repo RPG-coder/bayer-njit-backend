@@ -10,6 +10,10 @@
 ## Description
 This repository provides the essentials for Bayer's API-Backend. More details about the API is shared on (Bayer PF API Documentation)['#patient-finder-doc-link'] <= Link coming soon
 
+## Requirements
+- Sequelize CLI [Node.js: 14.17.0, CLI: 6.2.0, ORM: 6.7.0]
+- 
+ 
 ## Installation
 ### Configure your database
 - Store your MySQL Database credentials inside ./config/config.json

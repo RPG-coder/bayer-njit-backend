@@ -11,7 +11,13 @@ module.exports = {
       userid: {
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        references: {
+          model: 'Users',
+          key: 'userid',
+        }, 
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       jsonData: {
         type: Sequelize.JSON,

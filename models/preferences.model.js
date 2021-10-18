@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.hasOne(models.FormSettings, {
+        foreignKey: 'userid',
+        targetKey: 'userid'
+      });
     }
   };
   Preferences.init({
@@ -18,12 +21,24 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      autoIncrement: true
+      autoIncrement: true,
+      references: {
+        model: 'FormSettings',
+        key: 'id',
+      }, 
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
     userid: {
       type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
+      references: {
+        model: 'FormSettings',
+        key: 'userid',
+      }, 
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
     saveName: {
       type: DataTypes.STRING,

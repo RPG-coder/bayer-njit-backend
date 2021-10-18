@@ -10,7 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.hasOne(models.User, {
+        foreignKey: 'userid'
+      });
+      models.User.hasMany(models.FormSettings, {
+        foreignKey: 'userid'
+      });
     }
   };
   FormSettings.init({
@@ -23,7 +28,13 @@ module.exports = (sequelize, DataTypes) => {
     userid: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      references: {
+        model: 'Users',
+        key: 'userid',
+      }, 
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
     jsonData: {
       type: DataTypes.JSON,

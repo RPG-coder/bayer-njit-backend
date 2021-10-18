@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userController = require('../controllers/users.controller');
+var preferenceController = require('../controllers/preferences.controller');
 
 
 /* Route: /users (via. app.use('\users') ) */
@@ -103,7 +104,7 @@ router.get('/preferences', function(req, res, next) {
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
 
-  userController.getPreferences(req).then((response)=>{
+   preferenceController.getPreferences(req).then((response)=>{
     console.log(`Sending: ${response}`);
     res.status(response.status).send(response);
   });
@@ -119,7 +120,7 @@ router.post('/preferences', function(req, res, next) {
    * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-  userController.createPreferences(req).then((response)=>{
+   preferenceController.createPreference(req).then((response)=>{
     console.log(`Sending: ${response}`);
     res.status(response.status).send(response);
   });
@@ -134,7 +135,7 @@ router.put('/preferences', function(req, res, next) {
    * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-  userController.updatePreferences(req).then((response)=>{
+   preferenceController.editPreference(req).then((response)=>{
     console.log(`Sending: ${response}`);
     res.status(response.status).send(response);
   });
@@ -150,7 +151,7 @@ router.delete('/preferences', function(req, res, next) {
    * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-  userController.deletePreferences(req).then((response)=>{
+   preferenceController.deletePreference(req).then((response)=>{
     console.log(`Sending: ${response}`);
     res.status(response.status).send(response);
   });;
