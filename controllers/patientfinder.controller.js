@@ -75,7 +75,7 @@ const getDistinctValues = async (req, modelData, columnName)=>{
      *  @returns {JSON} a response message containing the distinct values within the column with it's name as columnName
     **/
     if(await checkCredentials(req)){
-        console.log(modelData);
+        /* console.log(modelData);*/
         try{
             const data = await modelData.findAll({
                 attributes: [[database.Sequelize.fn('DISTINCT', database.Sequelize.col(columnName)), columnName]]
@@ -122,7 +122,7 @@ const processRequest = async (req) => {
      * error: an integer where value 1 indicates any processing error and 0 indicates no errors.
      * errorMessage: a string describing the reason for the error to occur
      * @function processRequest()
-     * @param {JSON} req - filter data (req.body.jsonData, not the req or req.body)
+     * @param {JSON} req - filter data (req.query.jsonData, not the req or req.query)
      * @returns {Array} an array containing [query, groupByConditionQuery, error, errorMessage, group_by]. These are the intermediate results after request is processed.
     **/
 
@@ -206,7 +206,7 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
     /**
      * Generates a response required for data visualization (bargraph) purpose.
      * @function generateGraphResponseFor()
-     * @param {JSON} req - filter data (req.body.jsonData, not the req or req.body)
+     * @param {JSON} req - filter data (req.query.jsonData, not the req or req.query)
      * @param {JSON} processedArray - intermediate results after request is processed
      * @param {string} label_type - select either one: 'medical_label' or 'treatment'
      * @returns {JSON} response message after request processing valid or invalid request format
@@ -281,6 +281,7 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
     }
 };
 
+
 const getGraphDataFor = async (req, label_type)=>{
     /**
      * ProcessRequest and generates the following,
@@ -290,7 +291,7 @@ const getGraphDataFor = async (req, label_type)=>{
      * error: an integer where value 1 indicates any processing error and 0 indicates no errors.
      * errorMessage: a string describing the reason for the error to occur
      * @function getLabels()
-     * @param {JSON} req - filter data (req.body.jsonData, not the req or req.body)
+     * @param {JSON} req - filter data (req.query.jsonData, not the req or req.query)
      * @returns {Array} an array containing [query, groupByConditionQuery, error, errorMessage, group_by]
     **/
 
@@ -333,11 +334,37 @@ const getGraphDataFor = async (req, label_type)=>{
     }
 };
 
-/* --- Controller Interface methods for generating graph data --- */
-exports.getMedicalCondition = async (req)=>{ 
+const processFilterRequest = (req)=>{
+    let request = req.query;
+
+    request.group_condition = JSON.parse(request.group_condition);
+    request.group_condition.selection = JSON.parse(request.group_condition.selection);
+    request.states = JSON.parse(request.states);
+
+    request.treatments = JSON.parse(request.treatments);
+    request.treatments.labels = JSON.parse(request.treatments.labels);
+    request.treatments.OR = JSON.parse(request.treatments.OR);
+    request.treatments.AND = JSON.parse(request.treatments.AND);
+
+    request.medical_conditions = JSON.parse(request.medical_conditions);
+    request.medical_conditions.labels = JSON.parse(request.medical_conditions.labels);
+    request.medical_conditions.OR = JSON.parse(request.medical_conditions.OR);
+    request.medical_conditions.AND = JSON.parse(request.medical_conditions.AND);
+    
+    return request;
+}
+
+const getResponseFor = async (req,label_type) => {
     try{
-        if(await checkCredentials(req)){
-            return await getGraphDataFor(req.body.jsonData, 'medical_condition');
+        const requestMessage = processFilterRequest(req);
+        console.log(requestMessage);
+        const request = {
+            method: 'get',
+            query: requestMessage
+        }
+        if(await checkCredentials(request)){
+            console.log("It came here...");
+            return await getGraphDataFor(requestMessage, label_type);
         }else{
             return {
                 status: 401,
@@ -346,6 +373,7 @@ exports.getMedicalCondition = async (req)=>{
             };
         }
     }catch(err){
+        console.log(err);
         return {
             status: 400,
             success:0,
@@ -353,24 +381,11 @@ exports.getMedicalCondition = async (req)=>{
             error: err
         };
     }
+}
+/* --- Controller Interface methods for generating graph data --- */
+exports.getMedicalCondition = async (req)=>{ 
+    return getResponseFor(req, 'medical_condition');
 };
 exports.getTreatment = async (req)=>{ 
-    try{
-        if(await checkCredentials(req)){
-            return await getGraphDataFor(req.body.jsonData, 'treatment');
-        }else{
-            return {
-                status: 401,
-                success:0,
-                message: "Unauthorized action!", 
-            };
-        }
-    }catch(err){
-        return {
-            status: 400,
-            success:0,
-            message: "Bad Request1", 
-            error: err
-        };
-    }
+    return getResponseFor(req, 'treatment');
 };

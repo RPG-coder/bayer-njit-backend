@@ -94,7 +94,7 @@ router.post('/logout', function(req, res, next) {
 /* ------------------------------------------------------------------------------- */
 
 /* Route: /user/preferences */
-router.post('/preferences', function(req, res, next) {
+router.get('/preferences', function(req, res, next) {
   /**
    * Get a list of preferences, specific to a user with userid. jsonData contains the filter values stored at mySQL end.
    * @route /users/preferences
@@ -109,7 +109,7 @@ router.post('/preferences', function(req, res, next) {
   });
 
 });
-router.post('/preferences/create', function(req, res, next) {
+router.post('/preferences', function(req, res, next) {
   /**
    * POST /preferences is used to create a new preference belonging to user with userid.
    * Responds the success with message for the creation operation.

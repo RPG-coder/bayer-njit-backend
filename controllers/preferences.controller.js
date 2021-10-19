@@ -27,10 +27,11 @@ exports.getPreferences = async (req) => {
      * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
      * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
      **/
+    console.log("Got message: preference",req.query);
     try{
         if(await checkCredentials(req)){
             const user = await User.findOne({
-                userid: req.body.userid 
+                userid: req.query.userid 
             });
 
             const userPreferences = await database.sequelize.query(
