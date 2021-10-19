@@ -113,7 +113,7 @@ exports.getStates = async (req)=>{ return (await getDistinctValues(req, patientD
 
 
 /* --- Controller: For /medicals and /treatments --- */
-const processRequest = async (req) => {
+const processRequest = async (request) => {
     /**
      * ProcessRequest and generates the following,
      * query: MySQL Query string for a generating temporary container specific to the request message.
@@ -122,10 +122,13 @@ const processRequest = async (req) => {
      * error: an integer where value 1 indicates any processing error and 0 indicates no errors.
      * errorMessage: a string describing the reason for the error to occur
      * @function processRequest()
-     * @param {JSON} req - filter data (req.query.jsonData, not the req or req.query)
+     * @param {JSON} request - filter data (req.query.jsonData, not the req or req.query)
      * @returns {Array} an array containing [query, groupByConditionQuery, error, errorMessage, group_by]. These are the intermediate results after request is processed.
     **/
 
+    //const req = processFilterRequest(request);
+    const req = request.query;
+    console.log(req);
     /* If the temporary storage view B exists then delete it... */
     await database.sequelize.query(`DROP VIEW IF EXISTS B`);
 
@@ -202,17 +205,20 @@ const processRequest = async (req) => {
     return [query, groupByConditionQuery, error, errorMessage, group_by];
 };
 
-const generateGraphResponseFor = async (req, processedArray, label_type)=>{
+const generateGraphResponseFor = async (request, processedArray, label_type)=>{
     /**
      * Generates a response required for data visualization (bargraph) purpose.
      * @function generateGraphResponseFor()
-     * @param {JSON} req - filter data (req.query.jsonData, not the req or req.query)
+     * @param {JSON} request - filter data (req.query.jsonData, not the req or req.query)
      * @param {JSON} processedArray - intermediate results after request is processed
      * @param {string} label_type - select either one: 'medical_label' or 'treatment'
      * @returns {JSON} response message after request processing valid or invalid request format
     **/
     const {QueryTypes} = database.Sequelize;
     try{
+        //const req = processFilterRequest(request);
+        const req = request.query;
+
         let query, groupByConditionQuery, error, errorMessage, group_by;
         [query, groupByConditionQuery, error, errorMessage, group_by] = processedArray;
 
@@ -282,7 +288,7 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
 };
 
 
-const getGraphDataFor = async (req, label_type)=>{
+const getGraphDataFor = async (request, label_type)=>{
     /**
      * ProcessRequest and generates the following,
      * query: MySQL Query string for a generating temporary container specific to the request message.
@@ -291,10 +297,11 @@ const getGraphDataFor = async (req, label_type)=>{
      * error: an integer where value 1 indicates any processing error and 0 indicates no errors.
      * errorMessage: a string describing the reason for the error to occur
      * @function getLabels()
-     * @param {JSON} req - filter data (req.query.jsonData, not the req or req.query)
+     * @param {JSON} request - filter data (req.query.jsonData, not the req or req.query)
      * @returns {Array} an array containing [query, groupByConditionQuery, error, errorMessage, group_by]
     **/
-
+    //const req = processFilterRequest(request);
+    const req = request.query;
     if(
         req.group_condition && req.states && req.medical_conditions && req.treatments && 
         Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 && 
@@ -302,7 +309,7 @@ const getGraphDataFor = async (req, label_type)=>{
     ){/* --- First Check: if there are no errors on first-level labels, i.e., if message is in suitable format for processing request --- */
         
         let query, groupByConditionQuery, error, errorMessage, group_by;
-        [query, groupByConditionQuery, error, errorMessage, group_by] = await processRequest(req);
+        [query, groupByConditionQuery, error, errorMessage, group_by] = await processRequest(request);
         
         if(error===1){ /* --- Second Check: If there are any errors within the request format, i.e., after processing completes --- */
             return { 
@@ -314,7 +321,7 @@ const getGraphDataFor = async (req, label_type)=>{
         }
 
         try{
-            return await generateGraphResponseFor(req, [query, groupByConditionQuery, error, errorMessage, group_by],`${label_type}`);
+            return await generateGraphResponseFor(request, [query, groupByConditionQuery, error, errorMessage, group_by],`${label_type}`);
         } catch(err){
             return {
                 status: 400, 
@@ -336,7 +343,6 @@ const getGraphDataFor = async (req, label_type)=>{
 
 const processFilterRequest = (req)=>{
     let request = req.query;
-
     request.group_condition = JSON.parse(request.group_condition);
     request.group_condition.selection = JSON.parse(request.group_condition.selection);
     request.states = JSON.parse(request.states);
@@ -357,14 +363,12 @@ const processFilterRequest = (req)=>{
 const getResponseFor = async (req,label_type) => {
     try{
         const requestMessage = processFilterRequest(req);
-        console.log(requestMessage);
         const request = {
             method: 'get',
             query: requestMessage
         }
         if(await checkCredentials(request)){
-            console.log("It came here...");
-            return await getGraphDataFor(requestMessage, label_type);
+            return await getGraphDataFor(req, label_type);
         }else{
             return {
                 status: 401,
