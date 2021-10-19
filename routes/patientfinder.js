@@ -61,7 +61,7 @@ router.get('/values/cohort', (req,res,next)=>{
 /* ---------------------------------------------------------------------------------- */
 /* --- 2. Routes: for Bar Graph generation --- */
 
-router.get('/treatments', (req, res, next)=>{
+router.post('/treatments', (req, res, next)=>{
   /**
    * Generate the PatientFinder data required for data visualization (graph) purpose. For treatments only.
    * jsonData contains filter values.
@@ -77,7 +77,7 @@ router.get('/treatments', (req, res, next)=>{
    });
 });
 
-router.get('/medicals', (req, res, next)=>{
+router.post('/medicals', (req, res, next)=>{
     /**
      * Generate the PatientFinder data required for data visualization (graph) purpose. For treatments only.
      * jsonData contains filter values.

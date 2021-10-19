@@ -77,7 +77,6 @@ exports.createPreference = async (req) => {
             if(req.body.saveName && req.body.jsonData){
                 const setting = await FormSettings.create({userid: req.body.userid, jsonData: req.body.jsonData});
                 const preference = await Preferences.create({userid: req.body.userid, saveName: req.body.saveName});
-                console.log(setting, 'settings');
                 if(req.body.makeDefault==true){
                     console.log('Default preference set');
                     const user = await User.findOne({where:{userid: req.body.userid}});
@@ -122,20 +121,21 @@ exports.deletePreference = async (req) => {
      * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
      */
     try{
-        if(await checkCredentials(req)){
-            if(req.body.preferenceId){
+        if(await checkCredentials({body:{userid: req.query.userid, authToken: req.query.authToken}})){
+            console.log(req.query.preferenceId, 'preferenceId')
+            if(req.query.preferenceId){
                 const preference = await Preferences.findOne({
                     where : {
-                        id: req.body.preferenceId,
-                        userid: req.body.userid
+                        id: req.query.preferenceId,
+                        userid: req.query.userid
                     }
                 });
                 await preference.destroy();      
 
                 const setting = await FormSettings.findOne({
                     where : {
-                        id: req.body.preferenceId,
-                        userid: req.body.userid
+                        id: req.query.preferenceId,
+                        userid: req.query.userid
                     }
                 });
                 await setting.destroy();
