@@ -1,44 +1,34 @@
 'use strict';
+const { sequelize, PreferenceFormSettingsFK } = require('../models');
+
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface, DataTypes) => {
     await queryInterface.createTable('Preferences', {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        allowNull: false,
-        autoIncrement: true,
-        references: {
-          model: 'FormSettings',
-          key: 'id',
-        }, 
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
       userid: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         primaryKey: true,
         allowNull: false,
-        references: {
-          model: 'FormSettings',
-          key: 'userid',
-        }, 
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+      },
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false
       },
       saveName: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       }
     });
+    PreferenceFormSettingsFK();  
   },
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, DataTypes) => {
     await queryInterface.dropTable('Preferences');
   }
 };

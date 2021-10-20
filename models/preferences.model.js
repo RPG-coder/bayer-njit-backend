@@ -17,28 +17,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Preferences.init({
-    id: {
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
-      references: {
-        model: 'FormSettings',
-        key: 'id',
-      }, 
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    },
     userid: {
       type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
-      references: {
-        model: 'FormSettings',
-        key: 'userid',
-      }, 
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+    },
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false
     },
     saveName: {
       type: DataTypes.STRING,

@@ -1,39 +1,36 @@
 'use strict';
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface, DataTypes) => {
     await queryInterface.createTable('FormSettings', {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        allowNull: false,
-        autoIncrement: true
-      },
       userid: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
         references: {
           model: 'Users',
           key: 'userid',
-        }, 
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        }
+      },
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false
       },
       jsonData: {
-        type: Sequelize.JSON,
+        type: DataTypes.JSON,
         allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, DataTypes) => {
     await queryInterface.dropTable('FormSettings');
   }
 };
