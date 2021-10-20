@@ -8,11 +8,21 @@ const database = require("../models");
 
 /* --- Controller: Methods for accessing Patient Finder Data --- */
 const checkCredentials = async (req)=>{
-    try{
-        const user = await database['User'].findOne({where:{userid: req.body.userid}});
-        console.log(user.authToken===req.body.authToken);
 
-        return user.authToken===req.body.authToken;
+    /* Decision on whether GET & POST */
+    let request;
+    if(req.method.toLowerCase() === "get"){
+        request = req.query
+    }else{
+        
+        request = req.body
+    }
+
+    try{
+        const user = await database['User'].findOne({where:{userid: request.userid}});
+        console.log(`User ${user.userid} authorization success: ${user.authToken===request.authToken}`);
+
+        return user.authToken===request.authToken;
     }catch(err){
         console.log(err)
         return false;

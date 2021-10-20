@@ -18,7 +18,7 @@ router.put('/', function(req, res, next) {
   */ 
 
   userController.login(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 
@@ -33,7 +33,7 @@ router.put('/', function(req, res, next) {
    */
 
   userController.login(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 
@@ -53,7 +53,7 @@ router.post('/', function(req, res, next) {
    */
 
   userController.register(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 
@@ -68,7 +68,7 @@ router.post('/', function(req, res, next) {
    */
 
    userController.register(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 
@@ -86,7 +86,7 @@ router.post('/logout', function(req, res, next) {
 
 
    userController.logOut(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 });
@@ -94,7 +94,7 @@ router.post('/logout', function(req, res, next) {
 /* ------------------------------------------------------------------------------- */
 
 /* Route: /user/preferences */
-router.post('/preferences', function(req, res, next) {
+router.get('/preferences', function(req, res, next) {
   /**
    * Get a list of preferences, specific to a user with userid. jsonData contains the filter values stored at mySQL end.
    * @route /users/preferences
@@ -104,12 +104,12 @@ router.post('/preferences', function(req, res, next) {
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
    preferenceController.getPreferences(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 
 });
-router.post('/preferences/create', function(req, res, next) {
+router.post('/preferences', function(req, res, next) {
   /**
    * POST /preferences is used to create a new preference belonging to user with userid.
    * Responds the success with message for the creation operation.
@@ -120,7 +120,7 @@ router.post('/preferences/create', function(req, res, next) {
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
    preferenceController.createPreference(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 });
@@ -135,7 +135,7 @@ router.put('/preferences', function(req, res, next) {
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
    preferenceController.editPreference(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 });
@@ -151,7 +151,7 @@ router.delete('/preferences', function(req, res, next) {
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
    preferenceController.deletePreference(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });;
 });
