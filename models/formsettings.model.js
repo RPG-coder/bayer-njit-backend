@@ -19,12 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   FormSettings.init({
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true
-    },
     userid: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -32,9 +26,12 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'Users',
         key: 'userid',
-      }, 
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+      }
+    },
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false
     },
     jsonData: {
       type: DataTypes.JSON,

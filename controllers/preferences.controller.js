@@ -79,19 +79,16 @@ exports.createPreference = async (req) => {
     try{
         if(await checkCredentials(req)){
             if(req.body.saveName && req.body.jsonData){
-                
-                try{
-                    const formSettingMaxId = await FormSettings.findOne({
-                        attributes: [[database.sequelize.fn('max', database.sequelize.col('id')), 'maxId']], 
-                        where:{userid: req.body.userid}
-                    });
-                
-                    console.log(`MaxId belonging to user is ${formSettingMaxId.maxId}`);
-                    const setting = await FormSettings.create({id: formSettingMaxId.maxId+1, userid: req.body.userid, jsonData: req.body.jsonData});
-                    const preference = await Preferences.create({id: formSettingMaxId.maxId+1, userid: req.body.userid, saveName: req.body.saveName});
-                } catch(err){
-                    console.log(err);
-                }
+            
+                const formSettingMaxId = await FormSettings.findOne({
+                    attributes: [[database.sequelize.fn('max', database.sequelize.col('id')), 'maxId']], 
+                    where:{userid: req.body.userid}
+                });
+
+                const setting = await FormSettings.create({id: formSettingMaxId.dataValues.maxId+1, userid: req.body.userid, jsonData: req.body.jsonData});
+                const preference = await Preferences.create({id: formSettingMaxId.dataValues.maxId+1, userid: req.body.userid, saveName: req.body.saveName});
+
+            
 
                 console.log(setting, 'settings');
                 if(req.body.makeDefault==true){
@@ -106,7 +103,7 @@ exports.createPreference = async (req) => {
                     success:1,
                     message: "Preference added sucessfully",
                     data: {
-                        id: formSettingMaxId.maxId+1,
+                        id: formSettingMaxId.dataValues.maxId+1,
                         userid: req.body.userid,
                         saveName: preference.saveName,
                         jsonData: setting.jsonData
@@ -153,7 +150,7 @@ exports.deletePreference = async (req) => {
                         userid: req.query.userid
                     }
                 });
-                await preference.destroy();      
+                await preference.destroy();
 
                 const setting = await FormSettings.findOne({
                     where : {
@@ -162,13 +159,13 @@ exports.deletePreference = async (req) => {
                     }
                 });
                 await setting.destroy();
-
                 return {
                     status: 200,
                     success:1,
                     message: "Preference deleted sucessfully!",
                     preferenceId: req.body.preferenceId
                 }
+                    
             } else{
                 return {
                     status: 400,

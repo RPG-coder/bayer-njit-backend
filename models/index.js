@@ -31,8 +31,26 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-console.log(db);
+console.log('Loaded Database Tables:\n', db);
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+db.PreferenceFormSettingsFK = ()=>{
+  sequelize.query(`SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = DATABASE() AND REFERENCED_TABLE_NAME = 'FormSettings' AND CONSTRAINT_NAME = 'Preferences_ibfk_1' AND TABLE_NAME = 'Preferences'`, {type: Sequelize.QueryTypes.SELECT}).then((truth)=>{
+    if(truth && truth.length>0){
+      console.log("[INFO]: Preference is related to FormSettings",true);
+    }else{
+      sequelize.query("ALTER TABLE Preferences ADD CONSTRAINT Preferences_ibfk_1 FOREIGN KEY (userid,id) REFERENCES FormSettings(userid, id)").then((data)=>{
+        console.log("[INFO]: New relation constraint is imposed on Preference and Foreign key", true);
+      });
+    }
+  }).catch((err)=>{
+    console.log('[ERROR]: Server error in setting the Preference & FormSettings relation')
+  });
+}
+
+db.PreferenceFormSettingsFK();
+
+  
 
 module.exports = db;
