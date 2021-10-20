@@ -3,8 +3,8 @@ const database = require("../models");
 const User = database.User;
 const Preferences = database.Preferences;
 const FormSettings = database.FormSettings;
-const {checkCredentials} = require("./common.controller");
-const {Op, QueryTypes} = database.Sequelize;
+const { checkCredentials } = require("./common.controller");
+const { Op, QueryTypes } = database.Sequelize;
 
 /*********************************************************
  * Controller for Bayer Patient Finder: User Preferences
@@ -27,18 +27,18 @@ exports.getPreferences = async (req) => {
      * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
      * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
      **/
-    console.log("Got message: preference",req.query);
-    try{
-        if(await checkCredentials(req)){
-            const user = await User.findOne({ 
+    console.log("Got message: preference", req.query);
+    try {
+        if (await checkCredentials(req)) {
+            const user = await User.findOne({
                 where: {
                     userid: req.query.userid
-                } 
+                }
             });
 
             /* Working with the Composite Primary Key Fetching */
             const userPreferences = await database.sequelize.query(
-                `SELECT f.id, f.userid, f.jsonData, p.saveName FROM FormSettings AS f JOIN Preferences AS p ON f.userid=p.userid WHERE p.id = f.id `+
+                `SELECT f.id, f.userid, f.jsonData, p.saveName FROM FormSettings AS f JOIN Preferences AS p ON f.userid=p.userid WHERE p.id = f.id ` +
                 `AND f.userid='${user.userid}'`, { type: QueryTypes.SELECT }
             );
 
@@ -47,23 +47,23 @@ exports.getPreferences = async (req) => {
                 success: 1,
                 preferenceData: userPreferences
             }
-            if(user.defaultPreferenceId){
+            if (user.defaultPreferenceId) {
                 response['defaultPreferenceId'] = user.defaultPreferenceId;
             }
-            return response; 
+            return response;
 
-        }else{
+        } else {
             return {
                 status: 401,
-                success:0,
-                message: "Unauthorized action!", 
+                success: 0,
+                message: "Unauthorized action!",
             };
         }
-    } catch(err){
+    } catch (err) {
         return {
             status: 500,
-            success:0,
-            message: "Internal Server Error!", 
+            success: 0,
+            message: "Internal Server Error!",
         };
     }
 
@@ -76,61 +76,61 @@ exports.createPreference = async (req) => {
      * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
      * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
      **/
-    try{
-        if(await checkCredentials(req)){
-            if(req.body.saveName && req.body.jsonData){
-            
+    try {
+        if (await checkCredentials(req)) {
+            if (req.body.saveName && req.body.jsonData) {
+
                 const formSettingMaxId = await FormSettings.findOne({
-                    attributes: [[database.sequelize.fn('max', database.sequelize.col('id')), 'maxId']], 
-                    where:{userid: req.body.userid}
+                    attributes: [[database.sequelize.fn('max', database.sequelize.col('id')), 'maxId']],
+                    where: { userid: req.body.userid }
                 });
 
-                const setting = await FormSettings.create({id: formSettingMaxId.dataValues.maxId+1, userid: req.body.userid, jsonData: req.body.jsonData});
-                const preference = await Preferences.create({id: formSettingMaxId.dataValues.maxId+1, userid: req.body.userid, saveName: req.body.saveName});
+                const setting = await FormSettings.create({ id: formSettingMaxId.dataValues.maxId + 1, userid: req.body.userid, jsonData: req.body.jsonData });
+                const preference = await Preferences.create({ id: formSettingMaxId.dataValues.maxId + 1, userid: req.body.userid, saveName: req.body.saveName });
 
-            
+
 
                 console.log(setting, 'settings');
-                if(req.body.makeDefault==true){
+                if (req.body.makeDefault == true) {
                     console.log('Default preference set');
-                    const user = await User.findOne({where:{userid: req.body.userid}});
+                    const user = await User.findOne({ where: { userid: req.body.userid } });
                     user.defaultPreferenceId = preference.id;
                     await user.save();
                     await user.reload();
                 }
                 return {
                     status: 200,
-                    success:1,
+                    success: 1,
                     message: "Preference added sucessfully",
                     data: {
-                        id: formSettingMaxId.dataValues.maxId+1,
+                        id: formSettingMaxId.dataValues.maxId + 1,
                         userid: req.body.userid,
                         saveName: preference.saveName,
                         jsonData: setting.jsonData
                     }
                 }
-            } else{
+            } else {
                 return {
                     status: 400,
-                    success:0,
-                    message: "Bad Request!", 
+                    success: 0,
+                    message: "Bad Request!",
                 };
             }
-        }else{
+        } else {
             return {
                 status: 401,
-                success:0,
-                message: "Unauthorized action!", 
+                success: 0,
+                message: "Unauthorized action!",
             };
         }
-    }catch(err){
+    } catch (err) {
         return {
             status: 500,
-            success:0,
-            message: "Internal Server Error!", 
+            success: 0,
+            message: "Internal Server Error!",
         };
     }
-      
+
 }
 
 exports.deletePreference = async (req) => {
@@ -140,12 +140,12 @@ exports.deletePreference = async (req) => {
      * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
      * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
      */
-    try{
-        if(await checkCredentials({body:{userid: req.query.userid, authToken: req.query.authToken}})){
+    try {
+        if (await checkCredentials(req)) {
             console.log(req.query.preferenceId, 'preferenceId')
-            if(req.query.preferenceId){
+            if (req.query.preferenceId) {
                 const preference = await Preferences.findOne({
-                    where : {
+                    where: {
                         id: req.query.preferenceId,
                         userid: req.query.userid
                     }
@@ -153,7 +153,7 @@ exports.deletePreference = async (req) => {
                 await preference.destroy();
 
                 const setting = await FormSettings.findOne({
-                    where : {
+                    where: {
                         id: req.query.preferenceId,
                         userid: req.query.userid
                     }
@@ -161,30 +161,30 @@ exports.deletePreference = async (req) => {
                 await setting.destroy();
                 return {
                     status: 200,
-                    success:1,
+                    success: 1,
                     message: "Preference deleted sucessfully!",
                     preferenceId: req.body.preferenceId
                 }
-                    
-            } else{
+
+            } else {
                 return {
                     status: 400,
-                    success:0,
-                    message: "Bad Request!", 
+                    success: 0,
+                    message: "Bad Request!",
                 };
             }
-        }else{
+        } else {
             return {
                 status: 401,
-                success:0,
-                message: "Unauthorized action!", 
+                success: 0,
+                message: "Unauthorized action!",
             };
         }
-    }catch(err){
+    } catch (err) {
         return {
             status: 500,
-            success:0,
-            message: "Internal Server Error!", 
+            success: 0,
+            message: "Internal Server Error!",
         };
     }
 }
@@ -196,59 +196,59 @@ exports.editPreference = async (req) => {
      * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
      * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
      **/
-    try{
-        if(await checkCredentials(req)){
-            if(req.body.preferenceId && req.body.saveName && req.body.jsonData){
-                const preference = await Preferences.findOne({
-                    where : {
-                        id: req.body.preferenceId,
-                        userid: req.body.userid
+    try {
+        if (await checkCredentials(req)) {
+            if (req.body.preferenceId && req.body.saveName && req.body.jsonData) {
+                const preference = await Preferences.update({
+                    saveName: req.body.saveName
+                },
+                    {
+                        where: {
+                            id: req.body.preferenceId,
+                            userid: req.body.userid
+                        }
                     }
-                });
-                preference.saveName = req.body.saveName;
-                await preference.save();
-                await preference.reload();
+                )
 
-                const setting = await FormSettings.findOne({
-                    where : {
+                console.log(preference);
+
+                const setting = await FormSettings.update({jsonData:req.body.jsonData} ,{
+                    where: {
                         id: req.body.preferenceId,
                         userid: req.body.userid
                     }
                 });
-                setting.jsonData = req.body.jsonData;
-                await setting.save();
-                await setting.reload();
 
                 return {
                     status: 200,
-                    success:1,
+                    success: 1,
                     message: "Preference updated sucessfully!",
                     data: {
                         id: preference.id,
                         userid: preference.userid,
                         saveName: preference.saveName,
                         jsonData: setting.jsonData
-                    }   
+                    }
                 }
-            } else{
+            } else {
                 return {
                     status: 400,
-                    success:0,
-                    message: "Bad Request!", 
+                    success: 0,
+                    message: "Bad Request!",
                 };
             }
-        }else{
+        } else {
             return {
                 status: 401,
-                success:0,
-                message: "Unauthorized action!", 
+                success: 0,
+                message: "Unauthorized action!",
             };
         }
-    }catch(err){
+    } catch (err) {
         return {
             status: 500,
-            success:0,
-            message: "Internal Server Error!", 
+            success: 0,
+            message: "Internal Server Error!",
         };
-    }    
+    }
 }
