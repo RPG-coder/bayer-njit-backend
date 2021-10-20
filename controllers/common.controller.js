@@ -11,10 +11,11 @@ const checkCredentials = async (req)=>{
 
     /* Decision on whether GET & POST */
     let request;
-    if(req.method.toLowerCase() == "post"){
-        request = req.body
-    }else{
+    if(req.method.toLowerCase() === "get"){
         request = req.query
+    }else{
+        
+        request = req.body
     }
 
     try{

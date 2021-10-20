@@ -18,7 +18,7 @@ router.put('/', function(req, res, next) {
   */ 
 
   userController.login(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 
@@ -33,7 +33,7 @@ router.put('/', function(req, res, next) {
    */
 
   userController.login(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 
@@ -53,7 +53,7 @@ router.post('/', function(req, res, next) {
    */
 
   userController.register(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 
@@ -68,7 +68,7 @@ router.post('/', function(req, res, next) {
    */
 
    userController.register(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 
@@ -86,7 +86,7 @@ router.post('/logout', function(req, res, next) {
 
 
    userController.logOut(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 });
@@ -104,7 +104,7 @@ router.get('/preferences', function(req, res, next) {
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
    preferenceController.getPreferences(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 
@@ -120,7 +120,7 @@ router.post('/preferences', function(req, res, next) {
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
    preferenceController.createPreference(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 });
@@ -135,7 +135,7 @@ router.put('/preferences', function(req, res, next) {
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
    preferenceController.editPreference(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });
 });
@@ -151,7 +151,7 @@ router.delete('/preferences', function(req, res, next) {
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
    preferenceController.deletePreference(req).then((response)=>{
-    console.log(`Sending: ${response}`);
+    
     res.status(response.status).send(response);
   });;
 });

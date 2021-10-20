@@ -61,27 +61,28 @@ router.get('/values/cohort', (req,res,next)=>{
 /* ---------------------------------------------------------------------------------- */
 /* --- 2. Routes: for Bar Graph generation --- */
 
-router.get('/treatments', (req, res, next)=>{
+router.post('/treatments', (req, res, next)=>{
   /**
    * Generate the PatientFinder data required for data visualization (graph) purpose. For treatments only.
    * jsonData contains filter values.
-   * @route /users/logout
+   * @route /patientfinder/medicals
    * @method post
    * @param {JSON} req - request message of format {userid,auth-token,jsonData}
    * @param {JSON} res - response message for which function will generate, as specified in the Bayer PF API documentation
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
+   
    pfController.getTreatment(req).then((response)=>{
       console.log(`Sending: ${JSON.stringify(response)} /treatments`);
       res.status(response.status).send(response);
    });
 });
 
-router.get('/medicals', (req, res, next)=>{
+router.post('/medicals', (req, res, next)=>{
     /**
-     * Generate the PatientFinder data required for data visualization (graph) purpose. For treatments only.
+     * Generate the PatientFinder data required for data visualization (graph) purpose. For medical_conditions only.
      * jsonData contains filter values.
-     * @route /users/logout
+     * @route /patientfinder/medicals
      * @method post
      * @param {JSON} req - request message of format {userid,auth-token,jsonData}
      * @param {JSON} res - response message for which function will generate, as specified in the Bayer PF API documentation
@@ -104,6 +105,25 @@ router.get('/check-access', (req,res,next)=>{
         }
     });
 
+});
+const checkAccessRequestBodyResponse = (req,res)=>{
+    pfController.checkCredentials(req).then((response)=>{
+        console.log(response);
+        if(response){
+            res.send({access: 1});
+        }else{
+            res.send({access: 0});
+        }
+    });
+}
+router.put('/check-access', (req,res,next)=>{
+    checkAccessRequestBodyResponse(req,res);
+});
+router.post('/check-access', (req,res,next)=>{
+    checkAccessRequestBodyResponse(req,res);
+});
+router.delete('/check-access', (req,res,next)=>{
+    checkAccessRequestBodyResponse(req,res);
 });
 
 module.exports = router;

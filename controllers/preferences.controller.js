@@ -30,10 +30,13 @@ exports.getPreferences = async (req) => {
     console.log("Got message: preference",req.query);
     try{
         if(await checkCredentials(req)){
-            const user = await User.findOne({
-                userid: req.query.userid 
+            const user = await User.findOne({ 
+                where: {
+                    userid: req.query.userid
+                } 
             });
 
+            /* Working with the Composite Primary Key Fetching */
             const userPreferences = await database.sequelize.query(
                 `SELECT f.id, f.userid, f.jsonData, p.saveName FROM FormSettings AS f JOIN Preferences AS p ON f.userid=p.userid WHERE p.id = f.id `+
                 `AND f.userid='${user.userid}'`, { type: QueryTypes.SELECT }
@@ -76,8 +79,20 @@ exports.createPreference = async (req) => {
     try{
         if(await checkCredentials(req)){
             if(req.body.saveName && req.body.jsonData){
-                const setting = await FormSettings.create({userid: req.body.userid, jsonData: req.body.jsonData});
-                const preference = await Preferences.create({userid: req.body.userid, saveName: req.body.saveName});
+                
+                try{
+                    const formSettingMaxId = await FormSettings.findOne({
+                        attributes: [[database.sequelize.fn('max', database.sequelize.col('id')), 'maxId']], 
+                        where:{userid: req.body.userid}
+                    });
+                
+                    console.log(`MaxId belonging to user is ${formSettingMaxId.maxId}`);
+                    const setting = await FormSettings.create({id: formSettingMaxId.maxId+1, userid: req.body.userid, jsonData: req.body.jsonData});
+                    const preference = await Preferences.create({id: formSettingMaxId.maxId+1, userid: req.body.userid, saveName: req.body.saveName});
+                } catch(err){
+                    console.log(err);
+                }
+
                 console.log(setting, 'settings');
                 if(req.body.makeDefault==true){
                     console.log('Default preference set');
@@ -89,7 +104,13 @@ exports.createPreference = async (req) => {
                 return {
                     status: 200,
                     success:1,
-                    message: "Preference added sucessfully"
+                    message: "Preference added sucessfully",
+                    data: {
+                        id: formSettingMaxId.maxId+1,
+                        userid: req.body.userid,
+                        saveName: preference.saveName,
+                        jsonData: setting.jsonData
+                    }
                 }
             } else{
                 return {
@@ -144,7 +165,8 @@ exports.deletePreference = async (req) => {
                 return {
                     status: 200,
                     success:1,
-                    message: "Preference deleted sucessfully!"
+                    message: "Preference deleted sucessfully!",
+                    preferenceId: req.body.preferenceId
                 }
             } else{
                 return {
@@ -202,7 +224,13 @@ exports.editPreference = async (req) => {
                 return {
                     status: 200,
                     success:1,
-                    message: "Preference updated sucessfully!"
+                    message: "Preference updated sucessfully!",
+                    data: {
+                        id: preference.id,
+                        userid: preference.userid,
+                        saveName: preference.saveName,
+                        jsonData: setting.jsonData
+                    }   
                 }
             } else{
                 return {
