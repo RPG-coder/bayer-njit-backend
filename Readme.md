@@ -49,7 +49,7 @@ And watch the sql get migrated automatically into the database containing your l
 ### Running the application
 To run this application on a localhost or as part of a hosted server, perform:
 
-  $ npm start # Note at current stage this project is under development and is currently run using Nodemon npm package
+  `$ npm start` # Note at current stage this project is under development and is currently run using Nodemon npm package
 
 ## Automate Installation process: Updates coming soon
 The shell script and Docker Images to automate above installation process, for an easy and quick plug and play options are under development and are coming soon.
