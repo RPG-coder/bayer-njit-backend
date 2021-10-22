@@ -7,9 +7,9 @@
   - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [$ npm install](#npm-install)
+- [$ npm install](#-npm-install)
   - [Configure your database](#configure-your-database)
-  - [Migrate you database by Sequilize ORM & CLI](#migrate-you-database-by-sequilize orm-cli)
+  - [Migrate you database by Sequilize ORM & CLI](#migrate-you-database-by-sequilize-orm-cli)
   - [Running the application](#running-the-application) 
 - [Automate Installation process: Updates coming soon](#automate-installation-process-updates-coming-soon)
 
