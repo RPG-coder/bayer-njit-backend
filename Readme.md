@@ -14,8 +14,9 @@
 - [Automate Installation process: Updates coming soon](#automate-installation-process-updates-coming-soon)
 
 ## Licence
-- This project is worked over by the student at NJIT, to satisfy the requirements of the . 
-- For more details please see the <LicenceFileName_here...> (Coming Soon...)
+This project is worked over by the student at NJIT, to satisfy the requirements for the Research Assistanship under guidance of Prof. Zhi Wei. The usage of the project for other means are currently limited. The Licence file is under review and is generated soon.
+
+<!--For more details please see the <LicenceFileName_here...> (Coming Soon...)-->
 
 ## Description
 A Patient Finder application that is used for finding percentage (%) population of patients who are dealing with a set of medical conditions while taking treatments or medication cures. The data for these could be collected from over a range of states and it is analysed by this application to determine which particular conditions and which particular product are more highlighted by the trends in data.
