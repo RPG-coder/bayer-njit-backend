@@ -10,12 +10,11 @@ const database = require("../models");
 const checkCredentials = async (req)=>{
 
     /* Decision on whether GET & POST */
-    console.log(req.method)
     let request;
+    /* Delete and get are both requesting using query parameters */
     if(req.method.toLowerCase() === "get" || req.method.toLowerCase() ==='delete'){
         request = req.query
-    }else{
-        
+    }else{ /* Post and Put are both requesting using message body */
         request = req.body
     }
 

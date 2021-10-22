@@ -142,7 +142,7 @@ exports.deletePreference = async (req) => {
      */
     try {
         if (await checkCredentials(req)) {
-            console.log(req.query.preferenceId, 'preferenceId')
+            console.log(`[INFO]: Received userId: ${req.query.userid}, preferenceId: ${req.query.preferenceId}`);
             if (req.query.preferenceId) {
                 const preference = await Preferences.findOne({
                     where: {
@@ -201,35 +201,41 @@ exports.editPreference = async (req) => {
             if (req.body.preferenceId && req.body.saveName && req.body.jsonData) {
                 const preference = await Preferences.update({
                     saveName: req.body.saveName
-                },
-                    {
-                        where: {
-                            id: req.body.preferenceId,
-                            userid: req.body.userid
-                        }
-                    }
-                )
-
-                console.log(preference);
-
-                const setting = await FormSettings.update({jsonData:req.body.jsonData} ,{
+                },{
                     where: {
                         id: req.body.preferenceId,
                         userid: req.body.userid
                     }
-                });
+                })
 
-                return {
-                    status: 200,
-                    success: 1,
-                    message: "Preference updated sucessfully!",
-                    data: {
-                        id: preference.id,
-                        userid: preference.userid,
-                        saveName: preference.saveName,
-                        jsonData: setting.jsonData
+                if(preference[0]){
+
+                    const setting = await FormSettings.update({jsonData:req.body.jsonData} ,{
+                        where: {
+                            id: req.body.preferenceId,
+                            userid: req.body.userid
+                        }
+                    });
+
+                    return {
+                        status: 200,
+                        success: 1,
+                        message: "Preference updated sucessfully!",
+                        data: {
+                            id: preference.id,
+                            userid: preference.userid,
+                            saveName: preference.saveName,
+                            jsonData: setting.jsonData
+                        }
+                    }
+                }else {
+                    return {
+                        status: 404,
+                        success: 0,
+                        message: "Resource not found!",
                     }
                 }
+
             } else {
                 return {
                     status: 400,
