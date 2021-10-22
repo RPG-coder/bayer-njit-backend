@@ -19,6 +19,7 @@
     "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
+    "constantinople": "^4.0.1",
     "nodemon": "^2.0.13"
   }
 }
