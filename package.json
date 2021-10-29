@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "node app.js",
+    "test": "nodemon ./bin/www"
   },
   "dependencies": {
+    "clean-css": ">=4.1.11",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -14,12 +16,12 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "mysql2": "^2.3.2",
-    "sequelize": "^6.7.0",
-    "sequelize-auto": "^0.8.4",
+    "sequelize": "^6.8.0",
+    "sequelize-auto": "^0.8.5",
     "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
     "constantinople": "^4.0.1",
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.14"
   }
 }
