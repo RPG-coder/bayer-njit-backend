@@ -38,7 +38,7 @@ exports.getPreferences = async (req) => {
 
             /* Working with the Composite Primary Key Fetching */
             const userPreferences = await database.sequelize.query(
-                `SELECT f.id, f.userid, f.jsonData, p.saveName FROM FormSettings AS f JOIN Preferences AS p ON f.userid=p.userid WHERE p.id = f.id ` +
+                `SELECT f.id, f.userid, f.jsonData, p.saveName, p.createdAt FROM FormSettings AS f JOIN Preferences AS p ON f.userid=p.userid WHERE p.id = f.id ` +
                 `AND f.userid='${user.userid}'`, { type: QueryTypes.SELECT }
             );
 
@@ -106,6 +106,7 @@ exports.createPreference = async (req) => {
                         id: formSettingMaxId.dataValues.maxId + 1,
                         userid: req.body.userid,
                         saveName: preference.saveName,
+                        createdAt: preference.createdAt,
                         jsonData: setting.jsonData
                     }
                 }
@@ -199,7 +200,7 @@ exports.editPreference = async (req) => {
     try {
         if (await checkCredentials(req)) {
             if (req.body.preferenceId && req.body.saveName && req.body.jsonData) {
-                const preference = await Preferences.update({
+                const success = await Preferences.update({
                     saveName: req.body.saveName
                 },{
                     where: {
@@ -207,10 +208,24 @@ exports.editPreference = async (req) => {
                         userid: req.body.userid
                     }
                 })
+                
+                const preference = await Preferences.findOne({
+                    where: {
+                        id: req.body.preferenceId,
+                        userid: req.body.userid
+                    }
+                });
 
-                if(preference[0]){
+                if(success[0]){
 
-                    const setting = await FormSettings.update({jsonData:req.body.jsonData} ,{
+                    await FormSettings.update({jsonData:req.body.jsonData} ,{
+                        where: {
+                            id: req.body.preferenceId,
+                            userid: req.body.userid
+                        }
+                    });
+
+                    const setting = await FormSettings.findOne({
                         where: {
                             id: req.body.preferenceId,
                             userid: req.body.userid
@@ -225,6 +240,7 @@ exports.editPreference = async (req) => {
                             id: preference.id,
                             userid: preference.userid,
                             saveName: preference.saveName,
+                            createdAt: preference.createdAt,
                             jsonData: setting.jsonData
                         }
                     }
@@ -251,6 +267,7 @@ exports.editPreference = async (req) => {
             };
         }
     } catch (err) {
+        console.log(err)
         return {
             status: 500,
             success: 0,
