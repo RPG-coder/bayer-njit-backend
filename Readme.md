@@ -43,7 +43,9 @@ Having mysql installed and started for database query requests, we need to confi
 ### Migrate you database by Sequilize ORM
 This project comes with migration files set up to make the database setup easier and automated. The only requirement is to have a existing database with two files label_info and patients_info table containing data as described in the *Wireframe and Database design documentations* that will be shared with this application in the future. In order to migrate we are required to have Sequelize CLI installed that's also automatically done with npm install cmd. Using Sequelize-CLI we can perform:
 
-  `$ npx sequelize-cli db:migrate`
+  `$ npx sequelize-cli db:migrate:undo` # If you have previously migrated the last update
+
+  `$ npx sequelize-cli db:migrate` # Save new updates
  
 And watch the sql get migrated automatically into the database containing your label_info and patients_info table data.
 
