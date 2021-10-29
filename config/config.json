@@ -1,0 +1,23 @@
+{
+  "development": {   
+    "username": "rahul",
+    "password": "PASSword@123",
+    "database": "patient_database",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "rahul",
+    "password": "PASSword@123",
+    "database": "patient_database",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "rahul",
+    "password": "PASSword@123",
+    "database": "patient_database",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
