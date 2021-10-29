@@ -217,15 +217,17 @@ exports.editPreference = async (req) => {
                         }
                     });
 
+                    console.log(preference[0]);
+
                     return {
                         status: 200,
                         success: 1,
                         message: "Preference updated sucessfully!",
                         data: {
-                            id: preference.id,
-                            userid: preference.userid,
-                            saveName: preference.saveName,
-                            jsonData: setting.jsonData
+                            id: req.body.preferenceId,
+                            userid: req.body.userid,
+                            saveName: req.body.saveName,
+                            jsonData: req.body.jsonData
                         }
                     }
                 }else {
