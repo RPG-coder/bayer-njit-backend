@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js",
+    "start": "cross-env NODE_ENV=production node ./bin/www >> ./logs/log_files/debug.log",
     "test": "nodemon ./bin/www"
   },
   "dependencies": {
@@ -14,6 +14,7 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "log4js": "^6.3.0",
     "morgan": "~1.9.1",
     "mysql2": "^2.3.2",
     "sequelize": "^6.8.0",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "constantinople": "^4.0.1",
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.14"
   }
 }
