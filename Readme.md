@@ -26,6 +26,9 @@ A Patient Finder application that is used for finding percentage (%) population 
  2. Preferences: A FormSettings configurations that are manually saved by a user, so that users can default certain settings like a template rather than filling the long form from scratch. This is a means for users to efficiently work with the Patient Finder application, gaining a bonus interface experience.
  3. History: A FormSetting configuration that are stored automatically when a user clicks for graph generation (or data visualization) so that the potential product owner or respective users of the application can track what they have accessed across their product usage. 
 
+### Design
+[Bayer Patient Finder Design](http://bayer.wireframe.rahulgputcha.live/)
+
 ## Requirements
 - SQL Version 13.0.5
 - Node.js: 14.17.0
