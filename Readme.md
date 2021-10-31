@@ -5,6 +5,7 @@
 - [Licence](#licence)
 - [Description](#description)
   - [Features](#features)
+  - [Design](#design)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [$ npm install](#-npm-install)
