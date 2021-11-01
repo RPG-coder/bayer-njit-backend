@@ -1,0 +1,2600 @@
+{
+	"info": {
+		"_postman_id": "8c1c4354-cd14-4d81-ba61-13aa9edba876",
+		"name": "PF Application Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\": \"rp397\",\r\n    \"fullName\": \"Rahul Gautham Putcha\",\r\n    \"password\": \"hello123\",\r\n    \"email\": \"rp397@njit.edu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CreateUser: /user",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"fullName\": \"Rahul Gautham Putcha\",\r\n    \"password\": \"hello@123\",\r\n    \"email\": \"rp390@njit.edu\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "212"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"d4-mtvoj/eqzqYwzREpUnWvTIe3Myk\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 22:44:54 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"userData\": {\n        \"userid\": \"rp390\",\n        \"fullName\": \"Rahul Gautham Putcha\",\n        \"email\": \"rp390@njit.edu\",\n        \"authToken\": \"b176b63a-2b7c-4b73-80ee-0581ef5fb2eb\"\n    },\n    \"message\": \"You are now officialy registered!\"\n}"
+				},
+				{
+					"name": "CreateUser Alternative",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp393\",\r\n    \"fullName\": \"Rahul Luhar G\",\r\n    \"password\": \"luhar@123\",\r\n    \"email\": \"rp393@njit.edu\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "205"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"cd-rs8U12Gokb/63H8S53kcUQGKtho\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 23:36:34 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"userData\": {\n        \"userid\": \"rp393\",\n        \"fullName\": \"Rahul Luhar G\",\n        \"email\": \"rp393@njit.edu\",\n        \"authToken\": \"1e60c466-24ec-456b-85be-fe22c2fe4d4d\"\n    },\n    \"message\": \"You are now officialy registered!\"\n}"
+				},
+				{
+					"name": "CreateUser: Userid Collision",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"fullName\": \"Rahul Gautham Putcha\",\r\n    \"password\": \"hello123\",\r\n    \"email\": \"rp40@njit.edu\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1616"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"650-ML2vs3sSkMfqK8SrfZzgJDcdqLQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 23:37:27 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 401,\n    \"success\": 0,\n    \"message\": \"UserID/Email is already taken.\",\n    \"error\": {\n        \"name\": \"SequelizeUniqueConstraintError\",\n        \"errors\": [\n            {\n                \"message\": \"Users.PRIMARY must be unique\",\n                \"type\": \"unique violation\",\n                \"path\": \"Users.PRIMARY\",\n                \"value\": \"rp390\",\n                \"origin\": \"DB\",\n                \"instance\": {\n                    \"fullName\": \"Rahul Gautham Putcha\",\n                    \"userid\": \"rp390\",\n                    \"password\": \"hello123\",\n                    \"email\": \"rp40@njit.edu\",\n                    \"isLogged\": true,\n                    \"authToken\": \"9c85cf53-878a-4a19-974c-db2b09719ad3\",\n                    \"updatedAt\": \"2021-10-19T23:37:27.552Z\",\n                    \"createdAt\": \"2021-10-19T23:37:27.552Z\"\n                },\n                \"validatorKey\": \"not_unique\",\n                \"validatorName\": null,\n                \"validatorArgs\": []\n            }\n        ],\n        \"fields\": {\n            \"Users.PRIMARY\": \"rp390\"\n        },\n        \"parent\": {\n            \"code\": \"ER_DUP_ENTRY\",\n            \"errno\": 1062,\n            \"sqlState\": \"23000\",\n            \"sqlMessage\": \"Duplicate entry 'rp390' for key 'Users.PRIMARY'\",\n            \"sql\": \"INSERT INTO `Users` (`fullName`,`email`,`userid`,`password`,`isLogged`,`authToken`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?,?,?);\",\n            \"parameters\": [\n                \"Rahul Gautham Putcha\",\n                \"rp40@njit.edu\",\n                \"rp390\",\n                \"hello123\",\n                true,\n                \"9c85cf53-878a-4a19-974c-db2b09719ad3\",\n                \"2021-10-19 23:37:27\",\n                \"2021-10-19 23:37:27\"\n            ]\n        },\n        \"original\": {\n            \"code\": \"ER_DUP_ENTRY\",\n            \"errno\": 1062,\n            \"sqlState\": \"23000\",\n            \"sqlMessage\": \"Duplicate entry 'rp390' for key 'Users.PRIMARY'\",\n            \"sql\": \"INSERT INTO `Users` (`fullName`,`email`,`userid`,`password`,`isLogged`,`authToken`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?,?,?);\",\n            \"parameters\": [\n                \"Rahul Gautham Putcha\",\n                \"rp40@njit.edu\",\n                \"rp390\",\n                \"hello123\",\n                true,\n                \"9c85cf53-878a-4a19-974c-db2b09719ad3\",\n                \"2021-10-19 23:37:27\",\n                \"2021-10-19 23:37:27\"\n            ]\n        },\n        \"sql\": \"INSERT INTO `Users` (`fullName`,`email`,`userid`,`password`,`isLogged`,`authToken`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?,?,?);\"\n    }\n}"
+				},
+				{
+					"name": "CreateUser: Email Collision",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp393\",\r\n    \"fullName\": \"Rahul Gautham Putcha\",\r\n    \"password\": \"hello123\",\r\n    \"email\": \"rp390@njit.edu\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1619"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"653-Cx/bViRc9v7Fw0sNi+I2/X0prtI\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 23:38:40 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 401,\n    \"success\": 0,\n    \"message\": \"UserID/Email is already taken.\",\n    \"error\": {\n        \"name\": \"SequelizeUniqueConstraintError\",\n        \"errors\": [\n            {\n                \"message\": \"Users.PRIMARY must be unique\",\n                \"type\": \"unique violation\",\n                \"path\": \"Users.PRIMARY\",\n                \"value\": \"rp393\",\n                \"origin\": \"DB\",\n                \"instance\": {\n                    \"fullName\": \"Rahul Gautham Putcha\",\n                    \"userid\": \"rp393\",\n                    \"password\": \"hello123\",\n                    \"email\": \"rp390@njit.edu\",\n                    \"isLogged\": true,\n                    \"authToken\": \"04b29755-d607-4a39-b13f-b7f8e2ae1722\",\n                    \"updatedAt\": \"2021-10-19T23:38:40.260Z\",\n                    \"createdAt\": \"2021-10-19T23:38:40.260Z\"\n                },\n                \"validatorKey\": \"not_unique\",\n                \"validatorName\": null,\n                \"validatorArgs\": []\n            }\n        ],\n        \"fields\": {\n            \"Users.PRIMARY\": \"rp393\"\n        },\n        \"parent\": {\n            \"code\": \"ER_DUP_ENTRY\",\n            \"errno\": 1062,\n            \"sqlState\": \"23000\",\n            \"sqlMessage\": \"Duplicate entry 'rp393' for key 'Users.PRIMARY'\",\n            \"sql\": \"INSERT INTO `Users` (`fullName`,`email`,`userid`,`password`,`isLogged`,`authToken`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?,?,?);\",\n            \"parameters\": [\n                \"Rahul Gautham Putcha\",\n                \"rp390@njit.edu\",\n                \"rp393\",\n                \"hello123\",\n                true,\n                \"04b29755-d607-4a39-b13f-b7f8e2ae1722\",\n                \"2021-10-19 23:38:40\",\n                \"2021-10-19 23:38:40\"\n            ]\n        },\n        \"original\": {\n            \"code\": \"ER_DUP_ENTRY\",\n            \"errno\": 1062,\n            \"sqlState\": \"23000\",\n            \"sqlMessage\": \"Duplicate entry 'rp393' for key 'Users.PRIMARY'\",\n            \"sql\": \"INSERT INTO `Users` (`fullName`,`email`,`userid`,`password`,`isLogged`,`authToken`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?,?,?);\",\n            \"parameters\": [\n                \"Rahul Gautham Putcha\",\n                \"rp390@njit.edu\",\n                \"rp393\",\n                \"hello123\",\n                true,\n                \"04b29755-d607-4a39-b13f-b7f8e2ae1722\",\n                \"2021-10-19 23:38:40\",\n                \"2021-10-19 23:38:40\"\n            ]\n        },\n        \"sql\": \"INSERT INTO `Users` (`fullName`,`email`,`userid`,`password`,`isLogged`,`authToken`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?,?,?);\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\": \"rp394\",\r\n    \"password\": \"hello123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login: /user",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"password\": \"hello@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "197"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c5-RKw11Q7+hJGh2UcQxeM7aI8t+Qg\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 23:39:33 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"userData\": {\n        \"userid\": \"rp390\",\n        \"fullName\": \"Rahul Gautham Putcha\",\n        \"email\": \"rp390@njit.edu\",\n        \"authToken\": \"fecbe6ce-1180-4722-8754-8c518de132c6\"\n    },\n    \"message\": \"Login: Successful!\"\n}"
+				},
+				{
+					"name": "Login Alternative",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"password\": \"hello@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "197"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c5-cn4v2a0O9RowE317phQTOQjLn8Q\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 23:40:09 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"userData\": {\n        \"userid\": \"rp390\",\n        \"fullName\": \"Rahul Gautham Putcha\",\n        \"email\": \"rp390@njit.edu\",\n        \"authToken\": \"cbe9e399-76a2-406d-8657-69196602bef8\"\n    },\n    \"message\": \"Login: Successful!\"\n}"
+				},
+				{
+					"name": "Login: Invalid userid",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp39122222\",\r\n    \"password\": \"hello123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "74"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"4a-M+0nqrijlCmEphgxr+ZMzTKhmjc\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 23:41:01 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 401,\n    \"success\": 0,\n    \"message\": \"Invalid UserID/Password!\",\n    \"error\": {}\n}"
+				},
+				{
+					"name": "Login: Invalid password",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"password\": \"hello@1234211\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "63"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3f-yG19PNAoYQj1YDBUxv3KAErKB8Q\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 23:41:58 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 401,\n    \"success\": 0,\n    \"message\": \"Invalid UserID/Password!\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"9b04588e-2e6f-470a-a420-e6ff3b353410\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Invalid Logout",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "/* Do this after logout or when user hasn't signed into the PF application*/\r\n{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"fc86422b-b19b-4dc9-b20e-3461975a40a3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"logout"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "CheckAccess: GET",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/patientfinder/check-access?userid=rp394&authToken=9b04588e-2e6f-470a-a420-e6ff3b353410",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"patientfinder",
+						"check-access"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "rp394"
+						},
+						{
+							"key": "authToken",
+							"value": "9b04588e-2e6f-470a-a420-e6ff3b353410"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CheckAccess: GET",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/check-access?userid=rp390&authToken=cbe9e399-76a2-406d-8657-69196602bef8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"check-access"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "rp390"
+								},
+								{
+									"key": "authToken",
+									"value": "cbe9e399-76a2-406d-8657-69196602bef8"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "12"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c-+qH6ga5KsfAvEQfCZ+ozU6EA++o\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 23:48:53 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"access\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "CheckAccess: POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\": \"rp394\",\r\n    \"authToken\": \"9b04588e-2e6f-470a-a420-e6ff3b353410\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/patientfinder/check-access",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"patientfinder",
+						"check-access"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CheckAccess: POST",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"cbe9e399-76a2-406d-8657-69196602bef8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/check-access",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"check-access"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "12"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c-+qH6ga5KsfAvEQfCZ+ozU6EA++o\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 23:58:10 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"access\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "CheckAccess: PUT",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\": \"rp394\",\r\n    \"authToken\": \"9b04588e-2e6f-470a-a420-e6ff3b353410\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/patientfinder/check-access",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"patientfinder",
+						"check-access"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CheckAccess: PUT",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"cbe9e399-76a2-406d-8657-69196602bef8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/check-access",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"check-access"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "12"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c-+qH6ga5KsfAvEQfCZ+ozU6EA++o\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Oct 2021 23:56:53 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"access\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "CheckAccess: DELETE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/patientfinder/check-access?authToken=9b04588e-2e6f-470a-a420-e6ff3b353410&userid=rp394",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"patientfinder",
+						"check-access"
+					],
+					"query": [
+						{
+							"key": "authToken",
+							"value": "9b04588e-2e6f-470a-a420-e6ff3b353410"
+						},
+						{
+							"key": "userid",
+							"value": "rp394"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CheckAccess: DELETE",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"cbe9e399-76a2-406d-8657-69196602bef8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/check-access",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"check-access"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "12"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c-+qH6ga5KsfAvEQfCZ+ozU6EA++o\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:00:18 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"access\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "Treatment Data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\": \"rp394\",\r\n    \"authToken\": \"9b04588e-2e6f-470a-a420-e6ff3b353410\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"paytype\",\r\n            \"selection\":[\"MCR\"]\r\n        },\r\n        \"states\": [\"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\"],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\"],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \r\n                \"tx_htn_arb\", \"tx_htn_bb\", \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \r\n                \"tx_glc_dpp4\", \"tx_lpd_fibrates\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/patientfinder/treatments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"patientfinder",
+						"treatments"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Treatment Data: Example 1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"cbe9e399-76a2-406d-8657-69196602bef8\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"cohort\",\r\n            \"selection\":[\"diab\", \"both\", \"ckd\"]\r\n        },\r\n        \"states\": [\r\n            \"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\", \"WA\", \"AZ\", \"OR\", \"SC\", \"GA\", \"CA\", \"IL\", \"MN\", \"NY\", \"VA\", \"UN\", \"OH\", \"MO\",\r\n            \"CO\", \"IA\", \"IN\", \"SD\", \"ID\", \"AL\", \"WI\", \"MD\", \"LA\", \"MS\", \"NV\", \"ND\", \"PA\", \"OK\", \"DC\", \"VT\", \"MI\", \"RI\", \"HI\", \"KY\",\"NH\", \r\n            \"NM\", \"UT\", \"NE\", \"WV\", \"KS\", \"WY\", \"ME\"\r\n        ],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\r\n                \"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\", \r\n                \"dx_pvd\", \"dx_anm\", \"dx_hyperk\", \"dx_hypok\", \"dx_hypon\", \"dx_angina\", \"dx_acs\", \"dx_sleep\", \"dx_dep\", \"dx_ftg\", \"dx_pain\", \r\n                \"dx_osteo\", \"dx_edema\", \"dx_clpd\", \"dx_rf\", \"dx_aki\", \"dx_hf\", \"dx_mcd\"\r\n            ],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \"tx_htn_arb\", \"tx_htn_bb\", \r\n                \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \"tx_glc_dpp4\", \"tx_lpd_fibrates\", \"tx_glc_glp1\", \"tx_glc\", \r\n                \"tx_glc_insulin\", \"tx_htn_ld\", \"tx_glc_megl\", \"tx_htn_mra\", \"tx_lpd_PCSK9s\", \"tx_htn_pai\", \"tx_htn_pd\", \"tx_glc_sglt2\", \r\n                \"tx_lpd_statin\", \"tx_glc_sulf\", \"tx_htn_td\", \"tx_glc_thia\", \"tx_lpd_zetia\", \"tx_lpd_bile\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/treatments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"treatments"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "912"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"390-pSHQy9OwbI0aZhcDBuWlZLFpKIg\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:01:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"group_condition\": {\n        \"group_by\": \"pop\",\n        \"selection\": [\n            \"diab\",\n            \"both\",\n            \"ckd\"\n        ]\n    },\n    \"treatments\": {\n        \"labels\": [\n            \"ALL_DATA\",\n            \"tx_plt\",\n            \"tx_lpd_statin\",\n            \"tx_lpd_fibrates\",\n            \"tx_lpd_PCSK9s\",\n            \"tx_lpd_bile\",\n            \"tx_lpd_zetia\",\n            \"tx_htn_ace\",\n            \"tx_htn_arb\",\n            \"tx_htn_bb\",\n            \"tx_htn_diuretics\",\n            \"tx_htn_td\",\n            \"tx_htn_ld\",\n            \"tx_htn_pd\",\n            \"tx_htn_cai\",\n            \"tx_htn_mra\",\n            \"tx_htn_ccb\",\n            \"tx_htn_ab\",\n            \"tx_htn_a2\",\n            \"tx_htn_pai\",\n            \"tx_glc_bg\",\n            \"tx_glc_sglt2\",\n            \"tx_glc_dpp4\",\n            \"tx_glc_glp1\",\n            \"tx_glc_sulf\",\n            \"tx_glc_agi\",\n            \"tx_glc_thia\",\n            \"tx_glc_megl\",\n            \"tx_glc_insulin\",\n            \"tx_htn\",\n            \"tx_glc\",\n            \"tx_lpd\"\n        ],\n        \"data\": [\n            {\n                \"type\": \"diab\",\n                \"data\": [\n                    524,\n                    43,\n                    297,\n                    29,\n                    0,\n                    4,\n                    6,\n                    167,\n                    135,\n                    193,\n                    211,\n                    130,\n                    85,\n                    33,\n                    1,\n                    22,\n                    141,\n                    12,\n                    10,\n                    16,\n                    191,\n                    24,\n                    38,\n                    27,\n                    70,\n                    1,\n                    18,\n                    0,\n                    75,\n                    377,\n                    263,\n                    321\n                ]\n            },\n            {\n                \"type\": \"both\",\n                \"data\": [\n                    253,\n                    21,\n                    156,\n                    6,\n                    0,\n                    0,\n                    7,\n                    79,\n                    63,\n                    76,\n                    98,\n                    76,\n                    28,\n                    16,\n                    0,\n                    12,\n                    72,\n                    3,\n                    8,\n                    10,\n                    99,\n                    16,\n                    25,\n                    22,\n                    43,\n                    0,\n                    12,\n                    3,\n                    43,\n                    186,\n                    127,\n                    149\n                ]\n            },\n            {\n                \"type\": \"ckd\",\n                \"data\": [\n                    222,\n                    23,\n                    134,\n                    7,\n                    0,\n                    1,\n                    4,\n                    64,\n                    59,\n                    76,\n                    87,\n                    53,\n                    43,\n                    15,\n                    1,\n                    11,\n                    74,\n                    4,\n                    8,\n                    7,\n                    81,\n                    8,\n                    15,\n                    12,\n                    38,\n                    0,\n                    13,\n                    0,\n                    36,\n                    172,\n                    121,\n                    133\n                ]\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Treatment Data: Example 2",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"cbe9e399-76a2-406d-8657-69196602bef8\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"cohort\",\r\n            \"selection\":[\"diab\"]\r\n        },\r\n        \"states\": [\"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\"],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\"],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \r\n                \"tx_htn_arb\", \"tx_htn_bb\", \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \r\n                \"tx_glc_dpp4\", \"tx_lpd_fibrates\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/treatments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"treatments"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "393"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"189-7joscT9HO+2QBfDzT2K9fR4zaew\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:03:10 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"group_condition\": {\n        \"group_by\": \"pop\",\n        \"selection\": [\n            \"diab\"\n        ]\n    },\n    \"treatments\": {\n        \"labels\": [\n            \"ALL_DATA\",\n            \"tx_plt\",\n            \"tx_lpd_fibrates\",\n            \"tx_htn_ace\",\n            \"tx_htn_arb\",\n            \"tx_htn_bb\",\n            \"tx_htn_diuretics\",\n            \"tx_htn_cai\",\n            \"tx_htn_ccb\",\n            \"tx_htn_ab\",\n            \"tx_htn_a2\",\n            \"tx_glc_bg\",\n            \"tx_glc_dpp4\",\n            \"tx_glc_agi\",\n            \"tx_htn\",\n            \"tx_lpd\"\n        ],\n        \"data\": [\n            {\n                \"type\": \"diab\",\n                \"data\": [\n                    183,\n                    17,\n                    11,\n                    61,\n                    52,\n                    61,\n                    73,\n                    1,\n                    46,\n                    2,\n                    3,\n                    74,\n                    14,\n                    1,\n                    124,\n                    118\n                ]\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Treatment Data: Example 3",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"cbe9e399-76a2-406d-8657-69196602bef8\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"paytype\",\r\n            \"selection\":[\"MCR\"]\r\n        },\r\n        \"states\": [\"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\"],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\"],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \r\n                \"tx_htn_arb\", \"tx_htn_bb\", \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \r\n                \"tx_glc_dpp4\", \"tx_lpd_fibrates\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/treatments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"treatments"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "396"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"18c-l2SYzdddpIjvDWplOL7UOdjjqnY\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:05:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"group_condition\": {\n        \"group_by\": \"paytyp\",\n        \"selection\": [\n            \"MCR\"\n        ]\n    },\n    \"treatments\": {\n        \"labels\": [\n            \"ALL_DATA\",\n            \"tx_plt\",\n            \"tx_lpd_fibrates\",\n            \"tx_htn_ace\",\n            \"tx_htn_arb\",\n            \"tx_htn_bb\",\n            \"tx_htn_diuretics\",\n            \"tx_htn_cai\",\n            \"tx_htn_ccb\",\n            \"tx_htn_ab\",\n            \"tx_htn_a2\",\n            \"tx_glc_bg\",\n            \"tx_glc_dpp4\",\n            \"tx_glc_agi\",\n            \"tx_htn\",\n            \"tx_lpd\"\n        ],\n        \"data\": [\n            {\n                \"type\": \"MCR\",\n                \"data\": [\n                    270,\n                    30,\n                    13,\n                    91,\n                    69,\n                    96,\n                    108,\n                    0,\n                    80,\n                    6,\n                    8,\n                    106,\n                    16,\n                    1,\n                    202,\n                    159\n                ]\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Treatment Data: Invalid authorization",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"2373b9f8-d108-4d6d-8df9-be1f87c72c03\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"cohort\",\r\n            \"selection\":[\"diab\", \"both\", \"ckd\"]\r\n        },\r\n        \"states\": [\r\n            \"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\", \"WA\", \"AZ\", \"OR\", \"SC\", \"GA\", \"CA\", \"IL\", \"MN\", \"NY\", \"VA\", \"UN\", \"OH\", \"MO\",\r\n            \"CO\", \"IA\", \"IN\", \"SD\", \"ID\", \"AL\", \"WI\", \"MD\", \"LA\", \"MS\", \"NV\", \"ND\", \"PA\", \"OK\", \"DC\", \"VT\", \"MI\", \"RI\", \"HI\", \"KY\",\"NH\", \r\n            \"NM\", \"UT\", \"NE\", \"WV\", \"KS\", \"WY\", \"ME\"\r\n        ],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\r\n                \"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\", \r\n                \"dx_pvd\", \"dx_anm\", \"dx_hyperk\", \"dx_hypok\", \"dx_hypon\", \"dx_angina\", \"dx_acs\", \"dx_sleep\", \"dx_dep\", \"dx_ftg\", \"dx_pain\", \r\n                \"dx_osteo\", \"dx_edema\", \"dx_clpd\", \"dx_rf\", \"dx_aki\", \"dx_hf\", \"dx_mcd\"\r\n            ],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \"tx_htn_arb\", \"tx_htn_bb\", \r\n                \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \"tx_glc_dpp4\", \"tx_lpd_fibrates\", \"tx_glc_glp1\", \"tx_glc\", \r\n                \"tx_glc_insulin\", \"tx_htn_ld\", \"tx_glc_megl\", \"tx_htn_mra\", \"tx_lpd_PCSK9s\", \"tx_htn_pai\", \"tx_htn_pd\", \"tx_glc_sglt2\", \r\n                \"tx_lpd_statin\", \"tx_glc_sulf\", \"tx_htn_td\", \"tx_glc_thia\", \"tx_lpd_zetia\", \"tx_lpd_bile\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/treatments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"treatments"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "59"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3b-FEQHbaWuMTaraALoseImrap4/U4\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:01:00 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 401,\n    \"success\": 0,\n    \"message\": \"Unauthorized action!\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Medical Data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\": \"rp394\",\r\n    \"authToken\": \"9b04588e-2e6f-470a-a420-e6ff3b353410\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"paytype\",\r\n            \"selection\":[\"MCR\"]\r\n        },\r\n        \"states\": [\"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\"],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\"],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \r\n                \"tx_htn_arb\", \"tx_htn_bb\", \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \r\n                \"tx_glc_dpp4\", \"tx_lpd_fibrates\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/patientfinder/medicals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"patientfinder",
+						"medicals"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Medical Data: Example 1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"cbe9e399-76a2-406d-8657-69196602bef8\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"cohort\",\r\n            \"selection\":[\"diab\", \"both\", \"ckd\"]\r\n        },\r\n        \"states\": [\r\n            \"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\", \"WA\", \"AZ\", \"OR\", \"SC\", \"GA\", \"CA\", \"IL\", \"MN\", \"NY\", \"VA\", \"UN\", \"OH\", \"MO\",\r\n            \"CO\", \"IA\", \"IN\", \"SD\", \"ID\", \"AL\", \"WI\", \"MD\", \"LA\", \"MS\", \"NV\", \"ND\", \"PA\", \"OK\", \"DC\", \"VT\", \"MI\", \"RI\", \"HI\", \"KY\",\"NH\", \r\n            \"NM\", \"UT\", \"NE\", \"WV\", \"KS\", \"WY\", \"ME\"\r\n        ],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\r\n                \"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\", \r\n                \"dx_pvd\", \"dx_anm\", \"dx_hyperk\", \"dx_hypok\", \"dx_hypon\", \"dx_angina\", \"dx_acs\", \"dx_sleep\", \"dx_dep\", \"dx_ftg\", \"dx_pain\", \r\n                \"dx_osteo\", \"dx_edema\", \"dx_clpd\", \"dx_rf\", \"dx_aki\", \"dx_hf\", \"dx_mcd\"\r\n            ],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \"tx_htn_arb\", \"tx_htn_bb\", \r\n                \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \"tx_glc_dpp4\", \"tx_lpd_fibrates\", \"tx_glc_glp1\", \"tx_glc\", \r\n                \"tx_glc_insulin\", \"tx_htn_ld\", \"tx_glc_megl\", \"tx_htn_mra\", \"tx_lpd_PCSK9s\", \"tx_htn_pai\", \"tx_htn_pd\", \"tx_glc_sglt2\", \r\n                \"tx_lpd_statin\", \"tx_glc_sulf\", \"tx_htn_td\", \"tx_glc_thia\", \"tx_lpd_zetia\", \"tx_lpd_bile\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/medicals",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"medicals"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "793"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"319-JU47jFitE0kUM8cNHtOFV+k0cas\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:08:57 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"group_condition\": {\n        \"group_by\": \"pop\",\n        \"selection\": [\n            \"diab\",\n            \"both\",\n            \"ckd\"\n        ]\n    },\n    \"medical_conditions\": {\n        \"labels\": [\n            \"ALL_DATA\",\n            \"dx_esrd\",\n            \"dx_mi\",\n            \"dx_stroke\",\n            \"dx_htn\",\n            \"dx_lpd\",\n            \"dx_obe\",\n            \"dx_dneu\",\n            \"dx_dret\",\n            \"dx_dnep\",\n            \"dx_af\",\n            \"dx_cad\",\n            \"dx_pvd\",\n            \"dx_anm\",\n            \"dx_hyperk\",\n            \"dx_hypok\",\n            \"dx_hypon\",\n            \"dx_angina\",\n            \"dx_acs\",\n            \"dx_sleep\",\n            \"dx_dep\",\n            \"dx_ftg\",\n            \"dx_pain\",\n            \"dx_osteo\",\n            \"dx_edema\",\n            \"dx_clpd\",\n            \"dx_rf\",\n            \"dx_aki\",\n            \"dx_hf\",\n            \"dx_mcd\"\n        ],\n        \"data\": [\n            {\n                \"type\": \"diab\",\n                \"data\": [\n                    524,\n                    17,\n                    8,\n                    33,\n                    439,\n                    395,\n                    194,\n                    104,\n                    44,\n                    32,\n                    65,\n                    136,\n                    68,\n                    131,\n                    27,\n                    40,\n                    25,\n                    138,\n                    29,\n                    83,\n                    113,\n                    139,\n                    343,\n                    168,\n                    77,\n                    132,\n                    23,\n                    41,\n                    76,\n                    127\n                ]\n            },\n            {\n                \"type\": \"both\",\n                \"data\": [\n                    253,\n                    6,\n                    5,\n                    14,\n                    221,\n                    198,\n                    88,\n                    50,\n                    30,\n                    10,\n                    37,\n                    65,\n                    34,\n                    52,\n                    11,\n                    13,\n                    10,\n                    64,\n                    16,\n                    39,\n                    41,\n                    85,\n                    171,\n                    103,\n                    30,\n                    64,\n                    20,\n                    25,\n                    33,\n                    72\n                ]\n            },\n            {\n                \"type\": \"ckd\",\n                \"data\": [\n                    222,\n                    10,\n                    3,\n                    11,\n                    185,\n                    186,\n                    75,\n                    31,\n                    21,\n                    7,\n                    29,\n                    64,\n                    32,\n                    66,\n                    8,\n                    16,\n                    7,\n                    48,\n                    12,\n                    41,\n                    45,\n                    55,\n                    154,\n                    71,\n                    30,\n                    56,\n                    17,\n                    23,\n                    41,\n                    64\n                ]\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Medical Data: Example 2",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"cbe9e399-76a2-406d-8657-69196602bef8\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"paytype\",\r\n            \"selection\":[\"MCR\"]\r\n        },\r\n        \"states\": [\"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\"],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\"],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \r\n                \"tx_htn_arb\", \"tx_htn_bb\", \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \r\n                \"tx_glc_dpp4\", \"tx_lpd_fibrates\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/medicals",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"medicals"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "305"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"131-EnBLS8HQcZgJrniahfpbkjffzxw\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:09:38 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"group_condition\": {\n        \"group_by\": \"paytyp\",\n        \"selection\": [\n            \"MCR\"\n        ]\n    },\n    \"medical_conditions\": {\n        \"labels\": [\n            \"ALL_DATA\",\n            \"dx_esrd\",\n            \"dx_mi\",\n            \"dx_stroke\",\n            \"dx_htn\",\n            \"dx_lpd\",\n            \"dx_obe\",\n            \"dx_dneu\",\n            \"dx_dret\",\n            \"dx_dnep\",\n            \"dx_af\",\n            \"dx_cad\"\n        ],\n        \"data\": [\n            {\n                \"type\": \"MCR\",\n                \"data\": [\n                    270,\n                    11,\n                    5,\n                    19,\n                    234,\n                    212,\n                    99,\n                    58,\n                    22,\n                    6,\n                    32,\n                    68\n                ]\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Medical Data: Invalid authorization",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp390\",\r\n    \"authToken\": \"2373b9f8-d108-4d6d-8df9-be1f87c72c03\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"cohort\",\r\n            \"selection\":[\"diab\", \"both\", \"ckd\"]\r\n        },\r\n        \"states\": [\r\n            \"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\", \"WA\", \"AZ\", \"OR\", \"SC\", \"GA\", \"CA\", \"IL\", \"MN\", \"NY\", \"VA\", \"UN\", \"OH\", \"MO\",\r\n            \"CO\", \"IA\", \"IN\", \"SD\", \"ID\", \"AL\", \"WI\", \"MD\", \"LA\", \"MS\", \"NV\", \"ND\", \"PA\", \"OK\", \"DC\", \"VT\", \"MI\", \"RI\", \"HI\", \"KY\",\"NH\", \r\n            \"NM\", \"UT\", \"NE\", \"WV\", \"KS\", \"WY\", \"ME\"\r\n        ],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\r\n                \"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\", \r\n                \"dx_pvd\", \"dx_anm\", \"dx_hyperk\", \"dx_hypok\", \"dx_hypon\", \"dx_angina\", \"dx_acs\", \"dx_sleep\", \"dx_dep\", \"dx_ftg\", \"dx_pain\", \r\n                \"dx_osteo\", \"dx_edema\", \"dx_clpd\", \"dx_rf\", \"dx_aki\", \"dx_hf\", \"dx_mcd\"\r\n            ],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \"tx_htn_arb\", \"tx_htn_bb\", \r\n                \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \"tx_glc_dpp4\", \"tx_lpd_fibrates\", \"tx_glc_glp1\", \"tx_glc\", \r\n                \"tx_glc_insulin\", \"tx_htn_ld\", \"tx_glc_megl\", \"tx_htn_mra\", \"tx_lpd_PCSK9s\", \"tx_htn_pai\", \"tx_htn_pd\", \"tx_glc_sglt2\", \r\n                \"tx_lpd_statin\", \"tx_glc_sulf\", \"tx_htn_td\", \"tx_glc_thia\", \"tx_lpd_zetia\", \"tx_lpd_bile\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/medicals",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"medicals"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "59"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3b-FEQHbaWuMTaraALoseImrap4/U4\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:07:58 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 401,\n    \"success\": 0,\n    \"message\": \"Unauthorized action!\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Values",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/patientfinder/values/cohort?userid=rp394&authToken=9b04588e-2e6f-470a-a420-e6ff3b353410",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"patientfinder",
+						"values",
+						"cohort"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "rp394"
+						},
+						{
+							"key": "authToken",
+							"value": "9b04588e-2e6f-470a-a420-e6ff3b353410"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Values: Invalid Authorization",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/values/states?userid=rp390&authToken=2373b9f8-d108-4d6d-8df9-be1f87c72c03",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"values",
+								"states"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "rp390"
+								},
+								{
+									"key": "authToken",
+									"value": "2373b9f8-d108-4d6d-8df9-be1f87c72c03"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "59"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3b-FEQHbaWuMTaraALoseImrap4/U4\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:14:26 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 401,\n    \"success\": 0,\n    \"message\": \"Unauthorized action!\"\n}"
+				},
+				{
+					"name": "Get Values: States",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/values/states?userid=rp390&authToken=cbe9e399-76a2-406d-8657-69196602bef8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"values",
+								"states"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "rp390"
+								},
+								{
+									"key": "authToken",
+									"value": "cbe9e399-76a2-406d-8657-69196602bef8"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "775"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"307-cMMiaWsDvWT2Fx3P1avpjTL6iUo\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:16:12 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"stateData\": [\n        {\n            \"state\": \"NC\"\n        },\n        {\n            \"state\": \"MA\"\n        },\n        {\n            \"state\": \"FL\"\n        },\n        {\n            \"state\": \"TX\"\n        },\n        {\n            \"state\": \"NJ\"\n        },\n        {\n            \"state\": \"AR\"\n        },\n        {\n            \"state\": \"CT\"\n        },\n        {\n            \"state\": \"TN\"\n        },\n        {\n            \"state\": \"WA\"\n        },\n        {\n            \"state\": \"AZ\"\n        },\n        {\n            \"state\": \"OR\"\n        },\n        {\n            \"state\": \"SC\"\n        },\n        {\n            \"state\": \"GA\"\n        },\n        {\n            \"state\": \"CA\"\n        },\n        {\n            \"state\": \"IL\"\n        },\n        {\n            \"state\": \"MN\"\n        },\n        {\n            \"state\": \"NY\"\n        },\n        {\n            \"state\": \"VA\"\n        },\n        {\n            \"state\": \"UN\"\n        },\n        {\n            \"state\": \"OH\"\n        },\n        {\n            \"state\": \"MO\"\n        },\n        {\n            \"state\": \"CO\"\n        },\n        {\n            \"state\": \"IA\"\n        },\n        {\n            \"state\": \"IN\"\n        },\n        {\n            \"state\": \"SD\"\n        },\n        {\n            \"state\": \"ID\"\n        },\n        {\n            \"state\": \"AL\"\n        },\n        {\n            \"state\": \"WI\"\n        },\n        {\n            \"state\": \"MD\"\n        },\n        {\n            \"state\": \"LA\"\n        },\n        {\n            \"state\": \"MS\"\n        },\n        {\n            \"state\": \"NV\"\n        },\n        {\n            \"state\": \"ND\"\n        },\n        {\n            \"state\": \"PA\"\n        },\n        {\n            \"state\": \"OK\"\n        },\n        {\n            \"state\": \"DC\"\n        },\n        {\n            \"state\": \"VT\"\n        },\n        {\n            \"state\": \"MI\"\n        },\n        {\n            \"state\": \"RI\"\n        },\n        {\n            \"state\": \"HI\"\n        },\n        {\n            \"state\": \"KY\"\n        },\n        {\n            \"state\": \"NH\"\n        },\n        {\n            \"state\": \"NM\"\n        },\n        {\n            \"state\": \"UT\"\n        },\n        {\n            \"state\": \"NE\"\n        },\n        {\n            \"state\": \"WV\"\n        },\n        {\n            \"state\": \"KS\"\n        },\n        {\n            \"state\": \"WY\"\n        },\n        {\n            \"state\": \"ME\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get Values: Payroll Type",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/values/paytyp?userid=rp390&authToken=cbe9e399-76a2-406d-8657-69196602bef8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"values",
+								"paytyp"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "rp390"
+								},
+								{
+									"key": "authToken",
+									"value": "cbe9e399-76a2-406d-8657-69196602bef8"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "75"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"4b-DsVUh42XdMcOqZZ3yYK5TXWt7gU\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:16:52 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"paytypData\": [\n        {\n            \"paytyp\": \"MCR\"\n        },\n        {\n            \"paytyp\": \"COM\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get Values: Cohort",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/values/cohort?userid=rp390&authToken=cbe9e399-76a2-406d-8657-69196602bef8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"values",
+								"cohort"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "rp390"
+								},
+								{
+									"key": "authToken",
+									"value": "cbe9e399-76a2-406d-8657-69196602bef8"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "82"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"52-RdJUf2CJFIaDnhJ01vqbRoOTFsc\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:17:29 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"popData\": [\n        {\n            \"pop\": \"diab\"\n        },\n        {\n            \"pop\": \"both\"\n        },\n        {\n            \"pop\": \"ckd\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Labels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/patientfinder/labels?userid=rp394&authToken=9b04588e-2e6f-470a-a420-e6ff3b353410",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"patientfinder",
+						"labels"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "rp394"
+						},
+						{
+							"key": "authToken",
+							"value": "9b04588e-2e6f-470a-a420-e6ff3b353410"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Labels",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/patientfinder/labels?userid=rp390&authToken=cbe9e399-76a2-406d-8657-69196602bef8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patientfinder",
+								"labels"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "rp390"
+								},
+								{
+									"key": "authToken",
+									"value": "cbe9e399-76a2-406d-8657-69196602bef8"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "5959"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1747-P71WhVcDASDHpBrSZJdj0rFYEoE\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:19:29 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"labelData\": [\n        {\n            \"name\": \"Acute Coronary Syndrome\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_acs\",\n            \"label_val\": 131072\n        },\n        {\n            \"name\": \"Acute_kidney_injury\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_aki\",\n            \"label_val\": 67108864\n        },\n        {\n            \"name\": \"AF\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_af\",\n            \"label_val\": 512\n        },\n        {\n            \"name\": \"Anemia\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_anm\",\n            \"label_val\": 4096\n        },\n        {\n            \"name\": \"Angina Pectoris\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_angina\",\n            \"label_val\": 65536\n        },\n        {\n            \"name\": \"CAD\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_cad\",\n            \"label_val\": 1024\n        },\n        {\n            \"name\": \"Cronic lung/pulmonary disease\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_clpd\",\n            \"label_val\": 16777216\n        },\n        {\n            \"name\": \"Depression\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_dep\",\n            \"label_val\": 524288\n        },\n        {\n            \"name\": \"Diabetic Nephropathy\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_dnep\",\n            \"label_val\": 256\n        },\n        {\n            \"name\": \"Diabetic Neuropathy\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_dneu\",\n            \"label_val\": 64\n        },\n        {\n            \"name\": \"Diabetic Retinopathy\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_dret\",\n            \"label_val\": 128\n        },\n        {\n            \"name\": \"Edema\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_edema\",\n            \"label_val\": 8388608\n        },\n        {\n            \"name\": \"ESRD\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_esrd\",\n            \"label_val\": 1\n        },\n        {\n            \"name\": \"Fatigue\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_ftg\",\n            \"label_val\": 1048576\n        },\n        {\n            \"name\": \"HF\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_hf\",\n            \"label_val\": 134217728\n        },\n        {\n            \"name\": \"Hyperkalemia\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_hyperk\",\n            \"label_val\": 8192\n        },\n        {\n            \"name\": \"Hyperlipidemia\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_lpd\",\n            \"label_val\": 16\n        },\n        {\n            \"name\": \"Hypertension\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_htn\",\n            \"label_val\": 8\n        },\n        {\n            \"name\": \"Hypokalemia\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_hypok\",\n            \"label_val\": 16384\n        },\n        {\n            \"name\": \"Hyponatremia\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_hypon\",\n            \"label_val\": 32768\n        },\n        {\n            \"name\": \"Microvascular complications disease\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_mcd\",\n            \"label_val\": 268435456\n        },\n        {\n            \"name\": \"Myocardial infarction\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_mi\",\n            \"label_val\": 2\n        },\n        {\n            \"name\": \"Obesity\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_obe\",\n            \"label_val\": 32\n        },\n        {\n            \"name\": \"Oteoarthritis\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_osteo\",\n            \"label_val\": 4194304\n        },\n        {\n            \"name\": \"Pain\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_pain\",\n            \"label_val\": 2097152\n        },\n        {\n            \"name\": \"PVD\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_pvd\",\n            \"label_val\": 2048\n        },\n        {\n            \"name\": \"Respiratory_failure\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_rf\",\n            \"label_val\": 33554432\n        },\n        {\n            \"name\": \"Sleep Apnea\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_sleep\",\n            \"label_val\": 262144\n        },\n        {\n            \"name\": \"Stroke\",\n            \"label_type\": \"medical_condition\",\n            \"label\": \"dx_stroke\",\n            \"label_val\": 4\n        },\n        {\n            \"name\": \"Treated with ACE\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_ace\",\n            \"label_val\": 64\n        },\n        {\n            \"name\": \"Treated with Alpha blocker\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_ab\",\n            \"label_val\": 65536\n        },\n        {\n            \"name\": \"Treated with Alpha glucosidase inhibitor\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_glc_agi\",\n            \"label_val\": 16777216\n        },\n        {\n            \"name\": \"Treated with Alpha-2 receptor agonists\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_a2\",\n            \"label_val\": 131072\n        },\n        {\n            \"name\": \"Treated with Antihyperlipidemic agents\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_lpd\",\n            \"label_val\": 1073741824\n        },\n        {\n            \"name\": \"Treated with Antihypertensive agents\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn\",\n            \"label_val\": 268435456\n        },\n        {\n            \"name\": \"Treated with Antiplatelet agents\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_plt\",\n            \"label_val\": 1\n        },\n        {\n            \"name\": \"Treated with ARB\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_arb\",\n            \"label_val\": 128\n        },\n        {\n            \"name\": \"Treated with Beta blocker\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_bb\",\n            \"label_val\": 256\n        },\n        {\n            \"name\": \"Treated with Biguanide\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_glc_bg\",\n            \"label_val\": 524288\n        },\n        {\n            \"name\": \"Treated with Calcium channel blocker\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_ccb\",\n            \"label_val\": 32768\n        },\n        {\n            \"name\": \"Treated with Carbonic anhydrase inhibitors\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_cai\",\n            \"label_val\": 8192\n        },\n        {\n            \"name\": \"Treated with Diuretics\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_diuretics\",\n            \"label_val\": 512\n        },\n        {\n            \"name\": \"Treated with DPP4\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_glc_dpp4\",\n            \"label_val\": 2097152\n        },\n        {\n            \"name\": \"Treated with Fibrates\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_lpd_fibrates\",\n            \"label_val\": 4\n        },\n        {\n            \"name\": \"Treated with GLP-1\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_glc_glp1\",\n            \"label_val\": 4194304\n        },\n        {\n            \"name\": \"Treated with Glucose-lowering agents\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_glc\",\n            \"label_val\": 536870912\n        },\n        {\n            \"name\": \"Treated with Insulin\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_glc_insulin\",\n            \"label_val\": 134217728\n        },\n        {\n            \"name\": \"Treated with Loop diuretic\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_ld\",\n            \"label_val\": 2048\n        },\n        {\n            \"name\": \"Treated with Meglitinide\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_glc_megl\",\n            \"label_val\": 67108864\n        },\n        {\n            \"name\": \"Treated with Mineralocorticoid receptor antagonist\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_mra\",\n            \"label_val\": 16384\n        },\n        {\n            \"name\": \"Treated with PCSK9s\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_lpd_PCSK9s\",\n            \"label_val\": 8\n        },\n        {\n            \"name\": \"Treated with Peripheral adrenergic inhibitors\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_pai\",\n            \"label_val\": 262144\n        },\n        {\n            \"name\": \"Treated with Potassium-sparing diuretic\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_pd\",\n            \"label_val\": 4096\n        },\n        {\n            \"name\": \"Treated with SGLT2\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_glc_sglt2\",\n            \"label_val\": 1048576\n        },\n        {\n            \"name\": \"Treated with Statin\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_lpd_statin\",\n            \"label_val\": 2\n        },\n        {\n            \"name\": \"Treated with Sulfonylurea\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_glc_sulf\",\n            \"label_val\": 8388608\n        },\n        {\n            \"name\": \"Treated with Thiazide diuretic\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_htn_td\",\n            \"label_val\": 1024\n        },\n        {\n            \"name\": \"Treated with Thiazolidinedione\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_glc_thia\",\n            \"label_val\": 33554432\n        },\n        {\n            \"name\": \"Treated with Zetia\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_lpd_zetia\",\n            \"label_val\": 32\n        },\n        {\n            \"name\": \"tx_lpd_bile\",\n            \"label_type\": \"treatment\",\n            \"label\": \"tx_lpd_bile\",\n            \"label_val\": 16\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get User Preference",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/users/preferences?userid=rp394&authToken=9b04588e-2e6f-470a-a420-e6ff3b353410",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"preferences"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "rp394"
+						},
+						{
+							"key": "authToken",
+							"value": "9b04588e-2e6f-470a-a420-e6ff3b353410"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get User Preferences: For new Users",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/preferences?userid=rp390&authToken=cbe9e399-76a2-406d-8657-69196602bef8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"preferences"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "rp390"
+								},
+								{
+									"key": "authToken",
+									"value": "cbe9e399-76a2-406d-8657-69196602bef8"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2e-BtM2UosPJh+RinAwJnYO9uRlqaY\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:21:24 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"preferenceData\": []\n}"
+				},
+				{
+					"name": "Get User Preferences: After adding one preference",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/preferences?userid=rp390&authToken=cbe9e399-76a2-406d-8657-69196602bef8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"preferences"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "rp390"
+								},
+								{
+									"key": "authToken",
+									"value": "cbe9e399-76a2-406d-8657-69196602bef8"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1457"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5b1-pw/ZAMTkY3AR+8QmJqUyignCUvQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:31:13 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"preferenceData\": [\n        {\n            \"id\": 12,\n            \"userid\": \"rp390\",\n            \"jsonData\": {\n                \"states\": [\n                    \"NC\",\n                    \"MA\",\n                    \"FL\",\n                    \"TX\",\n                    \"NJ\",\n                    \"AR\",\n                    \"CT\",\n                    \"TN\",\n                    \"WA\",\n                    \"AZ\",\n                    \"OR\",\n                    \"SC\",\n                    \"GA\",\n                    \"CA\",\n                    \"IL\",\n                    \"MN\",\n                    \"NY\",\n                    \"VA\",\n                    \"UN\",\n                    \"OH\",\n                    \"MO\",\n                    \"CO\",\n                    \"IA\",\n                    \"IN\",\n                    \"SD\",\n                    \"ID\",\n                    \"AL\",\n                    \"WI\",\n                    \"MD\",\n                    \"LA\",\n                    \"MS\",\n                    \"NV\",\n                    \"ND\",\n                    \"PA\",\n                    \"OK\",\n                    \"DC\",\n                    \"VT\",\n                    \"MI\",\n                    \"RI\",\n                    \"HI\",\n                    \"KY\",\n                    \"NH\",\n                    \"NM\",\n                    \"UT\",\n                    \"NE\",\n                    \"WV\",\n                    \"KS\",\n                    \"WY\",\n                    \"ME\"\n                ],\n                \"treatments\": {\n                    \"OR\": [\n                        64,\n                        65536,\n                        16777216,\n                        131072,\n                        1073741824,\n                        268435456,\n                        1,\n                        128,\n                        256\n                    ],\n                    \"AND\": [\n                        134217728,\n                        2048,\n                        67108864,\n                        16384,\n                        8,\n                        262144,\n                        4096,\n                        1048576\n                    ],\n                    \"labels\": [\n                        \"tx_htn_ace\",\n                        \"tx_htn_ab\",\n                        \"tx_glc_agi\",\n                        \"tx_htn_a2\",\n                        \"tx_lpd\",\n                        \"tx_htn\",\n                        \"tx_plt\",\n                        \"tx_htn_arb\",\n                        \"tx_htn_bb\",\n                        \"tx_glc_bg\",\n                        \"tx_htn_ccb\",\n                        \"tx_htn_cai\",\n                        \"tx_htn_diuretics\",\n                        \"tx_glc_dpp4\",\n                        \"tx_lpd_fibrates\",\n                        \"tx_glc_glp1\",\n                        \"tx_glc\",\n                        \"tx_glc_insulin\",\n                        \"tx_htn_ld\",\n                        \"tx_glc_megl\",\n                        \"tx_htn_mra\",\n                        \"tx_lpd_PCSK9s\",\n                        \"tx_htn_pai\",\n                        \"tx_htn_pd\",\n                        \"tx_glc_sglt2\",\n                        \"tx_lpd_statin\",\n                        \"tx_glc_sulf\",\n                        \"tx_htn_td\",\n                        \"tx_glc_thia\",\n                        \"tx_lpd_zetia\",\n                        \"tx_lpd_bile\"\n                    ]\n                },\n                \"group_condition\": {\n                    \"group_by\": \"cohort\",\n                    \"selection\": [\n                        \"diab\",\n                        \"both\",\n                        \"ckd\"\n                    ]\n                },\n                \"medical_conditions\": {\n                    \"OR\": [\n                        512,\n                        1024,\n                        256,\n                        64,\n                        128,\n                        1,\n                        16,\n                        8,\n                        2,\n                        32,\n                        4\n                    ],\n                    \"AND\": [\n                        67108864,\n                        16777216,\n                        8388608,\n                        134217728,\n                        268435456,\n                        4194304,\n                        33554432\n                    ],\n                    \"labels\": [\n                        \"dx_esrd\",\n                        \"dx_mi\",\n                        \"dx_stroke\",\n                        \"dx_htn\",\n                        \"dx_lpd\",\n                        \"dx_obe\",\n                        \"dx_dneu\",\n                        \"dx_dret\",\n                        \"dx_dnep\",\n                        \"dx_af\",\n                        \"dx_cad\",\n                        \"dx_pvd\",\n                        \"dx_anm\",\n                        \"dx_hyperk\",\n                        \"dx_hypok\",\n                        \"dx_hypon\",\n                        \"dx_angina\",\n                        \"dx_acs\",\n                        \"dx_sleep\",\n                        \"dx_dep\",\n                        \"dx_ftg\",\n                        \"dx_pain\",\n                        \"dx_osteo\",\n                        \"dx_edema\",\n                        \"dx_clpd\",\n                        \"dx_rf\",\n                        \"dx_aki\",\n                        \"dx_hf\",\n                        \"dx_mcd\"\n                    ]\n                }\n            },\n            \"saveName\": \"FirstPreferenc1\"\n        }\n    ],\n    \"defaultPreferenceId\": 12\n}"
+				},
+				{
+					"name": "Get User Preferences: Adding a Less Preffered",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/preferences?userid=rp390&authToken=cbe9e399-76a2-406d-8657-69196602bef8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"preferences"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "rp390"
+								},
+								{
+									"key": "authToken",
+									"value": "cbe9e399-76a2-406d-8657-69196602bef8"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "7044"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1b84-cu8k5BPGBRILkjuI1dFEFRaM4dA\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 00:42:28 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"preferenceData\": [\n        {\n            \"id\": 12,\n            \"userid\": \"rp390\",\n            \"jsonData\": {\n                \"states\": [\n                    \"NC\",\n                    \"MA\",\n                    \"FL\",\n                    \"TX\",\n                    \"NJ\",\n                    \"AR\",\n                    \"CT\",\n                    \"TN\",\n                    \"WA\",\n                    \"AZ\",\n                    \"OR\",\n                    \"SC\",\n                    \"GA\",\n                    \"CA\",\n                    \"IL\",\n                    \"MN\",\n                    \"NY\",\n                    \"VA\",\n                    \"UN\",\n                    \"OH\",\n                    \"MO\",\n                    \"CO\",\n                    \"IA\",\n                    \"IN\",\n                    \"SD\",\n                    \"ID\",\n                    \"AL\",\n                    \"WI\",\n                    \"MD\",\n                    \"LA\",\n                    \"MS\",\n                    \"NV\",\n                    \"ND\",\n                    \"PA\",\n                    \"OK\",\n                    \"DC\",\n                    \"VT\",\n                    \"MI\",\n                    \"RI\",\n                    \"HI\",\n                    \"KY\",\n                    \"NH\",\n                    \"NM\",\n                    \"UT\",\n                    \"NE\",\n                    \"WV\",\n                    \"KS\",\n                    \"WY\",\n                    \"ME\"\n                ],\n                \"treatments\": {\n                    \"OR\": [\n                        64,\n                        65536,\n                        16777216,\n                        131072,\n                        1073741824,\n                        268435456,\n                        1,\n                        128,\n                        256\n                    ],\n                    \"AND\": [\n                        134217728,\n                        2048,\n                        67108864,\n                        16384,\n                        8,\n                        262144,\n                        4096,\n                        1048576\n                    ],\n                    \"labels\": [\n                        \"tx_htn_ace\",\n                        \"tx_htn_ab\",\n                        \"tx_glc_agi\",\n                        \"tx_htn_a2\",\n                        \"tx_lpd\",\n                        \"tx_htn\",\n                        \"tx_plt\",\n                        \"tx_htn_arb\",\n                        \"tx_htn_bb\",\n                        \"tx_glc_bg\",\n                        \"tx_htn_ccb\",\n                        \"tx_htn_cai\",\n                        \"tx_htn_diuretics\",\n                        \"tx_glc_dpp4\",\n                        \"tx_lpd_fibrates\",\n                        \"tx_glc_glp1\",\n                        \"tx_glc\",\n                        \"tx_glc_insulin\",\n                        \"tx_htn_ld\",\n                        \"tx_glc_megl\",\n                        \"tx_htn_mra\",\n                        \"tx_lpd_PCSK9s\",\n                        \"tx_htn_pai\",\n                        \"tx_htn_pd\",\n                        \"tx_glc_sglt2\",\n                        \"tx_lpd_statin\",\n                        \"tx_glc_sulf\",\n                        \"tx_htn_td\",\n                        \"tx_glc_thia\",\n                        \"tx_lpd_zetia\",\n                        \"tx_lpd_bile\"\n                    ]\n                },\n                \"group_condition\": {\n                    \"group_by\": \"cohort\",\n                    \"selection\": [\n                        \"diab\",\n                        \"both\",\n                        \"ckd\"\n                    ]\n                },\n                \"medical_conditions\": {\n                    \"OR\": [\n                        512,\n                        1024,\n                        256,\n                        64,\n                        128,\n                        1,\n                        16,\n                        8,\n                        2,\n                        32,\n                        4\n                    ],\n                    \"AND\": [\n                        67108864,\n                        16777216,\n                        8388608,\n                        134217728,\n                        268435456,\n                        4194304,\n                        33554432\n                    ],\n                    \"labels\": [\n                        \"dx_esrd\",\n                        \"dx_mi\",\n                        \"dx_stroke\",\n                        \"dx_htn\",\n                        \"dx_lpd\",\n                        \"dx_obe\",\n                        \"dx_dneu\",\n                        \"dx_dret\",\n                        \"dx_dnep\",\n                        \"dx_af\",\n                        \"dx_cad\",\n                        \"dx_pvd\",\n                        \"dx_anm\",\n                        \"dx_hyperk\",\n                        \"dx_hypok\",\n                        \"dx_hypon\",\n                        \"dx_angina\",\n                        \"dx_acs\",\n                        \"dx_sleep\",\n                        \"dx_dep\",\n                        \"dx_ftg\",\n                        \"dx_pain\",\n                        \"dx_osteo\",\n                        \"dx_edema\",\n                        \"dx_clpd\",\n                        \"dx_rf\",\n                        \"dx_aki\",\n                        \"dx_hf\",\n                        \"dx_mcd\"\n                    ]\n                }\n            },\n            \"saveName\": \"FirstPreferenc1\"\n        },\n        {\n            \"id\": 13,\n            \"userid\": \"rp390\",\n            \"jsonData\": {\n                \"states\": [\n                    \"NC\",\n                    \"MA\",\n                    \"FL\",\n                    \"TX\",\n                    \"NJ\",\n                    \"AR\",\n                    \"CT\",\n                    \"TN\",\n                    \"WA\",\n                    \"AZ\",\n                    \"OR\",\n                    \"SC\",\n                    \"GA\",\n                    \"CA\",\n                    \"IL\",\n                    \"MN\",\n                    \"NY\",\n                    \"VA\",\n                    \"UN\",\n                    \"OH\",\n                    \"MO\",\n                    \"CO\",\n                    \"IA\",\n                    \"IN\",\n                    \"SD\",\n                    \"ID\",\n                    \"AL\",\n                    \"WI\",\n                    \"MD\",\n                    \"LA\",\n                    \"MS\",\n                    \"NV\",\n                    \"ND\",\n                    \"PA\",\n                    \"OK\",\n                    \"DC\",\n                    \"VT\",\n                    \"MI\",\n                    \"RI\",\n                    \"HI\",\n                    \"KY\",\n                    \"NH\",\n                    \"NM\",\n                    \"UT\",\n                    \"NE\",\n                    \"WV\",\n                    \"KS\",\n                    \"WY\",\n                    \"ME\"\n                ],\n                \"treatments\": {\n                    \"OR\": [\n                        64,\n                        65536,\n                        16777216,\n                        131072,\n                        1073741824,\n                        268435456,\n                        1,\n                        128,\n                        256\n                    ],\n                    \"AND\": [\n                        134217728,\n                        2048,\n                        67108864,\n                        16384,\n                        8,\n                        262144,\n                        4096,\n                        1048576\n                    ],\n                    \"labels\": [\n                        \"tx_htn_ace\",\n                        \"tx_htn_ab\",\n                        \"tx_glc_agi\",\n                        \"tx_htn_a2\",\n                        \"tx_lpd\",\n                        \"tx_htn\",\n                        \"tx_plt\",\n                        \"tx_htn_arb\",\n                        \"tx_htn_bb\",\n                        \"tx_glc_bg\",\n                        \"tx_htn_ccb\",\n                        \"tx_htn_cai\",\n                        \"tx_htn_diuretics\",\n                        \"tx_glc_dpp4\",\n                        \"tx_lpd_fibrates\",\n                        \"tx_glc_glp1\",\n                        \"tx_glc\",\n                        \"tx_glc_insulin\",\n                        \"tx_htn_ld\",\n                        \"tx_glc_megl\",\n                        \"tx_htn_mra\",\n                        \"tx_lpd_PCSK9s\",\n                        \"tx_htn_pai\",\n                        \"tx_htn_pd\",\n                        \"tx_glc_sglt2\",\n                        \"tx_lpd_statin\",\n                        \"tx_glc_sulf\",\n                        \"tx_htn_td\",\n                        \"tx_glc_thia\",\n                        \"tx_lpd_zetia\",\n                        \"tx_lpd_bile\"\n                    ]\n                },\n                \"group_condition\": {\n                    \"group_by\": \"cohort\",\n                    \"selection\": [\n                        \"diab\",\n                        \"both\",\n                        \"ckd\"\n                    ]\n                },\n                \"medical_conditions\": {\n                    \"OR\": [\n                        512,\n                        1024,\n                        256,\n                        64,\n                        128,\n                        1,\n                        16,\n                        8,\n                        2,\n                        32,\n                        4\n                    ],\n                    \"AND\": [\n                        67108864,\n                        16777216,\n                        8388608,\n                        134217728,\n                        268435456,\n                        4194304,\n                        33554432\n                    ],\n                    \"labels\": [\n                        \"dx_esrd\",\n                        \"dx_mi\",\n                        \"dx_stroke\",\n                        \"dx_htn\",\n                        \"dx_lpd\",\n                        \"dx_obe\",\n                        \"dx_dneu\",\n                        \"dx_dret\",\n                        \"dx_dnep\",\n                        \"dx_af\",\n                        \"dx_cad\",\n                        \"dx_pvd\",\n                        \"dx_anm\",\n                        \"dx_hyperk\",\n                        \"dx_hypok\",\n                        \"dx_hypon\",\n                        \"dx_angina\",\n                        \"dx_acs\",\n                        \"dx_sleep\",\n                        \"dx_dep\",\n                        \"dx_ftg\",\n                        \"dx_pain\",\n                        \"dx_osteo\",\n                        \"dx_edema\",\n                        \"dx_clpd\",\n                        \"dx_rf\",\n                        \"dx_aki\",\n                        \"dx_hf\",\n                        \"dx_mcd\"\n                    ]\n                }\n            },\n            \"saveName\": \"FirstPreference2\"\n        },\n        {\n            \"id\": 14,\n            \"userid\": \"rp390\",\n            \"jsonData\": {\n                \"states\": [\n                    \"NC\",\n                    \"MA\",\n                    \"FL\",\n                    \"TX\",\n                    \"NJ\",\n                    \"AR\",\n                    \"CT\",\n                    \"TN\",\n                    \"WA\",\n                    \"AZ\",\n                    \"OR\",\n                    \"SC\",\n                    \"GA\",\n                    \"CA\",\n                    \"IL\",\n                    \"MN\",\n                    \"NY\",\n                    \"VA\",\n                    \"UN\",\n                    \"OH\",\n                    \"MO\",\n                    \"CO\",\n                    \"IA\",\n                    \"IN\",\n                    \"SD\",\n                    \"ID\",\n                    \"AL\",\n                    \"WI\",\n                    \"MD\",\n                    \"LA\",\n                    \"MS\",\n                    \"NV\",\n                    \"ND\",\n                    \"PA\",\n                    \"OK\",\n                    \"DC\",\n                    \"VT\",\n                    \"MI\",\n                    \"RI\",\n                    \"HI\",\n                    \"KY\",\n                    \"NH\",\n                    \"NM\",\n                    \"UT\",\n                    \"NE\",\n                    \"WV\",\n                    \"KS\",\n                    \"WY\",\n                    \"ME\"\n                ],\n                \"treatments\": {\n                    \"OR\": [\n                        64,\n                        65536,\n                        16777216,\n                        131072,\n                        1073741824,\n                        268435456,\n                        1,\n                        128,\n                        256\n                    ],\n                    \"AND\": [\n                        134217728,\n                        2048,\n                        67108864,\n                        16384,\n                        8,\n                        262144,\n                        4096,\n                        1048576\n                    ],\n                    \"labels\": [\n                        \"tx_htn_ace\",\n                        \"tx_htn_ab\",\n                        \"tx_glc_agi\",\n                        \"tx_htn_a2\",\n                        \"tx_lpd\",\n                        \"tx_htn\",\n                        \"tx_plt\",\n                        \"tx_htn_arb\",\n                        \"tx_htn_bb\",\n                        \"tx_glc_bg\",\n                        \"tx_htn_ccb\",\n                        \"tx_htn_cai\",\n                        \"tx_htn_diuretics\",\n                        \"tx_glc_dpp4\",\n                        \"tx_lpd_fibrates\",\n                        \"tx_glc_glp1\",\n                        \"tx_glc\",\n                        \"tx_glc_insulin\",\n                        \"tx_htn_ld\",\n                        \"tx_glc_megl\",\n                        \"tx_htn_mra\",\n                        \"tx_lpd_PCSK9s\",\n                        \"tx_htn_pai\",\n                        \"tx_htn_pd\",\n                        \"tx_glc_sglt2\",\n                        \"tx_lpd_statin\",\n                        \"tx_glc_sulf\",\n                        \"tx_htn_td\",\n                        \"tx_glc_thia\",\n                        \"tx_lpd_zetia\",\n                        \"tx_lpd_bile\"\n                    ]\n                },\n                \"group_condition\": {\n                    \"group_by\": \"cohort\",\n                    \"selection\": [\n                        \"diab\",\n                        \"both\",\n                        \"ckd\"\n                    ]\n                },\n                \"medical_conditions\": {\n                    \"OR\": [\n                        512,\n                        1024,\n                        256,\n                        64,\n                        128,\n                        1,\n                        16,\n                        8,\n                        2,\n                        32,\n                        4\n                    ],\n                    \"AND\": [\n                        67108864,\n                        16777216,\n                        8388608,\n                        134217728,\n                        268435456,\n                        4194304,\n                        33554432\n                    ],\n                    \"labels\": [\n                        \"dx_esrd\",\n                        \"dx_mi\",\n                        \"dx_stroke\",\n                        \"dx_htn\",\n                        \"dx_lpd\",\n                        \"dx_obe\",\n                        \"dx_dneu\",\n                        \"dx_dret\",\n                        \"dx_dnep\",\n                        \"dx_af\",\n                        \"dx_cad\",\n                        \"dx_pvd\",\n                        \"dx_anm\",\n                        \"dx_hyperk\",\n                        \"dx_hypok\",\n                        \"dx_hypon\",\n                        \"dx_angina\",\n                        \"dx_acs\",\n                        \"dx_sleep\",\n                        \"dx_dep\",\n                        \"dx_ftg\",\n                        \"dx_pain\",\n                        \"dx_osteo\",\n                        \"dx_edema\",\n                        \"dx_clpd\",\n                        \"dx_rf\",\n                        \"dx_aki\",\n                        \"dx_hf\",\n                        \"dx_mcd\"\n                    ]\n                }\n            },\n            \"saveName\": \"FirstPreference: Less preffered\"\n        },\n        {\n            \"id\": 15,\n            \"userid\": \"rp390\",\n            \"jsonData\": {\n                \"states\": [\n                    \"NC\",\n                    \"MA\",\n                    \"FL\",\n                    \"TX\",\n                    \"NJ\",\n                    \"AR\",\n                    \"CT\",\n                    \"TN\",\n                    \"WA\",\n                    \"AZ\",\n                    \"OR\",\n                    \"SC\",\n                    \"GA\",\n                    \"CA\",\n                    \"IL\",\n                    \"MN\",\n                    \"NY\",\n                    \"VA\",\n                    \"UN\",\n                    \"OH\",\n                    \"MO\",\n                    \"CO\",\n                    \"IA\",\n                    \"IN\",\n                    \"SD\",\n                    \"ID\",\n                    \"AL\",\n                    \"WI\",\n                    \"MD\",\n                    \"LA\",\n                    \"MS\",\n                    \"NV\",\n                    \"ND\",\n                    \"PA\",\n                    \"OK\",\n                    \"DC\",\n                    \"VT\",\n                    \"MI\",\n                    \"RI\",\n                    \"HI\",\n                    \"KY\",\n                    \"NH\",\n                    \"NM\",\n                    \"UT\",\n                    \"NE\",\n                    \"WV\",\n                    \"KS\",\n                    \"WY\",\n                    \"ME\"\n                ],\n                \"treatments\": {\n                    \"OR\": [\n                        64,\n                        65536,\n                        16777216,\n                        131072,\n                        1073741824,\n                        268435456,\n                        1,\n                        128,\n                        256\n                    ],\n                    \"AND\": [\n                        134217728,\n                        2048,\n                        67108864,\n                        16384,\n                        8,\n                        262144,\n                        4096,\n                        1048576\n                    ],\n                    \"labels\": [\n                        \"tx_htn_ace\",\n                        \"tx_htn_ab\",\n                        \"tx_glc_agi\",\n                        \"tx_htn_a2\",\n                        \"tx_lpd\",\n                        \"tx_htn\",\n                        \"tx_plt\",\n                        \"tx_htn_arb\",\n                        \"tx_htn_bb\",\n                        \"tx_glc_bg\",\n                        \"tx_htn_ccb\",\n                        \"tx_htn_cai\",\n                        \"tx_htn_diuretics\",\n                        \"tx_glc_dpp4\",\n                        \"tx_lpd_fibrates\",\n                        \"tx_glc_glp1\",\n                        \"tx_glc\",\n                        \"tx_glc_insulin\",\n                        \"tx_htn_ld\",\n                        \"tx_glc_megl\",\n                        \"tx_htn_mra\",\n                        \"tx_lpd_PCSK9s\",\n                        \"tx_htn_pai\",\n                        \"tx_htn_pd\",\n                        \"tx_glc_sglt2\",\n                        \"tx_lpd_statin\",\n                        \"tx_glc_sulf\",\n                        \"tx_htn_td\",\n                        \"tx_glc_thia\",\n                        \"tx_lpd_zetia\",\n                        \"tx_lpd_bile\"\n                    ]\n                },\n                \"group_condition\": {\n                    \"group_by\": \"cohort\",\n                    \"selection\": [\n                        \"diab\",\n                        \"both\",\n                        \"ckd\"\n                    ]\n                },\n                \"medical_conditions\": {\n                    \"OR\": [\n                        512,\n                        1024,\n                        256,\n                        64,\n                        128,\n                        1,\n                        16,\n                        8,\n                        2,\n                        32,\n                        4\n                    ],\n                    \"AND\": [\n                        67108864,\n                        16777216,\n                        8388608,\n                        134217728,\n                        268435456,\n                        4194304,\n                        33554432\n                    ],\n                    \"labels\": [\n                        \"dx_esrd\",\n                        \"dx_mi\",\n                        \"dx_stroke\",\n                        \"dx_htn\",\n                        \"dx_lpd\",\n                        \"dx_obe\",\n                        \"dx_dneu\",\n                        \"dx_dret\",\n                        \"dx_dnep\",\n                        \"dx_af\",\n                        \"dx_cad\",\n                        \"dx_pvd\",\n                        \"dx_anm\",\n                        \"dx_hyperk\",\n                        \"dx_hypok\",\n                        \"dx_hypon\",\n                        \"dx_angina\",\n                        \"dx_acs\",\n                        \"dx_sleep\",\n                        \"dx_dep\",\n                        \"dx_ftg\",\n                        \"dx_pain\",\n                        \"dx_osteo\",\n                        \"dx_edema\",\n                        \"dx_clpd\",\n                        \"dx_rf\",\n                        \"dx_aki\",\n                        \"dx_hf\",\n                        \"dx_mcd\"\n                    ]\n                }\n            },\n            \"saveName\": \"FirstPreference: Preffered\"\n        },\n        {\n            \"id\": 16,\n            \"userid\": \"rp390\",\n            \"jsonData\": {\n                \"states\": [\n                    \"NC\",\n                    \"MA\",\n                    \"FL\",\n                    \"TX\",\n                    \"NJ\",\n                    \"AR\",\n                    \"CT\",\n                    \"TN\",\n                    \"WA\",\n                    \"AZ\",\n                    \"OR\",\n                    \"SC\",\n                    \"GA\",\n                    \"CA\",\n                    \"IL\",\n                    \"MN\",\n                    \"NY\",\n                    \"VA\",\n                    \"UN\",\n                    \"OH\",\n                    \"MO\",\n                    \"CO\",\n                    \"IA\",\n                    \"IN\",\n                    \"SD\",\n                    \"ID\",\n                    \"AL\",\n                    \"WI\",\n                    \"MD\",\n                    \"LA\",\n                    \"MS\",\n                    \"NV\",\n                    \"ND\",\n                    \"PA\",\n                    \"OK\",\n                    \"DC\",\n                    \"VT\",\n                    \"MI\",\n                    \"RI\",\n                    \"HI\",\n                    \"KY\",\n                    \"NH\",\n                    \"NM\",\n                    \"UT\",\n                    \"NE\",\n                    \"WV\",\n                    \"KS\",\n                    \"WY\",\n                    \"ME\"\n                ],\n                \"treatments\": {\n                    \"OR\": [\n                        64,\n                        65536,\n                        16777216,\n                        131072,\n                        1073741824,\n                        268435456,\n                        1,\n                        128,\n                        256\n                    ],\n                    \"AND\": [\n                        134217728,\n                        2048,\n                        67108864,\n                        16384,\n                        8,\n                        262144,\n                        4096,\n                        1048576\n                    ],\n                    \"labels\": [\n                        \"tx_htn_ace\",\n                        \"tx_htn_ab\",\n                        \"tx_glc_agi\",\n                        \"tx_htn_a2\",\n                        \"tx_lpd\",\n                        \"tx_htn\",\n                        \"tx_plt\",\n                        \"tx_htn_arb\",\n                        \"tx_htn_bb\",\n                        \"tx_glc_bg\",\n                        \"tx_htn_ccb\",\n                        \"tx_htn_cai\",\n                        \"tx_htn_diuretics\",\n                        \"tx_glc_dpp4\",\n                        \"tx_lpd_fibrates\",\n                        \"tx_glc_glp1\",\n                        \"tx_glc\",\n                        \"tx_glc_insulin\",\n                        \"tx_htn_ld\",\n                        \"tx_glc_megl\",\n                        \"tx_htn_mra\",\n                        \"tx_lpd_PCSK9s\",\n                        \"tx_htn_pai\",\n                        \"tx_htn_pd\",\n                        \"tx_glc_sglt2\",\n                        \"tx_lpd_statin\",\n                        \"tx_glc_sulf\",\n                        \"tx_htn_td\",\n                        \"tx_glc_thia\",\n                        \"tx_lpd_zetia\",\n                        \"tx_lpd_bile\"\n                    ]\n                },\n                \"group_condition\": {\n                    \"group_by\": \"cohort\",\n                    \"selection\": [\n                        \"diab\",\n                        \"both\",\n                        \"ckd\"\n                    ]\n                },\n                \"medical_conditions\": {\n                    \"OR\": [\n                        512,\n                        1024,\n                        256,\n                        64,\n                        128,\n                        1,\n                        16,\n                        8,\n                        2,\n                        32,\n                        4\n                    ],\n                    \"AND\": [\n                        67108864,\n                        16777216,\n                        8388608,\n                        134217728,\n                        268435456,\n                        4194304,\n                        33554432\n                    ],\n                    \"labels\": [\n                        \"dx_esrd\",\n                        \"dx_mi\",\n                        \"dx_stroke\",\n                        \"dx_htn\",\n                        \"dx_lpd\",\n                        \"dx_obe\",\n                        \"dx_dneu\",\n                        \"dx_dret\",\n                        \"dx_dnep\",\n                        \"dx_af\",\n                        \"dx_cad\",\n                        \"dx_pvd\",\n                        \"dx_anm\",\n                        \"dx_hyperk\",\n                        \"dx_hypok\",\n                        \"dx_hypon\",\n                        \"dx_angina\",\n                        \"dx_acs\",\n                        \"dx_sleep\",\n                        \"dx_dep\",\n                        \"dx_ftg\",\n                        \"dx_pain\",\n                        \"dx_osteo\",\n                        \"dx_edema\",\n                        \"dx_clpd\",\n                        \"dx_rf\",\n                        \"dx_aki\",\n                        \"dx_hf\",\n                        \"dx_mcd\"\n                    ]\n                }\n            },\n            \"saveName\": \"Preference: Less Preffered\"\n        }\n    ],\n    \"defaultPreferenceId\": 15\n}"
+				}
+			]
+		},
+		{
+			"name": "Add User Preference",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\": \"rp394\",\r\n    \"authToken\": \"9b04588e-2e6f-470a-a420-e6ff3b353410\",\r\n    \"saveName\": \"User Preference 6\",\r\n    \"makeDefault\": 1,\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"cohort\",\r\n            \"selection\":[\"diab\", \"both\", \"ckd\"]\r\n        },\r\n        \"states\": [\r\n            \"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\", \"WA\", \"AZ\", \"OR\", \"SC\", \"GA\", \"CA\", \"IL\", \"MN\", \"NY\", \"VA\", \"UN\", \"OH\", \"MO\",\r\n            \"CO\", \"IA\", \"IN\", \"SD\", \"ID\", \"AL\", \"WI\", \"MD\", \"LA\", \"MS\", \"NV\", \"ND\", \"PA\", \"OK\", \"DC\", \"VT\", \"MI\", \"RI\", \"HI\", \"KY\",\"NH\", \r\n            \"NM\", \"UT\", \"NE\", \"WV\", \"KS\", \"WY\", \"ME\"\r\n        ],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\r\n                \"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\", \r\n                \"dx_pvd\", \"dx_anm\", \"dx_hyperk\", \"dx_hypok\", \"dx_hypon\", \"dx_angina\", \"dx_acs\", \"dx_sleep\", \"dx_dep\", \"dx_ftg\", \"dx_pain\", \r\n                \"dx_osteo\", \"dx_edema\", \"dx_clpd\", \"dx_rf\", \"dx_aki\", \"dx_hf\", \"dx_mcd\"\r\n            ],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \"tx_htn_arb\", \"tx_htn_bb\", \r\n                \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \"tx_glc_dpp4\", \"tx_lpd_fibrates\", \"tx_glc_glp1\", \"tx_glc\", \r\n                \"tx_glc_insulin\", \"tx_htn_ld\", \"tx_glc_megl\", \"tx_htn_mra\", \"tx_lpd_PCSK9s\", \"tx_htn_pai\", \"tx_htn_pd\", \"tx_glc_sglt2\", \r\n                \"tx_lpd_statin\", \"tx_glc_sulf\", \"tx_htn_td\", \"tx_glc_thia\", \"tx_lpd_zetia\", \"tx_lpd_bile\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/preferences",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"preferences"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add User Preference: non-default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp39\",\r\n    \"authToken\": \"42849ea9-489f-4d26-b824-18c9ebec19d8\",\r\n    \"saveName\": \"User Preference 2\",\r\n    \"makeDefault\": 0,\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"cohort\",\r\n            \"selection\":[\"diab\", \"both\", \"ckd\"]\r\n        },\r\n        \"states\": [\r\n            \"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\", \"WA\", \"AZ\", \"OR\", \"SC\", \"GA\", \"CA\", \"IL\", \"MN\", \"NY\", \"VA\", \"UN\", \"OH\", \"MO\",\r\n            \"CO\", \"IA\", \"IN\", \"SD\", \"ID\", \"AL\", \"WI\", \"MD\", \"LA\", \"MS\", \"NV\", \"ND\", \"PA\", \"OK\", \"DC\", \"VT\", \"MI\", \"RI\", \"HI\", \"KY\",\"NH\", \r\n            \"NM\", \"UT\", \"NE\", \"WV\", \"KS\", \"WY\", \"ME\"\r\n        ],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\r\n                \"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\", \r\n                \"dx_pvd\", \"dx_anm\", \"dx_hyperk\", \"dx_hypok\", \"dx_hypon\", \"dx_angina\", \"dx_acs\", \"dx_sleep\", \"dx_dep\", \"dx_ftg\", \"dx_pain\", \r\n                \"dx_osteo\", \"dx_edema\", \"dx_clpd\", \"dx_rf\", \"dx_aki\", \"dx_hf\", \"dx_mcd\"\r\n            ],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \"tx_htn_arb\", \"tx_htn_bb\", \r\n                \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \"tx_glc_dpp4\", \"tx_lpd_fibrates\", \"tx_glc_glp1\", \"tx_glc\", \r\n                \"tx_glc_insulin\", \"tx_htn_ld\", \"tx_glc_megl\", \"tx_htn_mra\", \"tx_lpd_PCSK9s\", \"tx_htn_pai\", \"tx_htn_pd\", \"tx_glc_sglt2\", \r\n                \"tx_lpd_statin\", \"tx_glc_sulf\", \"tx_htn_td\", \"tx_glc_thia\", \"tx_lpd_zetia\", \"tx_lpd_bile\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/preferences",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"preferences"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1461"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5b5-GKd+bLB/ggAymWFGlG8Cur4S5B0\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 05:53:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"message\": \"Preference added sucessfully\",\n    \"data\": {\n        \"id\": 1,\n        \"userid\": \"rp39\",\n        \"saveName\": \"User Preference 2\",\n        \"jsonData\": {\n            \"group_condition\": {\n                \"group_by\": \"cohort\",\n                \"selection\": [\n                    \"diab\",\n                    \"both\",\n                    \"ckd\"\n                ]\n            },\n            \"states\": [\n                \"NC\",\n                \"MA\",\n                \"FL\",\n                \"TX\",\n                \"NJ\",\n                \"AR\",\n                \"CT\",\n                \"TN\",\n                \"WA\",\n                \"AZ\",\n                \"OR\",\n                \"SC\",\n                \"GA\",\n                \"CA\",\n                \"IL\",\n                \"MN\",\n                \"NY\",\n                \"VA\",\n                \"UN\",\n                \"OH\",\n                \"MO\",\n                \"CO\",\n                \"IA\",\n                \"IN\",\n                \"SD\",\n                \"ID\",\n                \"AL\",\n                \"WI\",\n                \"MD\",\n                \"LA\",\n                \"MS\",\n                \"NV\",\n                \"ND\",\n                \"PA\",\n                \"OK\",\n                \"DC\",\n                \"VT\",\n                \"MI\",\n                \"RI\",\n                \"HI\",\n                \"KY\",\n                \"NH\",\n                \"NM\",\n                \"UT\",\n                \"NE\",\n                \"WV\",\n                \"KS\",\n                \"WY\",\n                \"ME\"\n            ],\n            \"medical_conditions\": {\n                \"labels\": [\n                    \"dx_esrd\",\n                    \"dx_mi\",\n                    \"dx_stroke\",\n                    \"dx_htn\",\n                    \"dx_lpd\",\n                    \"dx_obe\",\n                    \"dx_dneu\",\n                    \"dx_dret\",\n                    \"dx_dnep\",\n                    \"dx_af\",\n                    \"dx_cad\",\n                    \"dx_pvd\",\n                    \"dx_anm\",\n                    \"dx_hyperk\",\n                    \"dx_hypok\",\n                    \"dx_hypon\",\n                    \"dx_angina\",\n                    \"dx_acs\",\n                    \"dx_sleep\",\n                    \"dx_dep\",\n                    \"dx_ftg\",\n                    \"dx_pain\",\n                    \"dx_osteo\",\n                    \"dx_edema\",\n                    \"dx_clpd\",\n                    \"dx_rf\",\n                    \"dx_aki\",\n                    \"dx_hf\",\n                    \"dx_mcd\"\n                ],\n                \"OR\": [\n                    512,\n                    1024,\n                    256,\n                    64,\n                    128,\n                    1,\n                    16,\n                    8,\n                    2,\n                    32,\n                    4\n                ],\n                \"AND\": [\n                    67108864,\n                    16777216,\n                    8388608,\n                    134217728,\n                    268435456,\n                    4194304,\n                    33554432\n                ]\n            },\n            \"treatments\": {\n                \"labels\": [\n                    \"tx_htn_ace\",\n                    \"tx_htn_ab\",\n                    \"tx_glc_agi\",\n                    \"tx_htn_a2\",\n                    \"tx_lpd\",\n                    \"tx_htn\",\n                    \"tx_plt\",\n                    \"tx_htn_arb\",\n                    \"tx_htn_bb\",\n                    \"tx_glc_bg\",\n                    \"tx_htn_ccb\",\n                    \"tx_htn_cai\",\n                    \"tx_htn_diuretics\",\n                    \"tx_glc_dpp4\",\n                    \"tx_lpd_fibrates\",\n                    \"tx_glc_glp1\",\n                    \"tx_glc\",\n                    \"tx_glc_insulin\",\n                    \"tx_htn_ld\",\n                    \"tx_glc_megl\",\n                    \"tx_htn_mra\",\n                    \"tx_lpd_PCSK9s\",\n                    \"tx_htn_pai\",\n                    \"tx_htn_pd\",\n                    \"tx_glc_sglt2\",\n                    \"tx_lpd_statin\",\n                    \"tx_glc_sulf\",\n                    \"tx_htn_td\",\n                    \"tx_glc_thia\",\n                    \"tx_lpd_zetia\",\n                    \"tx_lpd_bile\"\n                ],\n                \"OR\": [\n                    64,\n                    65536,\n                    16777216,\n                    131072,\n                    1073741824,\n                    268435456,\n                    1,\n                    128,\n                    256\n                ],\n                \"AND\": [\n                    134217728,\n                    2048,\n                    67108864,\n                    16384,\n                    8,\n                    262144,\n                    4096,\n                    1048576\n                ]\n            }\n        }\n    }\n}"
+				},
+				{
+					"name": "Add User Preference: set default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp39\",\r\n    \"authToken\": \"42849ea9-489f-4d26-b824-18c9ebec19d8\",\r\n    \"saveName\": \"User Preference 1\",\r\n    \"makeDefault\": 1,\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"cohort\",\r\n            \"selection\":[\"diab\", \"both\", \"ckd\"]\r\n        },\r\n        \"states\": [\r\n            \"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\", \"TN\", \"WA\", \"AZ\", \"OR\", \"SC\", \"GA\", \"CA\", \"IL\", \"MN\", \"NY\", \"VA\", \"UN\", \"OH\", \"MO\",\r\n            \"CO\", \"IA\", \"IN\", \"SD\", \"ID\", \"AL\", \"WI\", \"MD\", \"LA\", \"MS\", \"NV\", \"ND\", \"PA\", \"OK\", \"DC\", \"VT\", \"MI\", \"RI\", \"HI\", \"KY\",\"NH\", \r\n            \"NM\", \"UT\", \"NE\", \"WV\", \"KS\", \"WY\", \"ME\"\r\n        ],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\r\n                \"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\", \r\n                \"dx_pvd\", \"dx_anm\", \"dx_hyperk\", \"dx_hypok\", \"dx_hypon\", \"dx_angina\", \"dx_acs\", \"dx_sleep\", \"dx_dep\", \"dx_ftg\", \"dx_pain\", \r\n                \"dx_osteo\", \"dx_edema\", \"dx_clpd\", \"dx_rf\", \"dx_aki\", \"dx_hf\", \"dx_mcd\"\r\n            ],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \"tx_htn_arb\", \"tx_htn_bb\", \r\n                \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \"tx_glc_dpp4\", \"tx_lpd_fibrates\", \"tx_glc_glp1\", \"tx_glc\", \r\n                \"tx_glc_insulin\", \"tx_htn_ld\", \"tx_glc_megl\", \"tx_htn_mra\", \"tx_lpd_PCSK9s\", \"tx_htn_pai\", \"tx_htn_pd\", \"tx_glc_sglt2\", \r\n                \"tx_lpd_statin\", \"tx_glc_sulf\", \"tx_htn_td\", \"tx_glc_thia\", \"tx_lpd_zetia\", \"tx_lpd_bile\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/preferences",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"preferences"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1461"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5b5-SjV7+0Nb6JABn8JboqaeJ2KwkmE\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 05:54:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"message\": \"Preference added sucessfully\",\n    \"data\": {\n        \"id\": 2,\n        \"userid\": \"rp39\",\n        \"saveName\": \"User Preference 1\",\n        \"jsonData\": {\n            \"group_condition\": {\n                \"group_by\": \"cohort\",\n                \"selection\": [\n                    \"diab\",\n                    \"both\",\n                    \"ckd\"\n                ]\n            },\n            \"states\": [\n                \"NC\",\n                \"MA\",\n                \"FL\",\n                \"TX\",\n                \"NJ\",\n                \"AR\",\n                \"CT\",\n                \"TN\",\n                \"WA\",\n                \"AZ\",\n                \"OR\",\n                \"SC\",\n                \"GA\",\n                \"CA\",\n                \"IL\",\n                \"MN\",\n                \"NY\",\n                \"VA\",\n                \"UN\",\n                \"OH\",\n                \"MO\",\n                \"CO\",\n                \"IA\",\n                \"IN\",\n                \"SD\",\n                \"ID\",\n                \"AL\",\n                \"WI\",\n                \"MD\",\n                \"LA\",\n                \"MS\",\n                \"NV\",\n                \"ND\",\n                \"PA\",\n                \"OK\",\n                \"DC\",\n                \"VT\",\n                \"MI\",\n                \"RI\",\n                \"HI\",\n                \"KY\",\n                \"NH\",\n                \"NM\",\n                \"UT\",\n                \"NE\",\n                \"WV\",\n                \"KS\",\n                \"WY\",\n                \"ME\"\n            ],\n            \"medical_conditions\": {\n                \"labels\": [\n                    \"dx_esrd\",\n                    \"dx_mi\",\n                    \"dx_stroke\",\n                    \"dx_htn\",\n                    \"dx_lpd\",\n                    \"dx_obe\",\n                    \"dx_dneu\",\n                    \"dx_dret\",\n                    \"dx_dnep\",\n                    \"dx_af\",\n                    \"dx_cad\",\n                    \"dx_pvd\",\n                    \"dx_anm\",\n                    \"dx_hyperk\",\n                    \"dx_hypok\",\n                    \"dx_hypon\",\n                    \"dx_angina\",\n                    \"dx_acs\",\n                    \"dx_sleep\",\n                    \"dx_dep\",\n                    \"dx_ftg\",\n                    \"dx_pain\",\n                    \"dx_osteo\",\n                    \"dx_edema\",\n                    \"dx_clpd\",\n                    \"dx_rf\",\n                    \"dx_aki\",\n                    \"dx_hf\",\n                    \"dx_mcd\"\n                ],\n                \"OR\": [\n                    512,\n                    1024,\n                    256,\n                    64,\n                    128,\n                    1,\n                    16,\n                    8,\n                    2,\n                    32,\n                    4\n                ],\n                \"AND\": [\n                    67108864,\n                    16777216,\n                    8388608,\n                    134217728,\n                    268435456,\n                    4194304,\n                    33554432\n                ]\n            },\n            \"treatments\": {\n                \"labels\": [\n                    \"tx_htn_ace\",\n                    \"tx_htn_ab\",\n                    \"tx_glc_agi\",\n                    \"tx_htn_a2\",\n                    \"tx_lpd\",\n                    \"tx_htn\",\n                    \"tx_plt\",\n                    \"tx_htn_arb\",\n                    \"tx_htn_bb\",\n                    \"tx_glc_bg\",\n                    \"tx_htn_ccb\",\n                    \"tx_htn_cai\",\n                    \"tx_htn_diuretics\",\n                    \"tx_glc_dpp4\",\n                    \"tx_lpd_fibrates\",\n                    \"tx_glc_glp1\",\n                    \"tx_glc\",\n                    \"tx_glc_insulin\",\n                    \"tx_htn_ld\",\n                    \"tx_glc_megl\",\n                    \"tx_htn_mra\",\n                    \"tx_lpd_PCSK9s\",\n                    \"tx_htn_pai\",\n                    \"tx_htn_pd\",\n                    \"tx_glc_sglt2\",\n                    \"tx_lpd_statin\",\n                    \"tx_glc_sulf\",\n                    \"tx_htn_td\",\n                    \"tx_glc_thia\",\n                    \"tx_lpd_zetia\",\n                    \"tx_lpd_bile\"\n                ],\n                \"OR\": [\n                    64,\n                    65536,\n                    16777216,\n                    131072,\n                    1073741824,\n                    268435456,\n                    1,\n                    128,\n                    256\n                ],\n                \"AND\": [\n                    134217728,\n                    2048,\n                    67108864,\n                    16384,\n                    8,\n                    262144,\n                    4096,\n                    1048576\n                ]\n            }\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Update User Request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\": \"rp394\",\r\n    \"authToken\": \"9b04588e-2e6f-470a-a420-e6ff3b353410\",\r\n    \"preferenceId\": 1,\r\n    \"saveName\": \"NewName1\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"cohort\",\r\n            \"selection\":[\"diab\", \"both\", \"ckd\"]\r\n        },\r\n        \"states\": [\r\n            \"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\"\r\n        ]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/preferences",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"preferences"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update User Request",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "/* If preferenceId 10000 doesn't exist */\r\n{\r\n    \"userid\": \"rp39\",\r\n    \"authToken\": \"5195b635-0d30-4518-b241-e9dd76f48c29\",\r\n    \"preferenceId\": 10000, /* 1 is First Preference Id, 2 is Second Preference Id and so on... */\r\n    \"saveName\": \"NewName500\",\r\n    \"jsonData\": {\r\n        \"group_condition\": {\r\n            \"group_by\": \"cohort\",\r\n            \"selection\":[\"diab\", \"both\", \"ckd\"]\r\n        },\r\n        \"states\": [\r\n            \"NC\", \"MA\", \"FL\", \"TX\", \"NJ\", \"AR\", \"CT\"\r\n        ],\r\n        \"medical_conditions\": {\r\n            \"labels\": [\r\n                \"dx_esrd\", \"dx_mi\", \"dx_stroke\", \"dx_htn\", \"dx_lpd\", \"dx_obe\", \"dx_dneu\", \"dx_dret\", \"dx_dnep\", \"dx_af\", \"dx_cad\"\r\n            ],\r\n            \"OR\": [512, 1024, 256, 64, 128, 1, 16, 8, 2, 32, 4],\r\n            \"AND\": [67108864, 16777216, 8388608, 134217728, 268435456, 4194304, 33554432]\r\n        },\r\n        \"treatments\": {\r\n            \"labels\": [\r\n                \"tx_htn_ace\", \"tx_htn_ab\", \"tx_glc_agi\", \"tx_htn_a2\", \"tx_lpd\", \"tx_htn\", \"tx_plt\", \"tx_htn_arb\", \"tx_htn_bb\", \r\n                \"tx_glc_bg\", \"tx_htn_ccb\", \"tx_htn_cai\", \"tx_htn_diuretics\", \"tx_glc_dpp4\", \"tx_lpd_fibrates\", \"tx_glc_glp1\"\r\n            ],\r\n            \"OR\": [64, 65536, 16777216, 131072, 1073741824, 268435456, 1, 128, 256],\r\n            \"AND\": [134217728, 2048, 67108864, 16384, 8, 262144, 4096, 1048576]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/preferences",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"preferences"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"status\": 200,\r\n    \"success\":1,\r\n    \"message\": \"Preference added sucessfully\",\r\n    \"data\": {\r\n        \"id\": \"\",\r\n        \"userid\": \"\",\r\n        \"saveName\": \"\",\r\n        \"jsonData\": \"\"\r\n    }\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete User Preferences",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/preferences?userid=rp394&authToken=9b04588e-2e6f-470a-a420-e6ff3b353410&preferenceId=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"preferences"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "rp394"
+						},
+						{
+							"key": "authToken",
+							"value": "9b04588e-2e6f-470a-a420-e6ff3b353410"
+						},
+						{
+							"key": "preferenceId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete User Preferences",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"rp391\",\r\n    \"authToken\": \"92751f95-e731-4fa2-b8f8-2a843284df9a\",\r\n    \"preferenceId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/preferences",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"preferences"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "87"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"57-nl0/F2JJuAyjv5UjW+L0F3xqiLI\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Oct 2021 06:00:46 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"success\": 1,\n    \"message\": \"Preference deleted sucessfully!\",\n    \"preferenceId\": 1\n}"
+				}
+			]
+		}
+	]
+}

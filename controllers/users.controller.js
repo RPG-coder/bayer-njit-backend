@@ -1,6 +1,7 @@
 /* --- Import Files --- */
 const database = require("../models");
 const {v4} = require('uuid');
+const { errorLogger, activityLogger } = require("../logs/logger");
 const Users = database.User;
 
 /*********************************************************
@@ -25,7 +26,7 @@ exports.register = async (req) => {
    * @returns {JSON} a response object
   **/
     if(req.body.email && req.body.userid && req.body.password && req.body.fullName){
-        console.log(`[INFO]: Received request message ${JSON.stringify(req.body)} for an User Register\n`);
+        activityLogger.info(`Received request message ${JSON.stringify(req.body)} for an User Register\n`);
         
         const registerDetails={
             fullName: req.body.fullName,
@@ -39,7 +40,7 @@ exports.register = async (req) => {
         try{
             /* -- Create a new User -- */
             const data = await Users.create(registerDetails);
-            console.log(`[INFO]: Data received upon registering user ${registerDetails.userid} - \n ${JSON.stringify(data)}\n\n`);
+            activityLogger.info(`[INFO]: Data received upon registering user ${registerDetails.userid} - \n ${JSON.stringify(data)}\n\n`);
 
             /* -- Logging user into Patient Finder application -- */
             const user = await Users.findByPk(registerDetails.userid);
@@ -61,16 +62,26 @@ exports.register = async (req) => {
             
         }catch(err){
             /* Response Object on error from database */
-            console.log(err.message);
-            return {
+            errorLogger.error({
                 status: 401,
                 success: 0,
                 message: "UserID/Email is already taken.",
                 error: err
+            }, req.body);
+            return {
+                status: 401,
+                success: 0,
+                message: "UserID/Email is already taken.",
             };
         };
     }else{
         /* Response Object on request format error */
+        errorLogger.error({
+            status: 400,
+            signup: 0,
+            message: "Bad Request",
+            error: "Request message format unsupported"
+        }, req.body);
         return {
             status: 400,
             signup: 0,
@@ -90,9 +101,9 @@ exports.login = async (req) => {
      * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
      * @returns {JSON} a response object
     **/
-     console.log(`[INFO]: Received request message ${JSON.stringify(req.body)} for an User Login\n`);
+     activityLogger.info(`Received request message ${JSON.stringify(req.body)} for an User Login\n`);
     if(req.body.userid && req.body.password){
-        console.log(`[INFO]: Received request message ${JSON.stringify(req.body)} for an User Login\n`);
+        activityLogger.info(`Received request message ${JSON.stringify(req.body)} for an User Login\n`);
         const loginDetails = {userid: req.body.userid, password: req.body.password};
         try{
             const user = await Users.findByPk(req.body.userid);
@@ -115,6 +126,11 @@ exports.login = async (req) => {
                     message: "Login: Successful!" 
                 };
             }else{
+                errorLogger.error({
+                    status: 401,
+                    success: 0, 
+                    message: "Invalid UserID/Password!"
+                }, req.body);
                 return {
                     status: 401,
                     success: 0, 
@@ -126,16 +142,22 @@ exports.login = async (req) => {
                 status: 400,
                 success: 0,
                 message: "Bad Request",
-                error: err
             };
             if(err){
                 response.status = 401,
                 response.message = "Invalid UserID/Password!";
             }
+            errorLogger.error(response, err, req.body);
             return response;
         };
         
     }else{
+        errorLogger.error({
+            status: 400,
+            success: 0, 
+            message: "Bad Request",
+            error: "Request message format unsupported"
+        }, req.body);
         return {
             status: 400,
             success: 0, 
@@ -156,7 +178,7 @@ exports.logOut = async (req) => {
      * @returns {JSON} a response object
      **/
     if(req.body.userid && req.body.authToken){
-        console.log(`[INFO]: Received request message ${JSON.stringify(req.body)} for an User Logout\n`);
+        activityLogger.info(`Received request message ${JSON.stringify(req.body)} for an User Logout\n`);
 
         try{
             /* --- User logs out here... --- */
@@ -171,6 +193,11 @@ exports.logOut = async (req) => {
                     message: "Logged out successfully!"
                 };
             }else{
+                errorLogger.error({
+                    status: 401,
+                    success: 0,
+                    message: "Unauthorized command!"
+                }, req.body);
                 return {
                     status: 401,
                     success: 0,
@@ -180,15 +207,26 @@ exports.logOut = async (req) => {
 
             
         }catch(err){
-            return {
+            errorLogger.error({
                 status: 400,
                 success: 0,
                 message: "Bad Request",
                 error: err
+            }, req.body);
+            return {
+                status: 400,
+                success: 0,
+                message: "Bad Request",
             };
         }
 
     }else{
+        errorLogger.error({
+            status: 400,
+            success: 0,
+            message: "Bad Request",
+            error: "Request message format unsupported"
+        }, req.body);
         return {
             status: 400,
             success: 0,

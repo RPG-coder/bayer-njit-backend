@@ -50,7 +50,4 @@ db.PreferenceFormSettingsFK = ()=>{
 }
 
 db.PreferenceFormSettingsFK();
-
-  
-
 module.exports = db;

@@ -1,4 +1,5 @@
 /* --- Import Files --- */
+const { activityLogger, errorLogger } = require("../logs/logger");
 const database = require("../models");
 const User = database.User;
 const Preferences = database.Preferences;
@@ -27,7 +28,7 @@ exports.getPreferences = async (req) => {
      * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
      * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
      **/
-    console.log("Got message: preference", req.query);
+    activityLogger.info("[RECEIVED]: request message for preference", req.query);
     try {
         if (await checkCredentials(req)) {
             const user = await User.findOne({
@@ -53,6 +54,11 @@ exports.getPreferences = async (req) => {
             return response;
 
         } else {
+            errorLogger.error({
+                status: 401,
+                success: 0,
+                message: "Unauthorized action!",
+            }, req.query);
             return {
                 status: 401,
                 success: 0,
@@ -60,6 +66,12 @@ exports.getPreferences = async (req) => {
             };
         }
     } catch (err) {
+        errorLogger.error({
+            status: 500,
+            success: 0,
+            message: "Internal Server Error!",
+            err: err
+        }, req.query);
         return {
             status: 500,
             success: 0,
@@ -88,11 +100,7 @@ exports.createPreference = async (req) => {
                 const setting = await FormSettings.create({ id: formSettingMaxId.dataValues.maxId + 1, userid: req.body.userid, jsonData: req.body.jsonData });
                 const preference = await Preferences.create({ id: formSettingMaxId.dataValues.maxId + 1, userid: req.body.userid, saveName: req.body.saveName });
 
-
-
-                console.log(setting, 'settings');
                 if (req.body.makeDefault == true) {
-                    console.log('Default preference set');
                     const user = await User.findOne({ where: { userid: req.body.userid } });
                     user.defaultPreferenceId = preference.id;
                     await user.save();
@@ -111,6 +119,11 @@ exports.createPreference = async (req) => {
                     }
                 }
             } else {
+                errorLogger.error({
+                    status: 400,
+                    success: 0,
+                    message: "Bad Request!",
+                }, req.body);
                 return {
                     status: 400,
                     success: 0,
@@ -118,6 +131,11 @@ exports.createPreference = async (req) => {
                 };
             }
         } else {
+            errorLogger.error({
+                status: 401,
+                success: 0,
+                message: "Unauthorized action!",
+            }, req.body);
             return {
                 status: 401,
                 success: 0,
@@ -125,6 +143,12 @@ exports.createPreference = async (req) => {
             };
         }
     } catch (err) {
+        errorLogger.error({
+            status: 500,
+            success: 0,
+            message: "Internal Server Error!",
+            err: err
+        }, req.body);
         return {
             status: 500,
             success: 0,
@@ -143,7 +167,7 @@ exports.deletePreference = async (req) => {
      */
     try {
         if (await checkCredentials(req)) {
-            console.log(`[INFO]: Received userId: ${req.query.userid}, preferenceId: ${req.query.preferenceId}`);
+            activityLogger.info(`[RECEIVED]: Delete preference for userId: ${req.query.userid} on preferenceId: ${req.query.preferenceId}`);
             if (req.query.preferenceId) {
                 const preference = await Preferences.findOne({
                     where: {
@@ -168,6 +192,11 @@ exports.deletePreference = async (req) => {
                 }
 
             } else {
+                errorLogger.error({
+                    status: 400,
+                    success: 0,
+                    message: "Bad Request!",
+                }, req.query);
                 return {
                     status: 400,
                     success: 0,
@@ -175,6 +204,11 @@ exports.deletePreference = async (req) => {
                 };
             }
         } else {
+            errorLogger.error({
+                status: 401,
+                success: 0,
+                message: "Unauthorized action!",
+            }, req.query);
             return {
                 status: 401,
                 success: 0,
@@ -182,6 +216,12 @@ exports.deletePreference = async (req) => {
             };
         }
     } catch (err) {
+        errorLogger.error({
+            status: 500,
+            success: 0,
+            message: "Internal Server Error!",
+            err: err
+        }, req.query);
         return {
             status: 500,
             success: 0,
@@ -245,16 +285,26 @@ exports.editPreference = async (req) => {
                             createdAt: preference.createdAt,
                             jsonData: setting.jsonData
                         }
-                    }
+                    };
                 }else {
+                    errorLogger.error({
+                        status: 404,
+                        success: 0,
+                        message: "Resource not found!",
+                    }, req.body);
                     return {
                         status: 404,
                         success: 0,
                         message: "Resource not found!",
-                    }
+                    };
                 }
 
             } else {
+                errorLogger.error({
+                    status: 400,
+                    success: 0,
+                    message: "Bad Request!",
+                }, req.body);
                 return {
                     status: 400,
                     success: 0,
@@ -262,6 +312,11 @@ exports.editPreference = async (req) => {
                 };
             }
         } else {
+            errorLogger.error({
+                status: 401,
+                success: 0,
+                message: "Unauthorized action!",
+            }, req.body);
             return {
                 status: 401,
                 success: 0,
@@ -269,7 +324,12 @@ exports.editPreference = async (req) => {
             };
         }
     } catch (err) {
-        console.log(err)
+        errorLogger.error({
+            status: 500,
+            success: 0,
+            message: "Internal Server Error!",
+            err: err
+        }, req.body);
         return {
             status: 500,
             success: 0,
