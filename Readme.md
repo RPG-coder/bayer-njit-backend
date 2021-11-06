@@ -28,7 +28,7 @@ A Patient Finder application that is used for finding percentage (%) population 
  3. History: A FormSetting configuration that are stored automatically when a user clicks for graph generation (or data visualization) so that the potential product owner or respective users of the application can track what they have accessed across their product usage. 
 
 ### Design
-[Bayer Patient Finder Design](http://bayer.wireframe.rahulgputcha.live/)
+[Bayer Patient Finder Design](https://wireframes.rahulgputcha.live/bayer/)
 
 ## Requirements
 - SQL Version 13.0.5
