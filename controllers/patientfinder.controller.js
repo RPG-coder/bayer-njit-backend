@@ -195,7 +195,7 @@ const processRequest = async (req) => {
     /* --- Query Formation --- */
     const query = (
         `CREATE VIEW B AS (` +
-            `SELECT medical_condition, treatment, paytyp, state, pop FROM patients_info `+
+            `SELECT * FROM patients_info `+
             /* Static condition checking */
             `WHERE ${stateQuery} AND ${groupByConditionQuery} ` +
             /* Dynamic condition checking */
@@ -385,3 +385,129 @@ exports.getMedicalCondition = async (req)=>{
 exports.getTreatment = async (req)=>{ 
     return getResponseFor(req, 'treatment');
 };
+
+
+/* --- Population Overview section API --- */
+const getStatewiseMinMaxOfPatients =  async (req) => {
+    /**
+     * Get list of states and the population of patient w.r.t the options selected in the filter settings.
+     * @function getStatewiseMinMaxOfPatients()
+     * @param {JSON} req - request message containing filter setting data in req.body
+     * @returns {JSON} res - response  
+    **/
+    const {QueryTypes} = database.Sequelize;
+    const results = await database.sequelize.query("SELECT state, count(*) as population FROM B GROUP BY state;", {type: QueryTypes.SELECT});
+    const states = {};
+    results.map((obj)=>{states[obj.state] = obj.population})
+    return {
+        states: states,
+        max: Math.max(...Object.values(states)),
+        min: Math.min(...Object.values(states))
+    };
+}
+
+
+const generatePatientInfoForStates = async (req, stateList) => {
+    /**
+     * Get  and the population of patient w.r.t the options selected in the filter settings.
+     * @function generatePatientInfoForStates()
+     * @param {JSON} req - request message containing filter setting data in req.body
+     * @returns {JSON} res - response  
+    **/
+
+    let query, groupByConditionQuery, error, errorMessage, group_by;
+    [query, groupByConditionQuery, error, errorMessage, group_by] = await processRequest(req);
+    await database.sequelize.query(query);
+    /* --- VIEW B (TEMPERORY STORAGE) is now created --- */
+
+    return;
+}
+
+const deleteTemporaryStorage = async ()=> {
+    await database.sequelize.query(`DROP VIEW IF EXISTS B`);
+}
+
+exports.getPopulationOverview = async (request) => {
+    /**
+     * Population Overview for a graph filter setting
+     * @function getPopulationOverview()
+     * @param {JSON} request - request message containing filter setting data in req.body
+     * @returns {JSON} res - response  
+    **/
+    try{
+        const req = request.body.jsonData;
+        if(
+            req.group_condition && req.states && req.medical_conditions && req.treatments && 
+            Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 && 
+            Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0
+        ){/* --- First Check: if there are no errors on first-level labels, i.e., if message is in suitable format for processing request --- */
+            
+            await deleteTemporaryStorage();
+            
+            await generatePatientInfoForStates(req);
+
+            return {
+                status: 200,
+                ... await getStatewiseMinMaxOfPatients()
+            }; 
+        }else{
+            errorLogger.info({
+                status: 400,
+                success:0,
+                message: "Bad Request",
+                method: "getPopulationOverview"
+            }, req.body);
+            return {
+                status: 400,
+                success:0,
+                message: "Bad Request", 
+            };
+        }
+    } catch(err){
+        console.log(err);
+    }
+
+}
+
+exports.getPatientsData = async (request) => {
+    /**
+     * Patient Details based on the results of graph filter setting
+     * @function getPatientsData()
+     * @param {JSON} request - request message containing filter setting data in req.body
+     * @returns {JSON} res - response  
+    **/
+    try{
+        const req = request.body.jsonData;
+        if(
+            req.group_condition && req.states && req.medical_conditions && req.treatments && 
+            Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 && 
+            Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0
+        ){/* --- First Check: if there are no errors on first-level labels, i.e., if message is in suitable format for processing request --- */
+            
+            await deleteTemporaryStorage();
+            
+            await generatePatientInfoForStates(req);
+
+            const {QueryTypes} = database.Sequelize;
+            return {
+                status: 200,
+                patientData: await database.sequelize.query("SELECT patid,sex,race,state,pat_age FROM patients_info ORDER BY state;", {type: QueryTypes.SELECT})
+            };
+        }else{
+            errorLogger.info({
+                status: 400,
+                success:0,
+                message: "Bad Request",
+                method: "getPopulationOverview"
+            }, req.body);
+            return {
+                status: 400,
+                success:0,
+                message: "Bad Request", 
+            };
+        }
+    } catch(err){
+        console.log(err);
+    }
+
+}

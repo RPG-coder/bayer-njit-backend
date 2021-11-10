@@ -6,6 +6,9 @@ var cors = require('cors');
 var logger = require('morgan');
 var {appLogger, errorLogger} = require('./logs/logger');
 
+/* --- Application configurations --- */
+var app = express();
+
 try{
   appLogger.info("[STARTED]: Running Patient Finder Backend Application");
 
@@ -14,9 +17,6 @@ try{
   var usersRouter = require('./routes/users');
   var pfRouter = require('./routes/patientfinder');
 
-
-  /* --- Application configurations --- */
-  var app = express();
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
