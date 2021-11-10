@@ -124,4 +124,24 @@ router.put('/check-access', (req,res,next)=>{checkAccessRequestBodyResponse(req,
 router.post('/check-access', (req,res,next)=>{checkAccessRequestBodyResponse(req,res);});
 router.delete('/check-access', (req,res,next)=>{checkAccessRequestBodyResponse(req,res);});
 
+
+/* --- Population Overview --- */
+router.post('/states/population', (req,res)=>{
+    const route = '/patientfinder/states/population';
+    appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.body)} for ${route}`);
+    pfController.getPopulationOverview(req).then((response)=>{
+      appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
+      res.status(response.status).send(response);
+    });
+});
+
+router.post('/patients/details', (req,res)=>{
+    const route = '/patientfinder/states/population';
+    appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.body)} for ${route}`);
+    pfController.getPatientsData(req).then((response)=>{
+      appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
+      res.status(response.status).send(response);
+    });
+});
+
 module.exports = router;

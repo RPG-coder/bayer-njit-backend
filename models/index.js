@@ -45,7 +45,8 @@ db.PreferenceFormSettingsFK = ()=>{
       });
     }
   }).catch((err)=>{
-    console.log('[ERROR]: Server error in setting the Preference & FormSettings relation')
+    console.log('[ERROR]: Server error in setting the Preference & FormSettings relation');
+    console.log(err)
   });
 }
 
