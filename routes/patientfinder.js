@@ -136,7 +136,7 @@ router.post('/states/population', (req,res)=>{
 });
 
 router.post('/patients/details', (req,res)=>{
-    const route = '/patientfinder/states/population';
+    const route = '/patients/details';
     appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.body)} for ${route}`);
     pfController.getPatientsData(req).then((response)=>{
       appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
