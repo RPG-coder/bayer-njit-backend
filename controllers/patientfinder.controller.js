@@ -147,6 +147,7 @@ const processRequest = async (req) => {
         groupByConditionQuery = req.group_condition.selection.map((e,i)=>{
             return `${group_by}='${e}'`
         }).join(" OR ");
+        
     } else{ error = 1; errorMessage="Grouping condition, ";}
     
     /* --- Setting states conditions --- */
@@ -160,6 +161,7 @@ const processRequest = async (req) => {
 
         medicalORSum = 0; medicalANDSum = 0;
         if(req.medical_conditions.OR && req.medical_conditions.OR.length > 0){
+            console.log(req.medical_conditions);
             medicalORSum += req.medical_conditions.OR.reduce((prev,current,i)=>{
                 return prev + current;
             });
@@ -197,7 +199,7 @@ const processRequest = async (req) => {
         `CREATE VIEW B AS (` +
             `SELECT * FROM patients_info `+
             /* Static condition checking */
-            `WHERE ${stateQuery} AND ${groupByConditionQuery} ` +
+            `WHERE ( ${stateQuery} ) AND ( ${groupByConditionQuery} ) ` +
             /* Dynamic condition checking */
             /* Medical AND/OR condition check */
             ((req.medical_conditions.AND && req.medical_conditions.AND.length > 0)?` AND medical_condition & ${medicalANDSum} = ${medicalANDSum}`:'') +
@@ -248,7 +250,7 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
         /* --- Generating a Response --- */        
         const resultingQuery = (
             `SELECT COUNT(*) AS ALL_DATA, ${sumOfLabelQuery}, ${group_by} FROM B `+
-            `GROUP BY ${group_by} HAVING ${groupByConditionQuery}`
+            `GROUP BY ${group_by} HAVING ( ${groupByConditionQuery} )`
         );
 
         const results = await database.sequelize.query(resultingQuery, {type: QueryTypes.SELECT});
@@ -399,6 +401,7 @@ const getStatewiseMinMaxOfPatients =  async (req) => {
     const results = await database.sequelize.query("SELECT state, count(*) as population FROM B GROUP BY state;", {type: QueryTypes.SELECT});
     const states = {};
     results.map((obj)=>{states[obj.state] = obj.population})
+    console.log(states)
     return {
         states: states,
         max: Math.max(...Object.values(states)),
@@ -491,7 +494,7 @@ exports.getPatientsData = async (request) => {
             const {QueryTypes} = database.Sequelize;
             return {
                 status: 200,
-                patientData: await database.sequelize.query("SELECT patid,sex,race,state,pat_age FROM patients_info ORDER BY state;", {type: QueryTypes.SELECT})
+                patientData: await database.sequelize.query("SELECT patid,sex,race,state,pat_age FROM B ORDER BY state;", {type: QueryTypes.SELECT})
             };
         }else{
             errorLogger.info({
