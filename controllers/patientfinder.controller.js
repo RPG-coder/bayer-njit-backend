@@ -4,6 +4,7 @@ const {v4} = require('uuid');
 const patientData = database.patients_info;
 const labelData = database.label_info;
 const {checkCredentials} = require('./common.controller');
+const {activityLogger, errorLogger} = require("../logs/logger"); 
 
 /*********************************************************
  * Controller for Bayer Patient Finder: Relating to the Patient Finder Task
@@ -50,11 +51,16 @@ exports.getLabels = async (req)=>{
                 labelData: labels
             };
         } catch(err){ 
-            return {
+            errorLogger.error({
                 status: 500,
                 success: 0,
                 message: "Internal Server Error!", 
                 error: err
+            },req.query);
+            return {
+                status: 500,
+                success: 0,
+                message: "Internal Server Error!", 
             }; 
         }
     }else{
@@ -62,7 +68,6 @@ exports.getLabels = async (req)=>{
             status: 401,
             success: 0,
             message: "Unauthorized action!", 
-            // error: err
         }; 
     }
 };
@@ -75,7 +80,6 @@ const getDistinctValues = async (req, modelData, columnName)=>{
      *  @returns {JSON} a response message containing the distinct values within the column with it's name as columnName
     **/
     if(await checkCredentials(req)){
-        /* console.log(modelData);*/
         try{
             const data = await modelData.findAll({
                 attributes: [[database.Sequelize.fn('DISTINCT', database.Sequelize.col(columnName)), columnName]]
@@ -89,11 +93,16 @@ const getDistinctValues = async (req, modelData, columnName)=>{
             return response;
             
         } catch(err){
+            errorLogger.error({
+                status: 500,
+                success: 0,
+                message: "Internal Server Error!", 
+                error: err
+            },req.query);
             return {
                 status: 500, 
                 success: 0, 
                 message: "Internal Server Error!", 
-                error: err
             };
         }
 
@@ -138,6 +147,7 @@ const processRequest = async (req) => {
         groupByConditionQuery = req.group_condition.selection.map((e,i)=>{
             return `${group_by}='${e}'`
         }).join(" OR ");
+        
     } else{ error = 1; errorMessage="Grouping condition, ";}
     
     /* --- Setting states conditions --- */
@@ -151,6 +161,7 @@ const processRequest = async (req) => {
 
         medicalORSum = 0; medicalANDSum = 0;
         if(req.medical_conditions.OR && req.medical_conditions.OR.length > 0){
+            console.log(req.medical_conditions);
             medicalORSum += req.medical_conditions.OR.reduce((prev,current,i)=>{
                 return prev + current;
             });
@@ -186,9 +197,9 @@ const processRequest = async (req) => {
     /* --- Query Formation --- */
     const query = (
         `CREATE VIEW B AS (` +
-            `SELECT medical_condition, treatment, paytyp, state, pop FROM patients_info `+
+            `SELECT * FROM patients_info `+
             /* Static condition checking */
-            `WHERE ${stateQuery} AND ${groupByConditionQuery} ` +
+            `WHERE ( ${stateQuery} ) AND ( ${groupByConditionQuery} ) ` +
             /* Dynamic condition checking */
             /* Medical AND/OR condition check */
             ((req.medical_conditions.AND && req.medical_conditions.AND.length > 0)?` AND medical_condition & ${medicalANDSum} = ${medicalANDSum}`:'') +
@@ -221,7 +232,7 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
         
         
         /* --- Filter data in the View B based on selected label values mentioned in the request --- */
-        console.log(`[INFO]: Selecting ${label_type} labels as ${req[`${label_type}s`].labels.join()}.`);
+        activityLogger.info(`[SELECTED]: ${label_type} labels as ${req[`${label_type}s`].labels.join()}.`);
         const label=[], labelData = await database.sequelize.query(
             `SELECT label, label_val FROM label_info WHERE label_type='${label_type}' ORDER BY label_val`,
             {type: QueryTypes.SELECT}
@@ -239,8 +250,8 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
         /* --- Generating a Response --- */        
         const resultingQuery = (
             `SELECT COUNT(*) AS ALL_DATA, ${sumOfLabelQuery}, ${group_by} FROM B `+
-            `GROUP BY ${group_by} HAVING ${groupByConditionQuery}`
-        ); /*console.log(`[Executing]: ${resultingQuery}`);*/
+            `GROUP BY ${group_by} HAVING ( ${groupByConditionQuery} )`
+        );
 
         const results = await database.sequelize.query(resultingQuery, {type: QueryTypes.SELECT});
         const graphLabels = Object.keys(results[0]);
@@ -264,18 +275,21 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
             data: graphData
         };
 
-        console.log(`[SENDING]:`+JSON.stringify(response));
-
         /* Delete temporary storage view B, after generating response */
         await database.sequelize.query(`DROP VIEW IF EXISTS B`);
         return response;        
 
     }catch(err){
-        return {
+        activityLogger.info({
             status: 500, 
             success: 0, 
             message: "Internal Server Error!",
             error: err 
+        }, req);
+        return {
+            status: 500, 
+            success: 0, 
+            message: "Internal Server Error!",
         }
     }
 };
@@ -315,6 +329,14 @@ const getGraphDataFor = async (req, label_type)=>{
         try{
             return await generateGraphResponseFor(req, [query, groupByConditionQuery, error, errorMessage, group_by],`${label_type}`);
         } catch(err){
+            
+            errorLogger({
+                status: 400, 
+                success: 0,
+                message: "Bad Request",
+                error: err
+            }, req);
+
             return {
                 status: 400, 
                 success: 0,
@@ -345,12 +367,16 @@ const getResponseFor = async (req,label_type) => {
             };
         }
     }catch(err){
-        console.log(err);
-        return {
+        errorLogger.info({
             status: 400,
             success:0,
             message: "Bad Request", 
             error: err
+        }, req.body);
+        return {
+            status: 400,
+            success:0,
+            message: "Bad Request", 
         };
     }
 }
@@ -361,3 +387,130 @@ exports.getMedicalCondition = async (req)=>{
 exports.getTreatment = async (req)=>{ 
     return getResponseFor(req, 'treatment');
 };
+
+
+/* --- Population Overview section API --- */
+const getStatewiseMinMaxOfPatients =  async (req) => {
+    /**
+     * Get list of states and the population of patient w.r.t the options selected in the filter settings.
+     * @function getStatewiseMinMaxOfPatients()
+     * @param {JSON} req - request message containing filter setting data in req.body
+     * @returns {JSON} res - response  
+    **/
+    const {QueryTypes} = database.Sequelize;
+    const results = await database.sequelize.query("SELECT state, count(*) as population FROM B GROUP BY state;", {type: QueryTypes.SELECT});
+    const states = {};
+    results.map((obj)=>{states[obj.state] = obj.population})
+    console.log(states)
+    return {
+        states: states,
+        max: Math.max(...Object.values(states)),
+        min: Math.min(...Object.values(states))
+    };
+}
+
+
+const generatePatientInfoForStates = async (req, stateList) => {
+    /**
+     * Get  and the population of patient w.r.t the options selected in the filter settings.
+     * @function generatePatientInfoForStates()
+     * @param {JSON} req - request message containing filter setting data in req.body
+     * @returns {JSON} res - response  
+    **/
+
+    let query, groupByConditionQuery, error, errorMessage, group_by;
+    [query, groupByConditionQuery, error, errorMessage, group_by] = await processRequest(req);
+    await database.sequelize.query(query);
+    /* --- VIEW B (TEMPERORY STORAGE) is now created --- */
+
+    return;
+}
+
+const deleteTemporaryStorage = async ()=> {
+    await database.sequelize.query(`DROP VIEW IF EXISTS B`);
+}
+
+exports.getPopulationOverview = async (request) => {
+    /**
+     * Population Overview for a graph filter setting
+     * @function getPopulationOverview()
+     * @param {JSON} request - request message containing filter setting data in req.body
+     * @returns {JSON} res - response  
+    **/
+    try{
+        const req = request.body.jsonData;
+        if(
+            req.group_condition && req.states && req.medical_conditions && req.treatments && 
+            Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 && 
+            Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0
+        ){/* --- First Check: if there are no errors on first-level labels, i.e., if message is in suitable format for processing request --- */
+            
+            await deleteTemporaryStorage();
+            
+            await generatePatientInfoForStates(req);
+
+            return {
+                status: 200,
+                ... await getStatewiseMinMaxOfPatients()
+            }; 
+        }else{
+            errorLogger.info({
+                status: 400,
+                success:0,
+                message: "Bad Request",
+                method: "getPopulationOverview"
+            }, req.body);
+            return {
+                status: 400,
+                success:0,
+                message: "Bad Request", 
+            };
+        }
+    } catch(err){
+        console.log(err);
+    }
+
+}
+
+exports.getPatientsData = async (request) => {
+    /**
+     * Patient Details based on the results of graph filter setting
+     * @function getPatientsData()
+     * @param {JSON} request - request message containing filter setting data in req.body
+     * @returns {JSON} res - response  
+    **/
+    try{
+        const req = request.body.jsonData;
+        if(
+            req.group_condition && req.states && req.medical_conditions && req.treatments && 
+            Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 && 
+            Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0
+        ){/* --- First Check: if there are no errors on first-level labels, i.e., if message is in suitable format for processing request --- */
+            
+            await deleteTemporaryStorage();
+            
+            await generatePatientInfoForStates(req);
+
+            const {QueryTypes} = database.Sequelize;
+            return {
+                status: 200,
+                patientData: await database.sequelize.query("SELECT patid,sex,race,state,pat_age FROM B ORDER BY state;", {type: QueryTypes.SELECT})
+            };
+        }else{
+            errorLogger.info({
+                status: 400,
+                success:0,
+                message: "Bad Request",
+                method: "getPopulationOverview"
+            }, req.body);
+            return {
+                status: 400,
+                success:0,
+                message: "Bad Request", 
+            };
+        }
+    } catch(err){
+        console.log(err);
+    }
+
+}

@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var pfController = require('../controllers/patientfinder.controller');
-
+const express = require('express');
+const router = express.Router();
+const pfController = require('../controllers/patientfinder.controller');
+const {appLogger} = require('../logs/logger');
 
 /* --- Route: /patientfinder (via. app.use('/patientfinder'))--- */
 /* --- 1. Routes: For Getters for Filter values --- */
@@ -13,8 +13,10 @@ router.get('/labels', (req,res,next)=>{
      * @param {JSON} res - response message for which the function generates format, {status, success=1, labelData} or {status, success=0, message, error}
      * @return {void} Nothing is returned, but the response message sent to the client
      */
+    const route = '/patientfinder/labels';
+    appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
     pfController.getLabels(req).then((response)=>{
-        console.log(`Sending response ${JSON.stringify(response)} for /labels`);
+        appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
         res.status(response.status).send(response);
     });
 });
@@ -26,8 +28,10 @@ router.get('/values/paytyp', (req,res,next)=>{
      * @param {JSON} res - response message for which the function generates format, {status, success=1, paytypData} or {status, success=0, message, error}
      * @return {void} Nothing is returned, but the response message sent to the client
      */
+    const route = '/patientfinder/values/paytyp';
+    appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
     pfController.getPaytype(req).then((response)=>{
-        console.log(`Sending response ${JSON.stringify(response)} for /paytyp`);
+        appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
         res.status(response.status).send(response);
     });
 });
@@ -39,8 +43,10 @@ router.get('/values/states', (req,res,next)=>{
      * @param {JSON} res - response message for which the function generates format, {status, success=1, statesData} or {status, success=0, message, error}
      * @return {void} Nothing is returned, but the response message sent to the client
      */
+    const route = '/patientfinder/values/states';
+    appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
     pfController.getStates(req).then((response)=>{
-        console.log(`Sending response ${JSON.stringify(response)} for /states`);
+        appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
         res.status(response.status).send(response);
     });
 });
@@ -52,8 +58,10 @@ router.get('/values/cohort', (req,res,next)=>{
      * @param {JSON} res - response message for which the function generates format, {status, success=1, cohortData} or {status, success=0, message, error}
      * @return {void} Nothing is returned, but the response message sent to the client
      */
+    const route = '/patientfinder/values/cohort';
+    appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
     pfController.getCohort(req).then((response)=>{
-        console.log(`Sending response ${JSON.stringify(response)} for /cohort`);
+        appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
         res.status(response.status).send(response);
     });
 });
@@ -65,15 +73,16 @@ router.post('/treatments', (req, res, next)=>{
   /**
    * Generate the PatientFinder data required for data visualization (graph) purpose. For treatments only.
    * jsonData contains filter values.
-   * @route /patientfinder/medicals
+   * @route /patientfinder/treatments
    * @method post
    * @param {JSON} req - request message of format {userid,auth-token,jsonData}
    * @param {JSON} res - response message for which function will generate, as specified in the Bayer PF API documentation
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-   
+    const route = '/patientfinder/treatments';
+    appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.body)} for ${route}`);
    pfController.getTreatment(req).then((response)=>{
-      console.log(`Sending: ${JSON.stringify(response)} /treatments`);
+      appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
       res.status(response.status).send(response);
    });
 });
@@ -88,42 +97,51 @@ router.post('/medicals', (req, res, next)=>{
      * @param {JSON} res - response message for which function will generate, as specified in the Bayer PF API documentation
      * @returns {void} - nothing, instead sends a response to the client of format specified in res
      */
+     const route = '/patientfinder/medical';
+     appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.body)} for ${route}`);
     pfController.getMedicalCondition(req).then((response)=>{
-        console.log(`Sending: ${JSON.stringify(response)} for /medicals`);
+        appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
         res.status(response.status).send(response);
     });
 });
 
 /* --- For testing only --- */
-router.get('/check-access', (req,res,next)=>{
-    pfController.checkCredentials(req).then((response)=>{
-        console.log(response);
-        if(response){
-            res.send({access: 1});
-        }else{
-            res.send({access: 0});
-        }
-    });
-
-});
 const checkAccessRequestBodyResponse = (req,res)=>{
+    const route = '/patientfinder/check-access';
+    appLogger.info(`[RECEIVED]: Request ${JSON.stringify((req.method.toLowerCase() === "get" || req.method.toLowerCase() ==='delete')?req.query:req.body)} for ${route}`);
     pfController.checkCredentials(req).then((response)=>{
-        console.log(response);
         if(response){
             res.send({access: 1});
+            appLogger.info(`[STATUS]: OK`);
         }else{
             res.send({access: 0});
+            appLogger.info(`[STATUS]: FAILED`);
         }
     });
 }
-router.put('/check-access', (req,res,next)=>{
-    checkAccessRequestBodyResponse(req,res);
+router.get('/check-access', (req,res,next)=>{checkAccessRequestBodyResponse(req,res);});
+router.put('/check-access', (req,res,next)=>{checkAccessRequestBodyResponse(req,res);});
+router.post('/check-access', (req,res,next)=>{checkAccessRequestBodyResponse(req,res);});
+router.delete('/check-access', (req,res,next)=>{checkAccessRequestBodyResponse(req,res);});
+
+
+/* --- Population Overview --- */
+router.post('/states/population', (req,res)=>{
+    const route = '/patientfinder/states/population';
+    appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.body)} for ${route}`);
+    pfController.getPopulationOverview(req).then((response)=>{
+      appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
+      res.status(response.status).send(response);
+    });
 });
-router.post('/check-access', (req,res,next)=>{
-    checkAccessRequestBodyResponse(req,res);
-});
-router.delete('/check-access', (req,res,next)=>{
-    checkAccessRequestBodyResponse(req,res);
+
+router.post('/patients/details', (req,res)=>{
+    const route = '/patients/details';
+    appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.body)} for ${route}`);
+    pfController.getPatientsData(req).then((response)=>{
+      appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
+      res.status(response.status).send(response);
+    });
 });
 
 module.exports = router;

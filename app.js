@@ -1,48 +1,58 @@
-var createError = require('http-errors');
-var express = require('express');
 var path = require('path');
+var createError = require('http-errors');
 var cookieParser = require('cookie-parser');
+var express = require('express');
+var cors = require('cors');
 var logger = require('morgan');
+var {appLogger, errorLogger} = require('./logs/logger');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var pfRouter = require('./routes/patientfinder');
-var cors = require('cors')
-
+/* --- Application configurations --- */
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+try{
+  appLogger.info("[STARTED]: Running Patient Finder Backend Application");
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+  /* --- Route Settings --- */
+  var indexRouter = require('./routes/index');
+  var usersRouter = require('./routes/users');
+  var pfRouter = require('./routes/patientfinder');
 
 
-app.use(cors())
+  // view engine setup
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'jade');
 
-/* --- Route Handlers --- */
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/patientfinder', pfRouter);
+  app.use(logger('dev'));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
+  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(cors())
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+  /* --- Route Handlers --- */
+  app.use('/', indexRouter);
+  app.use('/users', usersRouter);
+  app.use('/patientfinder', pfRouter);
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // catch 404 and forward to error handler
+  app.use(function(req, res, next) {
+    next(createError(404));
+  });
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+  // error handler
+  app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+  });
+  
+}catch(err){
+  console.log(err);
+  errorLogger.error(err);
+}
 
 module.exports = app;

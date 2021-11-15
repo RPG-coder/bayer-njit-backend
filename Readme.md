@@ -5,6 +5,7 @@
 - [Licence](#licence)
 - [Description](#description)
   - [Features](#features)
+  - [Design](#design)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [$ npm install](#-npm-install)
@@ -25,6 +26,9 @@ A Patient Finder application that is used for finding percentage (%) population 
  1. User Authentication: Each time a user gets logged into their account they are generated with a unique accessToken. This user accessToken can be sent to as a authorization mechanism for every action they perform on their account and data accesses. If the access token is mismatch from what's in the database, then the Backend API must not carry out that request as they are marked as Unauthorized Action by default.
  2. Preferences: A FormSettings configurations that are manually saved by a user, so that users can default certain settings like a template rather than filling the long form from scratch. This is a means for users to efficiently work with the Patient Finder application, gaining a bonus interface experience.
  3. History: A FormSetting configuration that are stored automatically when a user clicks for graph generation (or data visualization) so that the potential product owner or respective users of the application can track what they have accessed across their product usage. 
+
+### Design
+[Bayer Patient Finder Design](https://wireframes.rahulgputcha.live/bayer/)
 
 ## Requirements
 - SQL Version 13.0.5

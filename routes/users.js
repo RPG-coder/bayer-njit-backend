@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 var userController = require('../controllers/users.controller');
 var preferenceController = require('../controllers/preferences.controller');
+var {appLogger} = require("../logs/logger");
 
-
-/* Route: /users (via. app.use('\users') ) */
+/* Route: /users (via. app.use('/users') ) */
 router.put('/', function(req, res, next) {
   /** 
    * GET /users is used to check if user exist and return userData as response.
@@ -16,9 +16,10 @@ router.put('/', function(req, res, next) {
    * @param {JSON} req - response message for which function will generate, userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
   */ 
-
+  const route = '/users';
+  appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
   userController.login(req).then((response)=>{
-    
+    appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
     res.status(response.status).send(response);
   });
 
@@ -31,9 +32,10 @@ router.put('/', function(req, res, next) {
    * @param {JSON} res - response message for which function will generate, userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-
+  const route = '/users';
+  appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
   userController.login(req).then((response)=>{
-    
+    appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
     res.status(response.status).send(response);
   });
 
@@ -51,9 +53,10 @@ router.post('/', function(req, res, next) {
    * @param {JSON} res - response message for which function will genereate, userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-
+  const route = '/';
+  appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
   userController.register(req).then((response)=>{
-    
+    appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
     res.status(response.status).send(response);
   });
 
@@ -66,9 +69,10 @@ router.post('/', function(req, res, next) {
    * @param {JSON} res - response message for which function will genereate, userData = {success: isLogged, userData: {userid, fullName, email, authToken}, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-
+   const route = '/users/register';
+   appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
    userController.register(req).then((response)=>{
-    
+    appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
     res.status(response.status).send(response);
   });
 
@@ -83,10 +87,10 @@ router.post('/logout', function(req, res, next) {
    * @param {JSON} res - response message for which function will generate, statusMessage = {success: !isLogged, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
-
-
+   const route = '/users/logout';
+   appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
    userController.logOut(req).then((response)=>{
-    
+    appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
     res.status(response.status).send(response);
   });
 });
@@ -103,10 +107,12 @@ router.get('/preferences', function(req, res, next) {
    * @param {JSON} res - response message for which function will generate, userPreferences = {userid, preferenceData : [ userPref1: {preferenceId, savedName, jsonData}, userPref2, ... ] }
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
+   const route = '/users/logout';
+   appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
    preferenceController.getPreferences(req).then((response)=>{
-    
+    appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
     res.status(response.status).send(response);
-  });
+   });
 
 });
 router.post('/preferences', function(req, res, next) {
@@ -119,8 +125,10 @@ router.post('/preferences', function(req, res, next) {
    * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
+   const route = '/users/preferences';
+   appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
    preferenceController.createPreference(req).then((response)=>{
-    
+    appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
     res.status(response.status).send(response);
   });
 });
@@ -134,8 +142,10 @@ router.put('/preferences', function(req, res, next) {
    * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
+   const route = '/users/preferences';
+   appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
    preferenceController.editPreference(req).then((response)=>{
-    
+    appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
     res.status(response.status).send(response);
   });
 });
@@ -150,8 +160,10 @@ router.delete('/preferences', function(req, res, next) {
    * @param {JSON} res - response message for which function will generate, statusMessage = {success, message}
    * @returns {void} - nothing, instead sends a response to the client of format specified in res
    */
+   const route = '/users/preferences';
+   appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.query)} for ${route}`);
    preferenceController.deletePreference(req).then((response)=>{
-    
+    appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
     res.status(response.status).send(response);
   });;
 });
