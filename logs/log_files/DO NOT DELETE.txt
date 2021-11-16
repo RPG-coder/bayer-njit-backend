@@ -1,0 +1,4 @@
+DO NOT DELETE 
+This file is needed for git to include this folder for repo.
+
+All logs at any evironment will be saved in this folder.
