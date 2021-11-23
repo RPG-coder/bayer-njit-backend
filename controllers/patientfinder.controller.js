@@ -161,7 +161,6 @@ const processRequest = async (req) => {
 
         medicalORSum = 0; medicalANDSum = 0;
         if(req.medical_conditions.OR && req.medical_conditions.OR.length > 0){
-            console.log(req.medical_conditions);
             medicalORSum += req.medical_conditions.OR.reduce((prev,current,i)=>{
                 return prev + current;
             });
@@ -231,22 +230,28 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
         /* --- VIEW B (TEMPERORY STORAGE) is now created --- */    
         
         
-        /* --- Filter data in the View B based on selected label values mentioned in the request --- */
+        /* --- Filter data in the View B based on selected label id's mentioned in the request --- */
         activityLogger.info(`[SELECTED]: ${label_type} labels as ${req[`${label_type}s`].labels.join()}.`);
-        const label=[], labelData = await database.sequelize.query(
-            `SELECT label, label_val FROM label_info WHERE label_type='${label_type}' ORDER BY label_val`,
+        const labels=[], labelNames = [] , labelNamesMapping = {}, labelData = await database.sequelize.query(
+            `SELECT label, label_val, name FROM label_info WHERE label_type='${label_type}' ORDER BY label_val`,
             {type: QueryTypes.SELECT}
         );
-        for(let i=0;i<labelData.length;i++){ label.push(labelData[i]['label']); }
+        for(let i=0;i<labelData.length;i++){ 
+            labels.push(labelData[i]['label']);
+            labelNamesMapping[labelData[i]['label']] = labelData[i]['name'];
+        }
         const sumOfLabelQuery = (
-            label
+            labels
              .map((e,i) => [e,` SUM(${label_type} & ${2**i}) >> ${i} AS ${e}`] )
-             .filter((e,i) => req[`${label_type}s`].labels.includes(e[0]))
-             .map( (e) => e[1] )
-             .join()
+             .filter((e,i) => {
+                return req[`${label_type}s`].labels.includes(e[0])
+             }).map( (e) => {
+                /* e here is a label id in label_info table */
+                labelNames.push(labelNamesMapping[e[0]]);
+                return e[1];
+              }).join()
         );
 
-        
         /* --- Generating a Response --- */        
         const resultingQuery = (
             `SELECT COUNT(*) AS ALL_DATA, ${sumOfLabelQuery}, ${group_by} FROM B `+
@@ -265,13 +270,15 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
             }    
         });
 
+        labelNames.unshift("ALL_DATA");
         const response = {
             status: 200,
             success: 1,
             group_condition: req.group_condition
         };
         response[`${label_type}s`] = {
-            labels: graphLabels,
+            /*labels: graphLabels,*/
+            labels: labelNames,
             data: graphData
         };
 
@@ -401,7 +408,6 @@ const getStatewiseMinMaxOfPatients =  async (req) => {
     const results = await database.sequelize.query("SELECT state, count(*) as population FROM B GROUP BY state;", {type: QueryTypes.SELECT});
     const states = {};
     results.map((obj)=>{states[obj.state] = obj.population})
-    console.log(states)
     return {
         states: states,
         max: Math.max(...Object.values(states)),
@@ -467,7 +473,7 @@ exports.getPopulationOverview = async (request) => {
             };
         }
     } catch(err){
-        console.log(err);
+        errorLogger.error(err);
     }
 
 }
@@ -510,7 +516,7 @@ exports.getPatientsData = async (request) => {
             };
         }
     } catch(err){
-        console.log(err);
+        errorLogger.error(err);
     }
 
 }

@@ -177,6 +177,7 @@ exports.logOut = async (req) => {
      * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
      * @returns {JSON} a response object
      **/
+    console.log(req.body)
     if(req.body.userid && req.body.authToken){
         activityLogger.info(`Received request message ${JSON.stringify(req.body)} for an User Logout\n`);
 

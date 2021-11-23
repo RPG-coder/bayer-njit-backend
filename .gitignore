@@ -1,6 +1,5 @@
 ./.env # make sure to delete this
 node_modules
-logs/log_files/*
 *.log
 documentation/*
 .dockerignore
