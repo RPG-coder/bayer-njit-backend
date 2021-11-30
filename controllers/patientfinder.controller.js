@@ -135,7 +135,7 @@ const processRequest = async (req) => {
     **/
 
     /* If the temporary storage view B exists then delete it... */
-    await database.sequelize.query(`DROP VIEW IF EXISTS B`);
+    deleteTemporaryStorage();
 
     let groupByConditionQuery = "", stateQuery = "";
     let treatmentORSum = 0, treatmentANDSum=0, medicalORSum = 0, medicalANDSum = 0;
@@ -283,7 +283,7 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
         };
 
         /* Delete temporary storage view B, after generating response */
-        await database.sequelize.query(`DROP VIEW IF EXISTS B`);
+        deleteTemporaryStorage();
         return response;        
 
     }catch(err){
@@ -451,14 +451,14 @@ exports.getPopulationOverview = async (request) => {
             Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0
         ){/* --- First Check: if there are no errors on first-level labels, i.e., if message is in suitable format for processing request --- */
             
-            await deleteTemporaryStorage();
             
-            await generatePatientInfoForStates(req);
-
-            return {
+            await deleteTemporaryStorage();
+            const res = {
                 status: 200,
                 ... await getStatewiseMinMaxOfPatients()
-            }; 
+            };
+            await deleteTemporaryStorage();
+            return res;
         }else{
             errorLogger.info({
                 status: 400,
@@ -474,6 +474,10 @@ exports.getPopulationOverview = async (request) => {
         }
     } catch(err){
         errorLogger.error(err);
+        return {
+            status: 500,
+            success:0
+        };
     }
 
 }
@@ -490,7 +494,8 @@ exports.getPatientsData = async (request) => {
         if(
             req.group_condition && req.states && req.medical_conditions && req.treatments && 
             Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 && 
-            Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0
+            Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0 &&
+            req.selectedState
         ){/* --- First Check: if there are no errors on first-level labels, i.e., if message is in suitable format for processing request --- */
             
             await deleteTemporaryStorage();
@@ -498,10 +503,13 @@ exports.getPatientsData = async (request) => {
             await generatePatientInfoForStates(req);
 
             const {QueryTypes} = database.Sequelize;
-            return {
+            const res = {
                 status: 200,
-                patientData: await database.sequelize.query("SELECT patid,sex,race,state,pat_age FROM B ORDER BY state;", {type: QueryTypes.SELECT})
-            };
+                patientData: await database.sequelize.query(`SELECT patid,sex,race,state,pat_age FROM B ORDER BY state where states = ${req.selectedState};`, {type: QueryTypes.SELECT})
+            }
+            await deleteTemporaryStorage();
+            console.log(res);
+            return res;
         }else{
             errorLogger.info({
                 status: 400,

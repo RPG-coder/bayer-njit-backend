@@ -1,6 +1,6 @@
 {
   "development": {   
-    "username": "root",
+    "username": "rahul",
     "password": "PASSword@123",
     "database": "patient_database",
     "host": "localhost",
