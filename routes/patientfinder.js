@@ -131,7 +131,7 @@ router.post('/states/population', (req,res)=>{
     appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.body)} for ${route}`);
     pfController.getPopulationOverview(req).then((response)=>{
       appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
-      res.status(response.status).send(response);
+      res.status(200).send(response);
     });
 });
 

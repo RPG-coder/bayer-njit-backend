@@ -272,6 +272,8 @@ exports.editPreference = async (req) => {
                         }
                     });
 
+                    console.log(preference[0]);
+
                     return {
                         status: 200,
                         success: 1,

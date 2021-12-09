@@ -475,13 +475,15 @@ exports.getPatientsData = async (request) => {
     try{
         console.log(request.body.jsonData,request.body.selectedState);
         const req = request.body.jsonData;
+
+        console.log(req)
         if(
             req.group_condition && req.states && req.medical_conditions && req.treatments && 
             Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 && 
             Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0 &&
             request.body.selectedState
         ){/* --- First Check: if there are no errors on first-level labels, i.e., if message is in suitable format for processing request --- */
-            
+
             await deleteTemporaryStorage();
             
             const processedReq = await processRequest(req);
