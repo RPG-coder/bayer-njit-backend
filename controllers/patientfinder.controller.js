@@ -415,23 +415,6 @@ const getStatewiseMinMaxOfPatients =  async (req) => {
     };
 }
 
-
-const generatePatientInfoForStates = async (req, stateList) => {
-    /**
-     * Get  and the population of patient w.r.t the options selected in the filter settings.
-     * @function generatePatientInfoForStates()
-     * @param {JSON} req - request message containing filter setting data in req.body
-     * @returns {JSON} res - response  
-    **/
-
-    let query, groupByConditionQuery, error, errorMessage, group_by;
-    [query, groupByConditionQuery, error, errorMessage, group_by] = await processRequest(req);
-    await database.sequelize.query(query);
-    /* --- VIEW B (TEMPERORY STORAGE) is now created --- */
-
-    return;
-}
-
 const deleteTemporaryStorage = async ()=> {
     await database.sequelize.query(`DROP VIEW IF EXISTS B`);
 }
@@ -501,15 +484,15 @@ exports.getPatientsData = async (request) => {
             
             await deleteTemporaryStorage();
             
-            await generatePatientInfoForStates(request);
+            const processedReq = await processRequest(req);
+            await database.sequelize.query(processedReq[0]);
 
             const {QueryTypes} = database.Sequelize;
             const res = {
                 status: 200,
-                patientData: await database.sequelize.query(`SELECT patid,sex,race,state,pat_age FROM B ORDER BY state where states = '${req.selectedState}'';`, {type: QueryTypes.SELECT})
+                patientData: await database.sequelize.query(`SELECT patid,sex,race,state,pat_age FROM B WHERE state = '${request.body.selectedState}' ORDER BY state;`, {type: QueryTypes.SELECT})
             }
             await deleteTemporaryStorage();
-            console.log(res);
             return res;
         }else{
 
