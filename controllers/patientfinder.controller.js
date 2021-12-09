@@ -287,7 +287,7 @@ const generateGraphResponseFor = async (req, processedArray, label_type)=>{
         return response;        
 
     }catch(err){
-        activityLogger.info({
+        errorLogger.error({
             status: 500, 
             success: 0, 
             message: "Internal Server Error!",
@@ -337,7 +337,7 @@ const getGraphDataFor = async (req, label_type)=>{
             return await generateGraphResponseFor(req, [query, groupByConditionQuery, error, errorMessage, group_by],`${label_type}`);
         } catch(err){
             
-            errorLogger({
+            errorLogger.error({
                 status: 400, 
                 success: 0,
                 message: "Bad Request",
@@ -374,7 +374,7 @@ const getResponseFor = async (req,label_type) => {
             };
         }
     }catch(err){
-        errorLogger.info({
+        errorLogger.error({
             status: 400,
             success:0,
             message: "Bad Request", 
@@ -460,7 +460,7 @@ exports.getPopulationOverview = async (request) => {
             await deleteTemporaryStorage();
             return res;
         }else{
-            errorLogger.info({
+            errorLogger.error({
                 status: 400,
                 success:0,
                 message: "Bad Request",
@@ -490,33 +490,35 @@ exports.getPatientsData = async (request) => {
      * @returns {JSON} res - response  
     **/
     try{
+        console.log(request.body.jsonData,request.body.selectedState);
         const req = request.body.jsonData;
         if(
             req.group_condition && req.states && req.medical_conditions && req.treatments && 
             Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 && 
             Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0 &&
-            req.selectedState
+            request.body.selectedState
         ){/* --- First Check: if there are no errors on first-level labels, i.e., if message is in suitable format for processing request --- */
             
             await deleteTemporaryStorage();
             
-            await generatePatientInfoForStates(req);
+            await generatePatientInfoForStates(request);
 
             const {QueryTypes} = database.Sequelize;
             const res = {
                 status: 200,
-                patientData: await database.sequelize.query(`SELECT patid,sex,race,state,pat_age FROM B ORDER BY state where states = ${req.selectedState};`, {type: QueryTypes.SELECT})
+                patientData: await database.sequelize.query(`SELECT patid,sex,race,state,pat_age FROM B ORDER BY state where states = '${req.selectedState}'';`, {type: QueryTypes.SELECT})
             }
             await deleteTemporaryStorage();
             console.log(res);
             return res;
         }else{
-            errorLogger.info({
+
+            errorLogger.error({
                 status: 400,
                 success:0,
                 message: "Bad Request",
                 method: "getPopulationOverview"
-            }, req.body);
+            }, request.body);
             return {
                 status: 400,
                 success:0,
@@ -524,7 +526,12 @@ exports.getPatientsData = async (request) => {
             };
         }
     } catch(err){
-        errorLogger.error(err);
+        errorLogger.error(err, request.body);
+        return {
+            status: 500,
+            success:0,
+            message: "Internal Server Error", 
+        }
     }
 
 }
