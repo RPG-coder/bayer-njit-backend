@@ -5,6 +5,8 @@ var express = require('express');
 var cors = require('cors');
 var logger = require('morgan');
 var {appLogger, errorLogger} = require('./logs/logger');
+const dotenv = require('dotenv')
+dotenv.config();
 
 /* --- Application configurations --- */
 var app = express();
