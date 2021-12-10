@@ -419,10 +419,10 @@ const deleteTemporaryStorage = async ()=> {
     await database.sequelize.query(`DROP VIEW IF EXISTS B`);
 }
 
-exports.getPopulationOverview = async (request) => {
+exports.getStatePopulation = async (request) => {
     /**
      * Population Overview for a graph filter setting
-     * @function getPopulationOverview()
+     * @function getStatePopulation()
      * @param {JSON} request - request message containing filter setting data in req.body
      * @returns {JSON} res - response  
     **/
@@ -438,7 +438,9 @@ exports.getPopulationOverview = async (request) => {
             await deleteTemporaryStorage();
             const res = {
                 status: 200,
-                ... await getStatewiseMinMaxOfPatients()
+                ... await getStatewiseMinMaxOfPatients(),
+                success: 1,
+                message: "Successfully Completed Request"
             };
             await deleteTemporaryStorage();
             return res;
@@ -447,7 +449,7 @@ exports.getPopulationOverview = async (request) => {
                 status: 400,
                 success:0,
                 message: "Bad Request",
-                method: "getPopulationOverview"
+                method: "getStatePopulation"
             }, req.body);
             return {
                 status: 400,
@@ -492,7 +494,9 @@ exports.getPatientsData = async (request) => {
             const {QueryTypes} = database.Sequelize;
             const res = {
                 status: 200,
-                patientData: await database.sequelize.query(`SELECT patid,sex,race,state,pat_age FROM B WHERE state = '${request.body.selectedState}' ORDER BY state;`, {type: QueryTypes.SELECT})
+                patientData: await database.sequelize.query(`SELECT patid,sex,race,state,pat_age FROM B WHERE state = '${request.body.selectedState}' ORDER BY state;`, {type: QueryTypes.SELECT}),
+                success: 1,
+                message: "Successfully Completed Request"
             }
             await deleteTemporaryStorage();
             return res;
@@ -502,7 +506,7 @@ exports.getPatientsData = async (request) => {
                 status: 400,
                 success:0,
                 message: "Bad Request",
-                method: "getPopulationOverview"
+                method: "getStatePopulation"
             }, request.body);
             return {
                 status: 400,
@@ -519,4 +523,26 @@ exports.getPatientsData = async (request) => {
         }
     }
 
+}
+
+exports.getPopulationOverview = async (req)=>{
+    try{        
+        const {QueryTypes} = database.Sequelize;
+        const res = {
+            status: 200,
+            raceData: await database.sequelize.query("SELECT race, count(race) AS 'count' FROM patients_info GROUP BY race;",{type: QueryTypes.SELECT}),
+            ageData: await database.sequelize.query("(SELECT '18-34' AS 'group', count(*) AS 'count' FROM patients_info WHERE pat_age BETWEEN 18 AND 34) UNION (SELECT '35-64' AS 'group', count(*) AS count FROM patients_info WHERE pat_age BETWEEN 35 AND 64) UNION ( SELECT '64+' AS 'group', count(*) AS count FROM patients_info WHERE pat_age>64);", {type: QueryTypes.SELECT}),
+            success: 1,
+            message: "Successfully Completed Request"
+        }
+        //console.log(res);
+        return res; 
+    } catch(err){
+        errorLogger.error(err, req.get, "PopulationOverview");
+        return {
+            status: 500,
+            success:0,
+            message: "Internal Server Error", 
+        }
+    }
 }

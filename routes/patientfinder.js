@@ -129,7 +129,7 @@ router.delete('/check-access', (req,res,next)=>{checkAccessRequestBodyResponse(r
 router.post('/states/population', (req,res)=>{
     const route = '/patientfinder/states/population';
     appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.body)} for ${route}`);
-    pfController.getPopulationOverview(req).then((response)=>{
+    pfController.getStatePopulation(req).then((response)=>{
       appLogger.info(`[SENDING]: Response ${JSON.stringify(response)} for ${route}`);
       res.status(200).send(response);
     });
@@ -143,5 +143,7 @@ router.post('/patients/details', (req,res)=>{
       res.status(response.status).send(response);
     });
 });
+
+
 
 module.exports = router;
