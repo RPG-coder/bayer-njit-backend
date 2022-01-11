@@ -1,7 +1,7 @@
+./.env # make sure to delete this
 node_modules
 *.log
 documentation/*
 .dockerignore
 Dockerfile
 docker-compose.yml
-.env
