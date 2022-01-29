@@ -125,7 +125,7 @@ router.post('/check-access', (req,res,next)=>{checkAccessRequestBodyResponse(req
 router.delete('/check-access', (req,res,next)=>{checkAccessRequestBodyResponse(req,res);});
 
 
-/* --- Population Overview --- */
+/* --- Map demonstration functions --- */
 router.post('/states/population', (req,res)=>{
     const route = '/patientfinder/states/population';
     appLogger.info(`[RECEIVED]: Request ${JSON.stringify(req.body)} for ${route}`);

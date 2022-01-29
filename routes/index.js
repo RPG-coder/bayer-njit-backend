@@ -4,6 +4,7 @@ var pfController = require('../controllers/patientfinder.controller');
 const {appLogger} = require('../logs/logger');
 
 /* --- Home page Routes --- */
+
 router.get('/', function(req, res, next) {
   /** @function: API Home page Routing */
   res.render('index', { title: 'Patient Finder API' });

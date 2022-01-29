@@ -169,6 +169,6 @@ router.delete('/preferences', function(req, res, next) {
 });
 
 
-/* History Code here ... */
+/* FAR_VISION: History Code here ... (Similar to Preferences) */
 
 module.exports = router;

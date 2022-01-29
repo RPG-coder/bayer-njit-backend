@@ -1,17 +1,13 @@
-/* --- Import Files --- */
-const { activityLogger, errorLogger } = require("../logs/logger");
-const database = require("../models");
-const User = database.User;
-const Preferences = database.Preferences;
-const FormSettings = database.FormSettings;
-const { checkCredentials } = require("./common.controller");
-const { Op, QueryTypes } = database.Sequelize;
-
 /*********************************************************
- * Controller for Bayer Patient Finder: User Preferences
- * for more information on the API documentation please visit: <Doc_Link_here>
+ * Preferences Controller module
+ * @module /controllers/preference.controller.js
+ * @version 1.28.2022
  * 
- * @contain functions (interface functions)
+ * @author Rahul Gautham Putcha <rp39@njit.edu>
+ * @contributors Jianlen Ren, Rahul Gautham Putcha, Jiawei Wang, Sai Kiran Pocham
+ * @description contains core function managing user preferences (FAR VISION: User Histories too)
+ * 
+ * Functions included:
  * 1. getPreferences() - safe
  * 2. createPreference() - unsafe
  * 3. deletePreference() - unsafe
@@ -19,321 +15,167 @@ const { Op, QueryTypes } = database.Sequelize;
  * 
  * safe - makes no changes in database, or atleast existing data.
  * unsafe - makes a change to the database
+ * 
+ * Note: Preference is Basic CRUD Application.
+ * 
+ * 
 *********************************************************/
 
+/**
+ * JSDOC setting type format for documentation purpose 
+ * @typedef {{userid: string, authToken: string}} UserAuthorizationRequest
+ * @typedef {{status: number, success: 1, data: any}} SuccessMessage
+ * @typedef {{status: number, success: 0, message: string}} FailureMessage
+ * @typedef {JSON} FuncParams
+ * 
+ * For more details check out, {@link } (API Docs)
+ */
+
+/* --- Import Files --- */
+const { activityLogger, errorLogger } = require("../logs/logger");
+const database = require("../models");
+const User = database.User;
+const Preferences = database.Preferences;
+const FormSettings = database.FormSettings;
+const { checkCredentials, safelyProcessRequestMSG } = require("./common.controller");
+const { Op, QueryTypes } = database.Sequelize;
+
+/**
+ * Get a list of preferences, specific to a user with userid. jsonData contains the filter values stored at mySQL end. 
+ * @param {JSON} req - request msg
+ * @returns {SuccessMessage|FailureMessage} response msg
+ **/
 exports.getPreferences = async (req) => {
-    /**
-     * Get a list of preferences, specific to a user with userid. jsonData contains the filter values stored at mySQL end. 
-     * @function getPreferences()
-     * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
-     * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
-     **/
-    activityLogger.info("[RECEIVED]: request message for preference", req.query);
-    try {
-        if (await checkCredentials(req)) {
-            const user = await User.findOne({
-                where: {
-                    userid: req.query.userid
-                }
+    
+    return await safelyProcessRequestMSG({req}, async (params)=>{
+        const user = await User.findOne({where: {userid: req.query.userid}});
+
+        /* Finding all preferences belonging to a respective user with userid */
+        const userPreferences = await database.sequelize.query(
+            /* Working with the Composite Primary Key Fetching */
+            `SELECT f.id, f.userid, f.jsonData, p.saveName, p.createdAt FROM FormSettings AS f JOIN Preferences AS p ON f.userid=p.userid WHERE p.id = f.id ` +
+            `AND f.userid='${user.userid}'`, { type: QueryTypes.SELECT }
+        );
+
+        const response = {
+            preferenceList: userPreferences
+        }
+        if (user.defaultPreferenceId) response['defaultPreferenceId'] = user.defaultPreferenceId;
+
+        return response;
+    });
+
+}
+
+/**
+ * Create a new preference based on the user request.
+ * @function createPreference()
+ * @param {JSON} req - request msg
+ * @returns {SuccessMessage|FailureMessage} response msg
+ **/
+exports.createPreference = async (req) => {
+    
+    return await safelyProcessRequestMSG({req}, async (params)=>{
+        if (req.body.saveName && req.body.jsonData) {
+
+            const formSettingMaxId = await FormSettings.findOne({
+                attributes: [[database.sequelize.fn('max', database.sequelize.col('id')), 'maxId']],
+                where: { userid: req.body.userid }
             });
 
-            /* Working with the Composite Primary Key Fetching */
-            const userPreferences = await database.sequelize.query(
-                `SELECT f.id, f.userid, f.jsonData, p.saveName, p.createdAt FROM FormSettings AS f JOIN Preferences AS p ON f.userid=p.userid WHERE p.id = f.id ` +
-                `AND f.userid='${user.userid}'`, { type: QueryTypes.SELECT }
-            );
+            const setting = await FormSettings.create({ id: formSettingMaxId.dataValues.maxId + 1, userid: req.body.userid, jsonData: req.body.jsonData });
+            const preference = await Preferences.create({ id: formSettingMaxId.dataValues.maxId + 1, userid: req.body.userid, saveName: req.body.saveName });
 
-            const response = {
-                status: 200,
-                success: 1,
-                preferenceData: userPreferences
+            if (req.body.makeDefault == true) {
+                const user = await User.findOne({ where: { userid: req.body.userid } });
+                user.defaultPreferenceId = preference.id;
+                await user.save();
+                await user.reload();
             }
-            if (user.defaultPreferenceId) {
-                response['defaultPreferenceId'] = user.defaultPreferenceId;
-            }
-            return response;
-
-        } else {
-            errorLogger.error({
-                status: 401,
-                success: 0,
-                message: "Unauthorized action!",
-            }, req.query);
             return {
-                status: 401,
-                success: 0,
-                message: "Unauthorized action!",
-            };
+                id: formSettingMaxId.dataValues.maxId + 1,
+                userid: req.body.userid,
+                saveName: preference.saveName,
+                createdAt: preference.createdAt,
+                jsonData: setting.jsonData
+            }
+        } else {
+            throw Error("Bad Request")
         }
-    } catch (err) {
-        errorLogger.error({
-            status: 500,
-            success: 0,
-            message: "Internal Server Error!",
-            err: err
-        }, req.query);
-        return {
-            status: 500,
-            success: 0,
-            message: "Internal Server Error!",
-        };
-    }
+    });
 
 }
 
-exports.createPreference = async (req) => {
-    /**
-     * Create a new preference based on the user request.
-     * @function createPreference()
-     * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
-     * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
-     **/
-    try {
-        if (await checkCredentials(req)) {
-            if (req.body.saveName && req.body.jsonData) {
-
-                const formSettingMaxId = await FormSettings.findOne({
-                    attributes: [[database.sequelize.fn('max', database.sequelize.col('id')), 'maxId']],
-                    where: { userid: req.body.userid }
-                });
-
-                const setting = await FormSettings.create({ id: formSettingMaxId.dataValues.maxId + 1, userid: req.body.userid, jsonData: req.body.jsonData });
-                const preference = await Preferences.create({ id: formSettingMaxId.dataValues.maxId + 1, userid: req.body.userid, saveName: req.body.saveName });
-
-                if (req.body.makeDefault == true) {
-                    const user = await User.findOne({ where: { userid: req.body.userid } });
-                    user.defaultPreferenceId = preference.id;
-                    await user.save();
-                    await user.reload();
-                }
-                return {
-                    status: 200,
-                    success: 1,
-                    message: "Preference added sucessfully",
-                    data: {
-                        id: formSettingMaxId.dataValues.maxId + 1,
-                        userid: req.body.userid,
-                        saveName: preference.saveName,
-                        createdAt: preference.createdAt,
-                        jsonData: setting.jsonData
-                    }
-                }
-            } else {
-                errorLogger.error({
-                    status: 400,
-                    success: 0,
-                    message: "Bad Request!",
-                }, req.body);
-                return {
-                    status: 400,
-                    success: 0,
-                    message: "Bad Request!",
-                };
-            }
-        } else {
-            errorLogger.error({
-                status: 401,
-                success: 0,
-                message: "Unauthorized action!",
-            }, req.body);
-            return {
-                status: 401,
-                success: 0,
-                message: "Unauthorized action!",
-            };
-        }
-    } catch (err) {
-        errorLogger.error({
-            status: 500,
-            success: 0,
-            message: "Internal Server Error!",
-            err: err
-        }, req.body);
-        return {
-            status: 500,
-            success: 0,
-            message: "Internal Server Error!",
-        };
-    }
-
-}
-
+/**
+ * Delete an existing preference based on user request (containing a preferenceId)
+ * @param {JSON} req - request msg
+ * @returns {SuccessMessage|FailureMessage} response msg
+ */
 exports.deletePreference = async (req) => {
-    /**
-     * Delete an existing preference based on user request (containing a preferenceId)
-     * @function deletePreference()
-     * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
-     * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
-     */
-    try {
-        if (await checkCredentials(req)) {
-            activityLogger.info(`[RECEIVED]: Delete preference for userId: ${req.query.userid} on preferenceId: ${req.query.preferenceId}`);
-            if (req.query.preferenceId) {
-                const preference = await Preferences.findOne({
-                    where: {
-                        id: req.query.preferenceId,
-                        userid: req.query.userid
-                    }
+
+    const deletePref = async (req)=>{
+        if (req.query.preferenceId) {
+            const preference = await Preferences.findOne({where: {id: req.query.preferenceId,userid: req.query.userid}});
+            await preference.destroy();
+
+            const setting = await FormSettings.findOne({where: {id: req.query.preferenceId, userid: req.query.userid}});
+            await setting.destroy();
+            return { id: req.query.preferenceId };
+
+        } else {
+            throw Error("Preference not deleted!");
+        }
+    }
+
+    return await safelyProcessRequestMSG({req}, async (params)=>{return await deletePref(params.req);});
+
+}
+
+/**
+ * Get a list of preferences, specific to a user with userid. jsonData contains the filter values stored at mySQL end. 
+ * @param {JSON} req - request msg
+ * @returns {SuccessMessage|FailureMessage} response msg
+ **/
+exports.editPreference = async (req) => {
+    
+    return await safelyProcessRequestMSG({req}, async (params)=>{
+
+        if (req.body.preferenceId && req.body.saveName && req.body.jsonData) {
+            const success = await Preferences.update({
+                saveName: req.body.saveName
+            },{
+                where: {id: req.body.preferenceId, userid: req.body.userid}
+            });
+            
+            const preference = await Preferences.findOne({
+                where: {id: req.body.preferenceId,userid: req.body.userid}
+            });
+
+            if(success[0]){
+
+                await FormSettings.update({jsonData:req.body.jsonData} ,{
+                    where: {id: req.body.preferenceId,userid: req.body.userid}
                 });
-                await preference.destroy();
 
                 const setting = await FormSettings.findOne({
-                    where: {
-                        id: req.query.preferenceId,
-                        userid: req.query.userid
-                    }
-                });
-                await setting.destroy();
-                return {
-                    status: 200,
-                    success: 1,
-                    message: "Preference deleted sucessfully!",
-                    preferenceId: req.body.preferenceId
-                }
-
-            } else {
-                errorLogger.error({
-                    status: 400,
-                    success: 0,
-                    message: "Bad Request!",
-                }, req.query);
-                return {
-                    status: 400,
-                    success: 0,
-                    message: "Bad Request!",
-                };
-            }
-        } else {
-            errorLogger.error({
-                status: 401,
-                success: 0,
-                message: "Unauthorized action!",
-            }, req.query);
-            return {
-                status: 401,
-                success: 0,
-                message: "Unauthorized action!",
-            };
-        }
-    } catch (err) {
-        errorLogger.error({
-            status: 500,
-            success: 0,
-            message: "Internal Server Error!",
-            err: err
-        }, req.query);
-        return {
-            status: 500,
-            success: 0,
-            message: "Internal Server Error!",
-        };
-    }
-}
-
-exports.editPreference = async (req) => {
-    /**
-     * Get a list of preferences, specific to a user with userid. jsonData contains the filter values stored at mySQL end. 
-     * @function editPreference()
-     * @param {JSON} req - request object with a body attribute, as specified in the Patient Finder API documentation
-     * @returns {JSON} a response object, as specified in API documentation for Bayer's PF application
-     **/
-    try {
-        if (await checkCredentials(req)) {
-            if (req.body.preferenceId && req.body.saveName && req.body.jsonData) {
-                const success = await Preferences.update({
-                    saveName: req.body.saveName
-                },{
-                    where: {
-                        id: req.body.preferenceId,
-                        userid: req.body.userid
-                    }
-                })
-                
-                const preference = await Preferences.findOne({
-                    where: {
-                        id: req.body.preferenceId,
-                        userid: req.body.userid
-                    }
+                    where: {id: req.body.preferenceId,userid: req.body.userid}
                 });
 
-                if(success[0]){
-
-                    await FormSettings.update({jsonData:req.body.jsonData} ,{
-                        where: {
-                            id: req.body.preferenceId,
-                            userid: req.body.userid
-                        }
-                    });
-
-                    const setting = await FormSettings.findOne({
-                        where: {
-                            id: req.body.preferenceId,
-                            userid: req.body.userid
-                        }
-                    });
-
-                    console.log(preference[0]);
-
-                    return {
-                        status: 200,
-                        success: 1,
-                        message: "Preference updated sucessfully!",
-                        data: {
-                            id: preference.id,
-                            userid: preference.userid,
-                            saveName: preference.saveName,
-                            createdAt: preference.createdAt,
-                            jsonData: setting.jsonData
-                        }
-                    };
-                }else {
-                    errorLogger.error({
-                        status: 404,
-                        success: 0,
-                        message: "Resource not found!",
-                    }, req.body);
-                    return {
-                        status: 404,
-                        success: 0,
-                        message: "Resource not found!",
-                    };
-                }
-
-            } else {
-                errorLogger.error({
-                    status: 400,
-                    success: 0,
-                    message: "Bad Request!",
-                }, req.body);
                 return {
-                    status: 400,
-                    success: 0,
-                    message: "Bad Request!",
+                    id: preference.id,
+                    userid: preference.userid,
+                    saveName: preference.saveName,
+                    createdAt: preference.createdAt,
+                    jsonData: setting.jsonData
                 };
+            }else {
+                throw Error("Resource not found!")
             }
+
         } else {
-            errorLogger.error({
-                status: 401,
-                success: 0,
-                message: "Unauthorized action!",
-            }, req.body);
-            return {
-                status: 401,
-                success: 0,
-                message: "Unauthorized action!",
-            };
+            throw Error("Bad Request");
         }
-    } catch (err) {
-        errorLogger.error({
-            status: 500,
-            success: 0,
-            message: "Internal Server Error!",
-            err: err
-        }, req.body);
-        return {
-            status: 500,
-            success: 0,
-            message: "Internal Server Error!",
-        };
-    }
+
+    });
+
 }
