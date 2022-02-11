@@ -443,7 +443,7 @@ exports.getPatientsData = async (requ) => {
                 success:0,
                 message: "Bad Request",
                 method: "getStatePopulation"
-            }, params.request.body);
+            }, params.req.body);
 
             /* Message is of invalid format */
             return {
