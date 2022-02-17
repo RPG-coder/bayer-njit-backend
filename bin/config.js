@@ -2,7 +2,7 @@ const config = {
   "development": {   
     "username": process.env.MYSQL_DEV_USER,
     "password": process.env.MYSQL_DEV_PASSWORD,
-    "database": "patient_database",
+    "database": "patient_database1",
     "host": process.env.MYSQL_DEV_HOST,
     "port": 3306,
     "dialect": "mysql"
@@ -10,7 +10,7 @@ const config = {
   "test": {
     "username": process.env.MYSQL_TEST_USER,
     "password": process.env.MYSQL_TEST_PASSWORD,
-    "database": "patient_database",
+    "database": "patient_database1",
     "host": process.env.MYSQL_TEST_HOST,
     "port": 3306,
     "dialect": "mysql"
@@ -18,7 +18,7 @@ const config = {
   "production": {
     "username": process.env.MYSQL_PROD_USER,
     "password": process.env.MYSQL_PROD_PASSWORD,
-    "database": "patient_database",
+    "database": "patient_database1",
     "host": process.env.MYSQL_PROD_HOST,
     "port": 3306,
     "dialect": "mysql",
