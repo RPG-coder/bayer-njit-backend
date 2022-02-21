@@ -413,13 +413,15 @@ exports.getStatePopulation = async (req) => {
  * 
  * For more details check out, {@link } (API Docs)
 **/
-exports.getPatientsData = async (req) => {
-    
-    return safelyProcessRequestMSG({req}, async (params)=>{
+exports.getPatientsData = async (requ) => {
+    //console.log(requ.body, "check");
+    return safelyProcessRequestMSG({req: requ}, async (params)=>{
         const req = params.req.body.jsonData;
-        if( /* FIRST CHECK: IF request is of valid format ... */
-            req.group_condition && req.states && req.medical_conditions && req.treatments && 
-            Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 && 
+        //console.log(req,"try")
+        /* FIRST CHECK: IF request is of valid format ... */
+        if(
+            req.group_condition && req.states && req.medical_conditions && req.treatments &&
+            Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 &&
             Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0 &&
             params.req.body.selectedState
         ){
@@ -429,6 +431,7 @@ exports.getPatientsData = async (req) => {
             await database.sequelize.query(processedReq[0]); /* Execute the graph filter query */
             /* Create View based on Filter Data (View B)  */
 
+           //console.log(`SELECT patid,sex,race,state,pat_age FROM B WHERE state = '${params.req.body.selectedState}' ORDER BY state;`);
             /* Get Patient Data for every label of label_type in {medical_conditions, treatments} that are specific to a given selected_state */
             const {QueryTypes} = database.Sequelize, res = await database.sequelize.query(`SELECT patid,sex,race,state,pat_age FROM B WHERE state = '${params.req.body.selectedState}' ORDER BY state;`, {type: QueryTypes.SELECT});
             await deleteTemporaryStorage();
@@ -440,19 +443,20 @@ exports.getPatientsData = async (req) => {
                 success:0,
                 message: "Bad Request",
                 method: "getStatePopulation"
-            }, request.body);
+            }, params.req.body);
 
             /* Message is of invalid format */
             return {
                 status: 400,
                 success:0,
-                message: "Bad Request", 
+                message: "Bad Request",
             };
         }   
 
     })
 
 }
+
 
 /**
  * Get the statistic on patient w.r.t race, age and popularity estimation on insurance used.
