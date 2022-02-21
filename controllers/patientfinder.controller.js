@@ -416,24 +416,21 @@ exports.getStatePopulation = async (req) => {
 exports.getPatientsData = async (req) => {
     
     return safelyProcessRequestMSG({req}, async (params)=>{
-        const req = params.request.body.jsonData;
-
-        /* FIRST CHECK: IF request is of valid format ... */
-        if(
+        const req = params.req.body.jsonData;
+        if( /* FIRST CHECK: IF request is of valid format ... */
             req.group_condition && req.states && req.medical_conditions && req.treatments && 
             Object.keys(req.group_condition).length > 0 && Object.keys(req.states).length > 0 && 
             Object.keys(req.medical_conditions).length > 0 && Object.keys(req.treatments).length > 0 &&
-            params.request.body.selectedState
+            params.req.body.selectedState
         ){
-
             /* Process Request Message: Get query for generating patient data which satisfy the graph filters */
             const processedReq = await processGraphRequest(req);
+
             await database.sequelize.query(processedReq[0]); /* Execute the graph filter query */
             /* Create View based on Filter Data (View B)  */
 
-            
             /* Get Patient Data for every label of label_type in {medical_conditions, treatments} that are specific to a given selected_state */
-            const {QueryTypes} = database.Sequelize, res = await database.sequelize.query(`SELECT patid,sex,race,state,pat_age FROM B WHERE state = '${request.body.selectedState}' ORDER BY state;`, {type: QueryTypes.SELECT});
+            const {QueryTypes} = database.Sequelize, res = await database.sequelize.query(`SELECT patid,sex,race,state,pat_age FROM B WHERE state = '${params.req.body.selectedState}' ORDER BY state;`, {type: QueryTypes.SELECT});
             await deleteTemporaryStorage();
             return res;
         }else{
@@ -451,7 +448,8 @@ exports.getPatientsData = async (req) => {
                 success:0,
                 message: "Bad Request", 
             };
-        }
+        }   
+
     })
 
 }

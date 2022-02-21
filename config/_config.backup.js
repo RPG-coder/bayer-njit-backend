@@ -1,3 +1,4 @@
+/* This file is only for Development Purpose. If included make sure to refer & change content in model/index.js as instructed in the comments */
 const config = {
   "development": {   
     "username": process.env.MYSQL_DEV_USER,

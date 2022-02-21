@@ -1,0 +1,7 @@
+All docker image details are found in the link below:
+https://drive.google.com/drive/folders/1T06iuKNVntf-rCRpvP1b5gWC8YJ_8OD4?usp=sharing
+
+Note: the docker application is split into two parts Backend API (via Node JS-EC2) and MySQL Database (on AWS RDS)
+The file names are followed respectively,
+- Backend API (via Node JS-EC2) : backend_dockervx-xx-xxxx
+- MySQL Database (on AWS RDS)   : mysql_dockervx-xx-xxxx
