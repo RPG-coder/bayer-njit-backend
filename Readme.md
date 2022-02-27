@@ -58,7 +58,7 @@ To run this application on a localhost or as part of a hosted server, perform:
 
   `$ npm start` # Note at current stage this project is under development and is currently run using Nodemon npm package
 
-## Automate Installation process: Updates coming soon
+## Automate Installation process: **NEW!!**
 Docker Images is found in **docker** folder.
 
 The docker application is split into two parts Backend API (via Node JS-EC2) and MySQL Database (on AWS RDS)
