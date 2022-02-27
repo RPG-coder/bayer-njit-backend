@@ -42,7 +42,7 @@ This application requires certain dependencies to be installed before running th
   `$ npm install`
 
 ### Configure your database
-Having mysql installed and started for database query requests, we need to configure the **config/config.json file**. This file should contain you MySQL database credentials and this database must come with a two pre-existing tables, namely **label_info** and **patient_info**. The tables from these must follow the schema supported by the application, thats also shared within the *Wireframe and Database design documentations*. Also capability of Sequelize ORM based database migration allows the application to be scalable using the power of [Sequelize-Auto](https://github.com/sequelize/sequelize-auto).
+Having mysql installed and started for database query requests, we need to configure the **config/config.json file**. This file should contain your MySQL database credentials and this database must come with a two pre-existing tables, namely **label_info** and **patient_info**. The tables from these must follow the schema supported by the application, thats also shared within the *Wireframe and Database design documentations*. Also capability of Sequelize ORM based database migration allows the application to be scalable using the power of [Sequelize-Auto](https://github.com/sequelize/sequelize-auto).
 
 ### Migrate you database by Sequilize ORM
 This project comes with migration files set up to make the database setup easier and automated. The only requirement is to have a existing database with two files label_info and patients_info table containing data as described in the *Wireframe and Database design documentations* that will be shared with this application in the future. In order to migrate we are required to have Sequelize CLI installed that's also automatically done with npm install cmd. Using Sequelize-CLI we can perform:
@@ -59,4 +59,10 @@ To run this application on a localhost or as part of a hosted server, perform:
   `$ npm start` # Note at current stage this project is under development and is currently run using Nodemon npm package
 
 ## Automate Installation process: Updates coming soon
-The shell script and Docker Images to automate above installation process, for an easy and quick plug and play options are under development and are coming soon.
+Docker Images is found in **docker** folder.
+
+The docker application is split into two parts Backend API (via Node JS-EC2) and MySQL Database (on AWS RDS)
+The file names are followed respectively,
+1. MySQL Database (on AWS RDS)   : mysql_dockervx-xx-xxxx , This will create the database and a special .env file with your database credentials.
+2. Backend API (via Node JS-EC2) : backend_dockervx-xx-xxxx, This will the server and requires the .env file mentioned above for the database connectivity.
+
