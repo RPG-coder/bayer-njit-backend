@@ -12,7 +12,7 @@
   - [Configure your database](#configure-your-database)
   - [Migrate you database by Sequilize ORM & CLI](#migrate-you-database-by-sequilize-orm-cli)
   - [Running the application](#running-the-application) 
-- [Automate Installation process: Updates coming soon](#automate-installation-process-updates-coming-soon)
+- [Automate Installation process: New!!](#automate-installation-process-new)
 
 ## Licence
 This project is worked over by the student at NJIT, to satisfy the requirements for the Research Assistanship under guidance of Prof. Zhi Wei. The usage of the project for other means are currently limited. The Licence file is under review and is generated soon.
