@@ -83,6 +83,7 @@ And watch for all mysql tables getting migrated automatically into the database 
 To run this application on a localhost, execute below line:
 
   \# WARNING: THIS SERVER MAY SHUTDOWN IF THE TERMINAL OR THE SYSTEM IS CLOSED | NOT FOR PRODUCTION PURPOSES
+  
   `$ npm start`  # This will start a server that resembles the actual server 
   
 For switching this application to production mode please refer to the [Backend Deployment Manual](https://github.com/RPG-coder/bayer-njit-backend/blob/master/documentation/Bayer%20-%20CKD%20Navigator%20Backend%20Deployment%20Manual%20v2022.2.10.pdf) in the documentation.
