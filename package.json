@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./bin/www >> ./logs/log_files/debug.log",
+    "migrate": "npx cross-env NODE_ENV=production sequelize-cli db:migrate",
+    "deploy": "npx pm2 start ./bin/www",
     "test": "nodemon ./bin/www"
   },
   "dependencies": {
