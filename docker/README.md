@@ -3,6 +3,9 @@
 
 Purpose: Complete deployment of CKD Patient Navigator system
 
+- Docker Images are held in this [Google drive](https://drive.google.com/drive/folders/1T06iuKNVntf-rCRpvP1b5gWC8YJ_8OD4?usp=sharing)
+- Download bayer-njit-ckd for Complete deployment options
+
 ## Description
 This file contains instructions running the docker image as container for CKD Patient-Navigator.
 This is a complete application for all kinds of deployments for CKD Patient-Navigator.
