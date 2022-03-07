@@ -37,6 +37,9 @@ This is a complete application for all kinds of deployments for CKD Patient-Navi
     - Execute below line in the folder containing README.md:
 
       $ sudo sh ./run.sh # This will Install docker and also run the image as container
+  
+  - For Windows/MacOS only
+    - Install [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 3. Loading the Docker image
   - \# Follow the instruction below: ignore lines starting with '#' as they are only for reference purposes
@@ -53,7 +56,6 @@ This is a complete application for all kinds of deployments for CKD Patient-Navi
       $ docker run -it -v "C:/Users/rahul/Desktop/Rahul Files/RA_filesNJIT/DockerWorks/folder/_complete_ckd_app_deployment/res":/temp/ bayer-njit-ckd
 
   - Windows/Mac OS
-    - Install [Docker Desktop](https://www.docker.com/products/docker-desktop)
     - Open Terminal/CMD prompt (Warning!!: not Powershell!)
     - For Windows users:
 
