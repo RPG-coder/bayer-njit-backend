@@ -10,22 +10,23 @@ This is a complete application for all kinds of deployments for CKD Patient-Navi
 ## Instructions:
 1. What you need before running 
 
-  i. You are provided with
+  - You are provided with
     - bayer-njit-ckd.tar (For Window & Ubuntu systems users)
     - bayer-njit-ckd-x86_64.tar (For Linux-x86_64 or MacOS users)
     - a **res** folder containing;
       - a couple of .sql files for setting database 
       - a couple of 'run.sh' ubuntu shell script for installing docker and running this system
     - README.md manual, Which you are viewing currently!!
-
-  ii. You are also required to have a AWS account with complete access to
+ 
+  - You are also required to have a AWS account with complete access to
     - Creating EC2 instances
     - Creating EC2 Security groups
     - Creating, Accessing RDS instances
     - Creating, Accessing S3 bucket
 
   - For the sake of simplicity for setting up account, we are opting to have the user with an Administrator access over AWS account.
-  - For setting up an Administrator access user account with programmatic access key, please visit [1. Tutorial - Create User with Access Key Credentials (Under production|Coming soon)]().
+  - For setting up an Administrator access user account with programmatic access key, 
+    - Please visit [1. Tutorial - Create User with Access Key Credentials (Under production|Coming soon)]().
 
 2. Install Docker Desktop or Docker-CLI
   - For Ubuntu only
@@ -55,14 +56,15 @@ This is a complete application for all kinds of deployments for CKD Patient-Navi
 
       $ docker run -it -v "<location of folder containing the res folder>/res":/temp/ bayer-njit-ckd
       
-      /# to get the location of the folder on Windows: 
-      /# copy the folder pos from the address bar or copy file path from "filepath> (cmd-prompt command line)" on cmd-prompt
+      \# to get the location of the folder on Windows: 
+  
+      \# copy the folder pos from the address bar or copy file path from "filepath> (cmd-prompt command line)" on cmd-prompt
 
     - for MacOS users:
 
       $ docker run -it --platform linux/x86_64 -v "<location of folder containing the res folder>/res":/temp/ bayer-njit-ckd-x86_64
 
-      /# to get the location of the folder use $ pwd cmd on Ubuntu or MacOS terminal
+      \# to get the location of the folder use $ pwd cmd on Ubuntu or MacOS terminal
 
 <hr/>
 
