@@ -69,8 +69,14 @@ This is a complete application for all kinds of deployments for CKD Patient-Navi
 
       \# to get the location of the folder use $ pwd cmd on Ubuntu or MacOS terminal
   
-      **##### MAC Users [WARNING] Make sure to set the docker settings on RAM to 4GB as the frontend npm build requires these RAM space for optimizing build before generating**
-
+      **##### MAC Users [WARNING] Make sure to set the docker settings on RAM to 4GB**
+  
+      **This is because the frontend npm build requires these RAM space for optimizing build before generating**
+      
+      This can be done from Docker Desktop > Settings > Resources > Set **Memory** Slider = 4GB
+  
+  
+  
 <hr/>
 
 ##### GIT source backend: https://www.github.com/RPG-coder
