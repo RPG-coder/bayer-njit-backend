@@ -68,6 +68,8 @@ This is a complete application for all kinds of deployments for CKD Patient-Navi
       $ docker run -it --platform linux/x86_64 -v "<location of folder containing the res folder>/res":/temp/ bayer-njit-ckd-x86_64
 
       \# to get the location of the folder use $ pwd cmd on Ubuntu or MacOS terminal
+  
+      **##### MAC Users [WARNING] Make sure to set the docker settings on RAM to 4GB as the frontend npm build requires these RAM space for optimizing build before generating**
 
 <hr/>
 
