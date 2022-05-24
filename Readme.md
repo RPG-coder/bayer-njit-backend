@@ -96,3 +96,5 @@ To run this application on localhost with Logging mode activated on for developm
 
 ## Automate Installation process using Docker
 All Docker Images are provided inside the **docker** folder of branch [sequelize-compatibility](https://github.com/RPG-coder/bayer-njit-backend/tree/sequelize-compatibility).
+
+## Frontend: [Bayer CKD Population Navigator frontend](https://github.com/sp2728/bayer-njit-frontend)
