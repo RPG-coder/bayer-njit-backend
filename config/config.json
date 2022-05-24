@@ -2,7 +2,7 @@
     "development": {   
       "username": "rahul",
       "password": "PASSword@123",
-      "database": "patient_database1",
+      "database": "patient_database",
       "host": "localhost",
       "port": 3306,
       "dialect": "mysql"
