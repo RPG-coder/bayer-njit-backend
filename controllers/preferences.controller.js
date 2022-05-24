@@ -152,6 +152,12 @@ exports.editPreference = async (req) => {
             });
 
             if(success[0]){
+                if (req.body.makeDefault == true) {
+                    const user = await User.findOne({ where: { userid: req.body.userid } });
+                    user.defaultPreferenceId = preference.id;
+                    await user.save();
+                    await user.reload();
+                }
 
                 await FormSettings.update({jsonData:req.body.jsonData} ,{
                     where: {id: req.body.preferenceId,userid: req.body.userid}
