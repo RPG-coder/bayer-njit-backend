@@ -467,10 +467,18 @@ exports.getPatientsData = async (requ) => {
  */
 exports.getPopulationOverview = async (req)=>{
     return safelyProcessRequestMSG({req}, async (params)=>{
+        const whereClause = (params.req.query.paytypChoice=="0")?"":((params.req.query.paytypChoice=="1")?"WHERE paytyp='COM'":"WHERE paytyp='MCR'");
         return {
-            raceData: await database.sequelize.query("SELECT race, count(race) AS 'count' FROM patients_info GROUP BY race;",{type: QueryTypes.SELECT}),
-            ageData: await database.sequelize.query("(SELECT '18-34' AS 'group', count(*) AS 'count' FROM patients_info WHERE pat_age BETWEEN 18 AND 34) UNION (SELECT '35-64' AS 'group', count(*) AS count FROM patients_info WHERE pat_age BETWEEN 35 AND 64) UNION ( SELECT '64+' AS 'group', count(*) AS count FROM patients_info WHERE pat_age>64);", {type: QueryTypes.SELECT}),
-            insuranceData: await database.sequelize.query("SELECT paytyp, count(paytyp) AS 'count' FROM patients_info GROUP BY paytyp;",{type: QueryTypes.SELECT})
+            raceData: await database.sequelize.query(`SELECT race, count(race) AS 'count' FROM patients_info ${whereClause} GROUP BY race;`,{type: QueryTypes.SELECT}),
+            ageData: await database.sequelize.query(
+                `(SELECT '18-34' AS 'group', count(*) AS 'count' FROM patients_info WHERE ${(params.req.query.paytypChoice=="0")?"":((params.req.query.paytypChoice=="1")?"paytyp='COM' AND":"paytyp='MCR' AND")} pat_age BETWEEN 18 AND 34)`+
+                ` UNION (SELECT '35-64' AS 'group', count(*) AS count FROM patients_info WHERE ${(params.req.query.paytypChoice=="0")?"":((params.req.query.paytypChoice=="1")?"paytyp='COM' AND":"paytyp='MCR' AND")} pat_age BETWEEN 35 AND 64)`+
+                ` UNION ( SELECT '64+' AS 'group', count(*) AS count FROM patients_info WHERE ${(params.req.query.paytypChoice=="0")?"":((params.req.query.paytypChoice=="1")?"paytyp='COM' AND":"paytyp='MCR' AND")} pat_age>64);`, {type: QueryTypes.SELECT}
+            ),
+            insuranceData: await database.sequelize.query(`SELECT prdtyp, count(prdtyp) AS 'count' FROM patients_info ${whereClause} GROUP BY prdtyp;`,{type: QueryTypes.SELECT}),
+            pieChartData: await database.sequelize.query(`SELECT pop, count(pop) AS 'count' FROM patients_info ${whereClause} GROUP BY pop;`,{type: QueryTypes.SELECT}),
+            totalPopulation: (await database.sequelize.query(`SELECT count(*) AS 'count' FROM patients_info`,{type: QueryTypes.SELECT}))[0]['count'],
+            populationCount: (await database.sequelize.query(`SELECT count(*) AS 'count' FROM patients_info ${whereClause};`,{type: QueryTypes.SELECT}))[0]['count'],
         }
     })
 }
