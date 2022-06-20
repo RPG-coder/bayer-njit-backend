@@ -1,6 +1,6 @@
 <h1 align=center>Bayer Patient Finder (PF)</h1>
 <h4 align=center>API-Backend</h4>
-<h6 align=center>This Branch is used for Production Mode only</h6>
+<h6 align=center>This branch is used for Production Mode only</h6>
 
 ## Quick Links
 - [Licence](#licence)
@@ -97,4 +97,7 @@ To run this application on localhost with Logging mode activated on for developm
 ## Automate Installation process using Docker
 All Docker Images are provided inside the **docker** folder of branch [sequelize-compatibility](https://github.com/RPG-coder/bayer-njit-backend/tree/sequelize-compatibility).
 
-## Frontend: [Bayer CKD Population Navigator frontend](https://github.com/sp2728/bayer-njit-frontend)
+
+##### Developers: rp39 (Rahul Gautham Putcha), sp2728 (Sai Kiran Pocham)
+##### Team: Prof. Zhi Wei, Jianlan Ren, Rahul Gautham Putcha, Sai Kiran Pocham, Jiawei Wang
+#### Bayer CKD Population Navigator Frontend: https://github.com/sp2728/bayer-njit-frontend
