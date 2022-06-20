@@ -98,6 +98,8 @@ To run this application on localhost with Logging mode activated on for developm
 All Docker Images are provided inside the **docker** folder of branch [sequelize-compatibility](https://github.com/RPG-coder/bayer-njit-backend/tree/sequelize-compatibility).
 
 
+<hr />
+
 ##### Developers: rp39 (Rahul Gautham Putcha), sp2728 (Sai Kiran Pocham)
 ##### Team: Prof. Zhi Wei, Jianlan Ren, Rahul Gautham Putcha, Sai Kiran Pocham, Jiawei Wang
 #### Bayer CKD Population Navigator Frontend: https://github.com/sp2728/bayer-njit-frontend
